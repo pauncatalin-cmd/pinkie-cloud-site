@@ -607,57 +607,144 @@
     }
 
     .volume-top {
-      min-height: 250px;
-      border-radius: 22px;
-      margin-bottom: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 2200px;
+      margin-bottom: 20px;
+      min-height: 240px;
+    }
+
+    .book-3d {
       position: relative;
+      width: 260px;
+      aspect-ratio: 1495 / 1056;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transform: rotateX(6deg) rotateY(-10deg);
+      transition: transform 0.95s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .book-3d:focus {
+      outline: none;
+    }
+
+    .book-3d:focus-visible {
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.75);
+      border-radius: 22px;
+    }
+
+    .book-3d:hover {
+      transform: rotateX(2deg) rotateY(-18deg) translateY(-4px) scale(1.03);
+    }
+
+    .book-3d.is-flipped {
+      transform: rotateX(4deg) rotateY(180deg);
+    }
+
+    .book-3d.is-flipped:hover {
+      transform: rotateX(2deg) rotateY(196deg) translateY(-4px) scale(1.03);
+    }
+
+    .book-shadow {
+      position: absolute;
+      inset: auto 8% -18px 8%;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.18);
+      filter: blur(14px);
+      transform: translateZ(-40px);
+      pointer-events: none;
+    }
+
+    .book-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
       overflow: hidden;
-      padding: 16px;
-      border: 2px solid rgba(255,255,255,0.86);
-      background:
-        radial-gradient(circle at 12% 16%, rgba(255,255,255,0.9) 0 18px, transparent 19px),
-        radial-gradient(circle at 88% 12%, rgba(255,255,255,0.9) 0 18px, transparent 19px),
-        linear-gradient(180deg, rgba(117,195,255,0.95) 0%, rgba(255,201,120,0.75) 48%, rgba(255,166,206,0.82) 100%);
-      box-shadow: inset 0 -80px 120px rgba(255,255,255,0.12);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background-repeat: no-repeat;
+      background-size: 200% 100%;
+      box-shadow:
+        0 28px 42px rgba(0, 0, 0, 0.22),
+        0 10px 16px rgba(0, 0, 0, 0.14);
     }
 
-    .volume-top::after {
-      content: '';
-      position: absolute;
-      width: 150%;
-      height: 170px;
-      top: -86px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background:
-        radial-gradient(ellipse at center,
-          transparent 0 41%,
-          #ff628d 41% 45%,
-          transparent 45% 49%,
-          #ff9349 49% 53%,
-          transparent 53% 57%,
-          #ffe15d 57% 61%,
-          transparent 61% 65%,
-          #79dd79 65% 69%,
-          transparent 69% 73%,
-          #6ae4e8 73% 77%,
-          transparent 77% 81%,
-          #77b2ff 81% 85%,
-          transparent 85% 89%,
-          #a37dff 89% 93%,
-          transparent 93% 100%);
-      z-index: 1;
+    .book-front {
+      transform: translateZ(14px);
     }
 
-    .volume-character {
+    .book-back {
+      transform: rotateY(180deg) translateZ(14px);
+    }
+
+    .book-pages {
       position: absolute;
-      right: 18px;
+      top: 10px;
       bottom: 10px;
-      z-index: 2;
-      font-size: 5.8rem;
-      animation: bounceSoft 3.8s ease-in-out infinite;
-      filter: drop-shadow(0 8px 16px rgba(255,255,255,0.24));
+      right: -8px;
+      width: 16px;
+      border-radius: 0 10px 10px 0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          #fffdf8 0px,
+          #fffdf8 3px,
+          #f1eadf 3px,
+          #f1eadf 4px
+        );
+      transform: rotateY(90deg) translateZ(6px);
+      transform-origin: right center;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+    }
+
+    .book-3d::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: -8px;
+      width: 16px;
+      border-radius: 10px 0 0 10px;
+      background: linear-gradient(to right, #b56ca7 0%, #f3d2e3 45%, #a65d98 100%);
+      transform: rotateY(-90deg) translateZ(8px);
+      transform-origin: left center;
+      box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.25);
+    }
+
+    .book-vol1 .book-front {
+      background-image: url("coperta-volum-1.png");
+      background-position: right center;
+    }
+
+    .book-vol1 .book-back {
+      background-image: url("coperta-volum-1.png");
+      background-position: left center;
+    }
+
+    .book-vol2 .book-front {
+      background-image: url("coperta-volum-2.png");
+      background-position: right center;
+    }
+
+    .book-vol2 .book-back {
+      background-image: url("coperta-volum-2.png");
+      background-position: left center;
+    }
+
+    .book-vol3 .book-front {
+      background-image: url("coperta-volum-3.png");
+      background-position: right center;
+    }
+
+    .book-vol3 .book-back {
+      background-image: url("coperta-volum-3.png");
+      background-position: left center;
     }
 
     .volume-tag {
@@ -881,6 +968,14 @@
       .section-header h2 {
         font-size: 2.6rem;
       }
+
+      .book-3d {
+        width: 220px;
+      }
+
+      .volume-top {
+        min-height: 210px;
+      }
     }
   </style>
 </head>
@@ -992,7 +1087,14 @@
 
         <div class="volume-grid">
           <article class="volume-card reveal">
-            <div class="volume-top"><div class="volume-character">🐱</div></div>
+            <div class="volume-top">
+              <button class="book-3d book-vol1" type="button" aria-label="Vezi coperta cărții Mimi">
+                <span class="book-shadow"></span>
+                <span class="book-face book-front"></span>
+                <span class="book-face book-back"></span>
+                <span class="book-pages"></span>
+              </button>
+            </div>
             <div class="volume-tag">Volumul I, Mimi</div>
             <h3>Iubire</h3>
             <p>Mimi îl ajută pe copil să descopere acceptarea de sine și valoarea personală.</p>
@@ -1004,10 +1106,17 @@
           </article>
 
           <article class="volume-card reveal">
-            <div class="volume-top"><div class="volume-character">🐿️</div></div>
+            <div class="volume-top">
+              <button class="book-3d book-vol2" type="button" aria-label="Vezi coperta cărții Vivi">
+                <span class="book-shadow"></span>
+                <span class="book-face book-front"></span>
+                <span class="book-face book-back"></span>
+                <span class="book-pages"></span>
+              </button>
+            </div>
             <div class="volume-tag">Volumul II, Vivi</div>
             <h3>Generozitate</h3>
-            <p>Vivi îl învață pe copil să dăruiască cu inimă și să păstreze echilibrul.</p>
+            <p>Vivi îi învață pe copii să dăruiască cu inimă și să păstreze echilibrul.</p>
             <ul class="check-list">
               <li>Empatie</li>
               <li>Cooperare</li>
@@ -1016,10 +1125,17 @@
           </article>
 
           <article class="volume-card reveal">
-            <div class="volume-top"><div class="volume-character">🐰</div></div>
+            <div class="volume-top">
+              <button class="book-3d book-vol3" type="button" aria-label="Vezi coperta cărții Hoppy">
+                <span class="book-shadow"></span>
+                <span class="book-face book-front"></span>
+                <span class="book-face book-back"></span>
+                <span class="book-pages"></span>
+              </button>
+            </div>
             <div class="volume-tag">Volumul III, Hoppy</div>
             <h3>Curaj</h3>
-            <p>Hoppy îl încurajează pe copil să meargă înainte chiar și atunci când apare frica.</p>
+            <p>Hoppy îi încurajează pe copii să meargă înainte chiar și atunci când apare frica.</p>
             <ul class="check-list">
               <li>Să încerce fără perfecțiune</li>
               <li>Să ceară ajutor</li>
@@ -1182,6 +1298,19 @@
       item.addEventListener('mousedown', () => { item.style.transform = 'scale(0.98)'; });
       item.addEventListener('mouseup', () => { item.style.transform = ''; });
       item.addEventListener('mouseleave', () => { item.style.transform = ''; });
+    });
+
+    document.querySelectorAll(".book-3d").forEach((book) => {
+      book.addEventListener("click", () => {
+        book.classList.toggle("is-flipped");
+      });
+
+      book.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          book.classList.toggle("is-flipped");
+        }
+      });
     });
   </script>
 </body>
