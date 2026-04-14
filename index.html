@@ -1,1 +1,995 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pinkie Cloud</title>
+  <style>
+    :root {
+      --bg: #fff8fc;
+      --bg-soft: #fff1f8;
+      --card: #ffffff;
+      --text: #2d2340;
+      --muted: #6f6484;
+      --primary: #ff6fb5;
+      --primary-dark: #e7549d;
+      --secondary: #8f7cff;
+      --accent: #ffd76a;
+      --border: #f1d8e7;
+      --success: #4caf50;
+      --shadow: 0 14px 40px rgba(143, 124, 255, 0.12);
+      --radius: 22px;
+      --max: 1180px;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #fff8fc 0%, #fffdfd 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 248, 252, 0.88);
+      border-bottom: 1px solid rgba(241, 216, 231, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-dark);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .hero {
+      padding: 72px 0 48px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero p.lead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .proof-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .proof-card strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .hero-visual {
+      background: linear-gradient(180deg, #ffe5f3 0%, #f5efff 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      min-height: 480px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .visual-card {
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .visual-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 40px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      margin-bottom: 14px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .stat-card,
+    .feature-card,
+    .book-card,
+    .gift-card,
+    .workshop-card,
+    .author-card,
+    .contact-card,
+    .final-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card h3,
+    .book-card h3,
+    .workshop-card h3,
+    .author-card h3,
+    .contact-card h3,
+    .gift-card h3,
+    .final-card h3 {
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .feature-card p,
+    .book-card p,
+    .workshop-card p,
+    .author-card p,
+    .contact-card p,
+    .gift-card p,
+    .final-card p,
+    .stat-card p {
+      color: var(--muted);
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #ffe7f3, #efe8ff);
+      margin-bottom: 16px;
+      font-size: 1.45rem;
+    }
+
+    .check-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .check-list li::before {
+      content: "✔";
+      color: var(--success);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .book-badge {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .price-box {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .price-pill {
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: #fff7da;
+      border: 1px solid #f4e2a1;
+      font-weight: 700;
+    }
+
+    .highlight-section {
+      background: linear-gradient(180deg, #fff2f8 0%, #fff9fd 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .workshop-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 18px;
+      background: #fffafd;
+      border: 1px solid var(--border);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .order-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .form-card form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .final-card {
+      text-align: center;
+      padding: 36px 24px;
+      background: linear-gradient(135deg, #fff2f8, #f4eeff);
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .order-layout,
+      .workshop-layout,
+      .grid-3,
+      .grid-2,
+      .books-grid,
+      .gift-grid,
+      .contact-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-proof {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px 0;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <span class="brand-badge">☁</span>
+        <span>Pinkie Cloud</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#carti">Cărți</a>
+        <a href="#ateliere">Ateliere</a>
+        <a href="#autor">Autor</a>
+        <a href="#comanda">Comandă</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Mai mult decât povești</div>
+          <h1>Pinkie Cloud, un univers care dezvoltă emoțional copilul tău</h1>
+          <p class="lead">
+            Cărți interactive și experiențe educaționale care îl ajută pe copil să își înțeleagă emoțiile,
+            să capete încredere și să crească echilibrat.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#carti">Descoperă cărțile</a>
+            <a class="btn btn-secondary" href="#ateliere">Despre atelierele Pinkie</a>
+            <a class="btn btn-secondary" href="#autor">Despre autor</a>
+          </div>
+
+          <div class="hero-proof">
+            <div class="proof-card">
+              <strong>Înțelegere emoțională</strong>
+              <p>Copiii învață să recunoască și să exprime ce simt.</p>
+            </div>
+            <div class="proof-card">
+              <strong>Mai multă încredere</strong>
+              <p>Exercițiile îi ajută să își construiască o imagine sănătoasă despre sine.</p>
+            </div>
+            <div class="proof-card">
+              <strong>Relații mai bune</strong>
+              <p>Activitățile dezvoltă empatia, comunicarea și cooperarea.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-card">
+            <h3>Ce conține fiecare carte Pinkie</h3>
+            <ul class="check-list">
+              <li>Povești terapeutice</li>
+              <li>Jurnale ghidate</li>
+              <li>Activități de reflecție</li>
+              <li>Exerciții de reglare emoțională</li>
+              <li>Jocuri de empatie și comunicare</li>
+              <li>Creativitate prin desen</li>
+              <li>Certificatul de prieten Pinkie</li>
+            </ul>
+          </div>
+
+          <div class="visual-card">
+            <h3>De ce contează</h3>
+            <p>
+              Dezvoltarea emoțională este la fel de importantă ca dezvoltarea academică. Când copilul își înțelege
+              emoțiile, comunică mai ușor, are mai multă încredere în el și gestionează mai bine situațiile dificile.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Ce primește copilul din fiecare experiență Pinkie</h2>
+          <p>
+            Fiecare volum este gândit ca o experiență completă. Copilul nu doar citește. Simte, reflectează,
+            răspunde, creează și învață să se cunoască mai bine.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card">
+            <div class="icon">📖</div>
+            <h3>Povești terapeutice</h3>
+            <p>
+              Personajele și situațiile reale îl ajută pe copil să înțeleagă frica, tristețea, nesiguranța și alte emoții.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">✍️</div>
+            <h3>Jurnale ghidate</h3>
+            <p>
+              Spații dedicate pentru gânduri și emoții, care susțin conștientizarea de sine și exprimarea autentică.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>Activități de reflecție</h3>
+            <p>
+              Întrebări și exerciții care îl ajută pe copil să gândească și să aplice ceea ce descoperă în poveste.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">🌿</div>
+            <h3>Reglare emoțională</h3>
+            <p>
+              Tehnici simple de respirație, conștientizare și pauză, pe care copilul le poate folosi singur.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">🤝</div>
+            <h3>Empatie și comunicare</h3>
+            <p>
+              Jocurile și exercițiile dezvoltă relații sănătoase și o înțelegere mai bună a celorlalți.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">🎨</div>
+            <h3>Creativitate și apartenență</h3>
+            <p>
+              Prin desen și certificatul de prieten Pinkie, copilul transformă emoțiile în expresie și capătă încredere.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section highlight-section" id="carti">
+      <div class="container">
+        <div class="section-header">
+          <h2>Colecția Pinkie Cloud</h2>
+          <p>
+            Trei volume construite în jurul unor lecții esențiale pentru dezvoltarea emoțională a copilului.
+          </p>
+        </div>
+
+        <div class="books-grid">
+          <article class="book-card">
+            <span class="book-badge">Volumul 1, Iubire, Mimi</span>
+            <h3>Acceptarea de sine și valoarea personală</h3>
+            <p>
+              Mimi își dorește să fie altcineva pentru a primi iubire. Pe parcurs, descoperă că valoarea ei vine din autenticitate.
+            </p>
+            <ul class="check-list">
+              <li>Să nu se compare</li>
+              <li>Să își accepte emoțiile</li>
+              <li>Să înțeleagă că este suficient exact așa cum este</li>
+            </ul>
+          </article>
+
+          <article class="book-card">
+            <span class="book-badge">Volumul 2, Generozitate, Vivi</span>
+            <h3>Echilibru între a dărui și a te proteja</h3>
+            <p>
+              Vivi descoperă că generozitatea nu înseamnă pierdere, ci capacitatea de a construi conexiuni reale.
+            </p>
+            <ul class="check-list">
+              <li>Empatie</li>
+              <li>Cooperare</li>
+              <li>Comunicare sănătoasă</li>
+            </ul>
+          </article>
+
+          <article class="book-card">
+            <span class="book-badge">Volumul 3, Curaj, Hoppy</span>
+            <h3>Curajul înseamnă acțiune, chiar și când există frică</h3>
+            <p>
+              Hoppy trece prin alegeri, greșeli și frici și învață să meargă înainte pas cu pas.
+            </p>
+            <ul class="check-list">
+              <li>Să încerce fără perfecțiune</li>
+              <li>Să gestioneze frica</li>
+              <li>Să își exprime adevărul</li>
+              <li>Să ceară ajutor</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="price-box">
+          <div class="price-pill">1 carte, 58 lei</div>
+          <div class="price-pill">Pachet complet, 133 lei</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Nu este o simplă carte</h2>
+          <p>
+            Este un proces prin care copilul înțelege ce simte, învață să reacționeze sănătos,
+            își construiește încrederea și creează conexiuni reale cu cei din jur.
+          </p>
+        </div>
+
+        <div class="gift-grid">
+          <article class="gift-card">
+            <div class="icon">🎁</div>
+            <h3>Un cadou care rămâne</h3>
+            <ul class="check-list">
+              <li>Zile de naștere</li>
+              <li>Zile onomastice</li>
+              <li>Momente speciale în familie</li>
+              <li>Un dar cu valoare reală</li>
+            </ul>
+          </article>
+
+          <article class="gift-card">
+            <div class="icon">📵</div>
+            <h3>O alternativă reală la ecrane</h3>
+            <ul class="check-list">
+              <li>Îl deconectează de la telefon și tabletă</li>
+              <li>Îl reconectează la emoții și imaginație</li>
+              <li>Creează momente autentice de bucurie</li>
+            </ul>
+          </article>
+
+          <article class="gift-card">
+            <div class="icon">🎓</div>
+            <h3>Creat pe baze pedagogice</h3>
+            <p>
+              Fiecare carte este construită pe principii educaționale moderne, astfel încât copilul să fie participant activ
+              în propria dezvoltare personală.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section highlight-section" id="ateliere">
+      <div class="container">
+        <div class="section-header">
+          <h2>Atelier Pinkie, experiență educațională integrată</h2>
+          <p>
+            Atelierul completează experiența cărților prin activități ghidate, bazate pe principii pedagogice moderne
+            și dezvoltare socio emoțională.
+          </p>
+        </div>
+
+        <div class="workshop-layout">
+          <article class="workshop-card">
+            <h3>Fundament pedagogic</h3>
+            <ul class="check-list">
+              <li>Învățare prin experiență</li>
+              <li>Inteligență emoțională</li>
+              <li>Dezvoltare cognitivă prin joc</li>
+              <li>Autoreglare emoțională</li>
+              <li>Comunicare empatică</li>
+            </ul>
+          </article>
+
+          <article class="workshop-card">
+            <h3>Despre ateliere</h3>
+            <div class="steps">
+              <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                  <strong>Ascultă povestea</strong>
+                  <p>Copilul intră în universul personajului și înțelege contextul emoțional.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                  <strong>Intră în rol</strong>
+                  <p>Experiența devine personală, prin joc și participare activă.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                  <strong>Exprimă și reflectează</strong>
+                  <p>Copilul discută emoțiile și face exerciții ghidate adaptate poveștii.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-number">4</div>
+                <div>
+                  <strong>Ia experiența acasă</strong>
+                  <p>Ce învață în atelier rămâne util și în viața de zi cu zi.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid-3" style="margin-top: 22px;">
+          <article class="workshop-card">
+            <div class="icon">🛡️</div>
+            <h3>Scutul invizibil</h3>
+            <p>Un exercițiu care îl ajută pe copil să simtă siguranță interioară.</p>
+          </article>
+          <article class="workshop-card">
+            <div class="icon">💬</div>
+            <h3>Afirmații ghidate</h3>
+            <p>Mesaje simple care întăresc încrederea și imaginea de sine.</p>
+          </article>
+          <article class="workshop-card">
+            <div class="icon">✨</div>
+            <h3>Ce ar face Pinkie</h3>
+            <p>Scenarii practice pentru decizii reale și reacții sănătoase.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="autor">
+      <div class="container">
+        <div class="section-header">
+          <h2>Despre autor</h2>
+          <p>
+            O viziune educațională construită din studiu, experiență și lucru direct cu copiii.
+          </p>
+        </div>
+
+        <article class="author-card">
+          <h3>Ruxandra Ioniță</h3>
+          <p>
+            Creatoarea Universului Pinkie Cloud, are o bază solidă în Științele Educației și un master în Management Educațional,
+            completate de experiențe internaționale de formare și ani de lucru direct cu copiii.
+          </p>
+          <br />
+          <p>
+            Din această experiență a înțeles un lucru esențial. Copiii nu au nevoie doar să fie învățați, ci și să fie înțeleși.
+            Din această convingere s-a născut Pinkie, un spațiu în care fiecare copil să se simtă văzut, ascultat și încurajat
+            să fie el însuși.
+          </p>
+          <br />
+          <p>
+            În fiecare copil există un univers care merită descoperit și îngrijit cu blândețe.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section highlight-section" id="comanda">
+      <div class="container order-layout">
+        <div>
+          <div class="section-header" style="text-align:left; margin: 0 0 24px;">
+            <h2>Comandă cărțile Pinkie</h2>
+            <p>
+              Alege volumul dorit sau pachetul complet și trimite comanda direct din formular.
+            </p>
+          </div>
+
+          <article class="contact-card">
+            <h3>Prețuri</h3>
+            <ul class="check-list">
+              <li>Volumul 1, 58 lei</li>
+              <li>Volumul 2, 58 lei</li>
+              <li>Volumul 3, 58 lei</li>
+              <li>Pachet complet, 133 lei</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="contact-card form-card">
+          <h3>Trimite comanda</h3>
+          <form>
+            <div class="form-row">
+              <label>
+                Nume
+                <input type="text" name="nume" placeholder="Nume" />
+              </label>
+              <label>
+                Prenume
+                <input type="text" name="prenume" placeholder="Prenume" />
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label>
+                Telefon
+                <input type="tel" name="telefon" placeholder="Telefon" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" placeholder="Email" />
+              </label>
+            </div>
+
+            <label>
+              Adresă livrare
+              <input type="text" name="adresa" placeholder="Adresă completă" />
+            </label>
+
+            <label>
+              Ce dorești să comanzi
+              <select name="produs">
+                <option>Volumul 1</option>
+                <option>Volumul 2</option>
+                <option>Volumul 3</option>
+                <option>Pachet complet</option>
+              </select>
+            </label>
+
+            <label>
+              Mesaj
+              <textarea name="mesaj" placeholder="Scrie aici detalii despre comanda ta"></textarea>
+            </label>
+
+            <button class="btn btn-primary" type="submit">Trimite comanda</button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2>Contact</h2>
+          <p>Poți comanda cărțile și cere detalii despre ateliere direct prin email, telefon sau social media.</p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="contact-card">
+            <div class="icon">📩</div>
+            <h3>Email</h3>
+            <p><a href="mailto:hello.pinkiecloud@gmail.com">hello.pinkiecloud@gmail.com</a></p>
+          </article>
+
+          <article class="contact-card">
+            <div class="icon">📱</div>
+            <h3>Telefon</h3>
+            <p><a href="tel:0784571533">0784571533</a></p>
+          </article>
+
+          <article class="contact-card">
+            <div class="icon">🌸</div>
+            <h3>TikTok și Instagram</h3>
+            <p>@hellopinkiecloud</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <article class="final-card">
+          <h3>Există copii care nu știu încă să spună ce simt, dar simt totul.</h3>
+          <p style="margin-top: 12px;">
+            Pinkie este acolo pentru ei. Pentru copilul care are nevoie de curaj. Pentru copilul care are nevoie să fie înțeles.
+            Pentru copilul care învață, pas cu pas, să fie el însuși.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Pinkie Cloud, cărți și experiențe educaționale pentru dezvoltarea emoțională a copilului.
+    </div>
+  </footer>
+</body>
+</html>
