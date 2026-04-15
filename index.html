@@ -90,18 +90,18 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(190, 210, 240, 0.76);
+      background: rgba(190, 210, 240, 0.78);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255,255,255,0.4);
       box-shadow: 0 8px 20px rgba(185,95,180,0.06);
     }
 
     .nav {
-      min-height: 82px;
+      min-height: 84px;
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
       padding: 8px 0;
     }
 
@@ -113,21 +113,20 @@
     }
 
     .brand-badge {
-      width: 60px;
-      height: 60px;
-      border-radius: 20px;
+      width: 76px;
+      height: 76px;
       background-image: url('pinkie.png');
-      background-size: cover;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
-      border: 3px solid rgba(255,255,255,0.96);
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 10px 20px rgba(255,255,255,0.16);
       animation: pinkieFloat 5s ease-in-out infinite;
       flex-shrink: 0;
     }
 
     .brand-text {
       font-family: 'Baloo 2', cursive;
-      font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+      font-size: clamp(1.9rem, 2.8vw, 2.7rem);
       font-weight: 800;
       line-height: 0.92;
       color: #ff4db1;
@@ -151,21 +150,18 @@
     }
 
     .nav-links a {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 8px 4px;
+      padding: 8px 6px;
       font-family: 'Baloo 2', cursive;
-      font-size: 1.08rem;
+      font-size: 1.06rem;
       font-weight: 800;
       line-height: 1;
       text-align: center;
       color: #ff4db1;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease, opacity 0.18s ease;
+      border-radius: 999px;
+      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease, background 0.18s ease;
     }
 
     .nav-links a:hover {
@@ -189,15 +185,15 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      min-width: 118px;
-      height: 46px;
-      padding: 0 16px;
+      min-width: 112px;
+      height: 42px;
+      padding: 0 14px;
       border-radius: 999px;
       border: 2px solid rgba(255,255,255,0.88);
       background: linear-gradient(135deg, #ff73c3 0%, #f05aae 100%);
       color: #ffffff;
       font-family: 'Baloo 2', cursive;
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       font-weight: 800;
       box-shadow: 0 8px 16px rgba(240,79,168,0.14);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -212,19 +208,19 @@
     }
 
     .cart-icon {
-      font-size: 1.1rem;
+      font-size: 1rem;
       line-height: 1;
     }
 
     .cart-count {
-      min-width: 24px;
-      height: 24px;
+      min-width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: #fff;
       color: #ff4db1;
       display: inline-grid;
       place-items: center;
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 800;
       box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     }
@@ -418,10 +414,7 @@
     .btn:active { transform: scale(0.97); }
     .btn-primary { background: linear-gradient(135deg, #ff74c9, #ff52b1); color: white; }
     .btn-secondary { background: linear-gradient(135deg, #82cfff, #6d8cff); color: white; }
-    .btn-light {
-      background: rgba(255,255,255,0.9);
-      color: var(--pink-dark);
-    }
+    .btn-light { background: rgba(255,255,255,0.9); color: var(--pink-dark); }
 
     .hero-proof,
     .feature-grid,
@@ -1271,25 +1264,25 @@
 
       .nav-links a {
         font-size: 0.96rem;
-        padding: 6px 2px;
+        padding: 8px 4px;
       }
 
       .cart-button {
-        min-width: 108px;
-        height: 42px;
-        font-size: 0.9rem;
-        padding: 0 14px;
+        min-width: 104px;
+        height: 40px;
+        font-size: 0.88rem;
+        padding: 0 12px;
       }
     }
 
     @media (max-width: 780px) {
       .brand-text {
-        font-size: 1.9rem;
+        font-size: 2rem;
       }
 
       .brand-badge {
-        width: 58px;
-        height: 58px;
+        width: 90px;
+        height: 90px;
       }
 
       .hero {
@@ -1323,13 +1316,14 @@
       .nav {
         grid-template-columns: 1fr;
         justify-items: center;
-        gap: 8px;
+        gap: 12px;
         min-height: auto;
-        padding: 10px 0 12px;
+        padding: 14px 0 16px;
       }
 
       .brand {
         justify-content: center;
+        gap: 12px;
       }
 
       .nav-right {
@@ -1339,21 +1333,31 @@
       .nav-links {
         width: 100%;
         justify-content: center;
-        gap: 12px 16px;
+        gap: 10px;
         flex-wrap: wrap;
       }
 
       .nav-links a {
+        min-width: 108px;
+        padding: 12px 16px;
+        background: rgba(255,255,255,0.78);
+        border: 2px solid rgba(255,255,255,0.92);
+        border-radius: 999px;
+        box-shadow: 0 8px 16px rgba(185,95,180,0.12);
         font-size: 1rem;
-        padding: 4px 2px;
+      }
+
+      .nav-links a:hover {
+        transform: translateY(-2px) scale(1.02);
+        background: rgba(255,255,255,0.92);
       }
 
       .cart-button {
         justify-self: center;
-        min-width: 112px;
-        height: 44px;
-        font-size: 0.92rem;
-        padding: 0 14px;
+        min-width: 128px;
+        height: 46px;
+        font-size: 0.94rem;
+        padding: 0 16px;
       }
 
       .cart-item {
@@ -1759,30 +1763,10 @@
 
   <script>
     const PRODUCTS = {
-      vol1: {
-        id: 'vol1',
-        name: 'Volumul I, Mimi',
-        price: 50,
-        thumbClass: 'vol1'
-      },
-      vol2: {
-        id: 'vol2',
-        name: 'Volumul II, Vivi',
-        price: 50,
-        thumbClass: 'vol2'
-      },
-      vol3: {
-        id: 'vol3',
-        name: 'Volumul III, Hoppy',
-        price: 50,
-        thumbClass: 'vol3'
-      },
-      pack: {
-        id: 'pack',
-        name: 'Pachet complet, toate cele 3 volume',
-        price: 133,
-        thumbClass: 'pachet'
-      }
+      vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 50, thumbClass: 'vol1' },
+      vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 50, thumbClass: 'vol2' },
+      vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 50, thumbClass: 'vol3' },
+      pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 133, thumbClass: 'pachet' }
     };
 
     const WHATSAPP_NUMBER = '40784571533';
@@ -1889,9 +1873,7 @@
     function decreaseFromCart(productId) {
       if (!cart[productId]) return;
       cart[productId].quantity -= 1;
-      if (cart[productId].quantity <= 0) {
-        delete cart[productId];
-      }
+      if (cart[productId].quantity <= 0) delete cart[productId];
       renderCart();
     }
 
@@ -1990,9 +1972,7 @@
     cartOverlay.addEventListener('click', closeCart);
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeCart();
-      }
+      if (e.key === 'Escape') closeCart();
     });
 
     cartItemsEl.addEventListener('click', (e) => {
