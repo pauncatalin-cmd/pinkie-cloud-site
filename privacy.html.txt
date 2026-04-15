@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy, Pinkie Cloud</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-1: #0d1535;
+      --bg-2: #111c45;
+      --card: rgba(20, 33, 72, 0.94);
+      --card-soft: rgba(15, 25, 58, 0.96);
+      --border: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --pink: #ff5cb8;
+      --blue: #4aa3ff;
+      --green: #37d67a;
+      --orange: #ff9c42;
+      --yellow: #ffd84f;
+      --shadow: 0 18px 34px rgba(0,0,0,0.24);
+      --max: 1220px;
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Fredoka', Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(76, 120, 255, 0.14), transparent 22%),
+        radial-gradient(circle at 80% 0%, rgba(255, 92, 184, 0.10), transparent 24%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(12, 20, 48, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .brand-badge {
+      width: 54px;
+      height: 54px;
+      background: url('pinkie.png') center/contain no-repeat;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .hero {
+      padding: 34px 0 18px;
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 26px 24px;
+    }
+
+    .hero-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .hero-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(74,163,255,0.16);
+      color: #72b6ff;
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      line-height: 1.05;
+      color: #ffffff;
+    }
+
+    .updated {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+
+    .page {
+      padding: 22px 0 42px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .section-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.45rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .icon-blue { background: rgba(74,163,255,0.16); color: #72b6ff; }
+    .icon-green { background: rgba(55,214,122,0.16); color: #58e18e; }
+    .icon-purple { background: rgba(183,112,255,0.16); color: #c48cff; }
+    .icon-orange { background: rgba(255,156,66,0.16); color: #ffab58; }
+    .icon-yellow { background: rgba(255,216,79,0.16); color: #ffd84f; }
+
+    h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      line-height: 1;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.45rem;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .bullet-dot {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #061523;
+      background: #46e287;
+    }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .mini-card {
+      background: var(--card-soft);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: #ffffff;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .highlight-box {
+      background: rgba(33, 52, 105, 0.9);
+      border: 1px solid rgba(72,131,255,0.55);
+      border-radius: 14px;
+      padding: 18px;
+      color: #dbe7ff;
+    }
+
+    .subcards {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .subcard {
+      background: var(--card-soft);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .subcard-title {
+      color: #ffd84f;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .recipient-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .recipient-item {
+      background: var(--card-soft);
+      border-radius: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      color: var(--muted);
+    }
+
+    .rights-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .rights-item {
+      background: var(--card-soft);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .rights-item strong {
+      display: block;
+      color: #ffab58;
+      font-size: 1.08rem;
+      margin-bottom: 6px;
+    }
+
+    .footer-links {
+      padding: 10px 0 34px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    .footer-links span {
+      color: rgba(255,255,255,0.2);
+    }
+
+    @media (max-width: 900px) {
+      .company-grid,
+      .recipient-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 14px 0;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 1.55rem;
+      }
+
+      .brand-badge {
+        width: 48px;
+        height: 48px;
+      }
+
+      .hero-card,
+      .section-card {
+        padding: 18px;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-badge"></span>
+        <span>Pinkie Cloud</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Înapoi la site</a>
+        <a href="terms.html">Terms & Conditions</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-title">
+          <div class="hero-icon">🛡</div>
+          <div>
+            <h1>Politica de confidențialitate și prelucrare a datelor cu caracter personal</h1>
+            <div class="updated">Ultima actualizare: 15.04.2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container page">
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">i</div>
+        <h2>Introducere</h2>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Pinkie Cloud prelucrează datele personale în conformitate cu Regulamentul UE 2016/679, denumit GDPR, precum și cu legislația aplicabilă din România.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Prin această pagină vă informăm despre modul în care colectăm, utilizăm, stocăm și protejăm datele personale atunci când plasați o comandă sau ne contactați în legătură cu produsele noastre.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Ne rezervăm dreptul de a actualiza periodic această politică, pentru a reflecta modificări ale activității noastre sau ale cerințelor legale.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">🏢</div>
+        <h2>Cine suntem și cum ne puteți contacta</h2>
+      </div>
+
+      <p>Operatorul datelor cu caracter personal pentru comenzile realizate prin site este societatea de mai jos.</p>
+
+      <div class="company-grid">
+        <div class="mini-card">
+          <strong>RUXANDRA BUSINESS MASTERY SRL</strong>
+          <div class="info-list">
+            <div>Reg. Com.: J52/525/06.05.2021</div>
+            <div>CUI: 44234518</div>
+            <div>Țara: România</div>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <strong>Date de contact operaționale</strong>
+          <div class="info-list">
+            <div>Comenzile se transmit prin WhatsApp</div>
+            <div>Se colectează datele necesare facturării și livrării</div>
+            <div>Pentru solicitări privind datele personale, recomandăm o adresă de contact dedicată afișată în site sau în mesajele comerciale</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-purple">🗂</div>
+        <h2>Colectarea de date</h2>
+      </div>
+
+      <div class="stack">
+        <p>Colectăm date de la și despre dvs. în următoarele moduri:</p>
+
+        <div class="bullet-list">
+          <div class="bullet-item">
+            <div class="bullet-dot">›</div>
+            <div>informații oferite direct de dvs. în momentul în care trimiteți comanda prin WhatsApp</div>
+          </div>
+
+          <div class="bullet-item">
+            <div class="bullet-dot">›</div>
+            <div>date necesare pentru facturare, livrare și confirmarea comenzii</div>
+          </div>
+
+          <div class="bullet-item">
+            <div class="bullet-dot">›</div>
+            <div>informații privind produsele comandate, cantitatea, valoarea comenzii și eventualele clarificări cerute de dvs.</div>
+          </div>
+        </div>
+
+        <h3>Tipuri de date colectate</h3>
+
+        <div class="subcards">
+          <div class="subcard">
+            <div class="subcard-title">Date de contact</div>
+            <p>Nume, prenume, număr de telefon, eventual adresă de email, dacă este furnizată de dvs.</p>
+          </div>
+
+          <div class="subcard">
+            <div class="subcard-title">Date de facturare și livrare</div>
+            <p>Adresă, localitate, județ, cod poștal, datele necesare emiterii facturii și livrării produselor.</p>
+          </div>
+
+          <div class="subcard">
+            <div class="subcard-title">Date despre comandă</div>
+            <p>Produsele comandate, cantitate, total comandă, detalii comunicate în conversația de comandă prin WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">🛡</div>
+        <h2>De ce procesăm datele</h2>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Pentru preluarea, confirmarea și gestionarea comenzilor.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Pentru emiterea facturilor și respectarea obligațiilor fiscale și contabile.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Pentru livrarea produselor și comunicarea cu dvs. în legătură cu comanda.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Pentru apărarea drepturilor și intereselor legitime ale societății, atunci când este necesar.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">⏳</div>
+        <h2>Cât timp stocăm datele</h2>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item">
+          <div class="bullet-dot">•</div>
+          <div>Datele legate de comenzi și facturi sunt păstrate atât timp cât este necesar pentru îndeplinirea obligațiilor legale, fiscale și contabile.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">•</div>
+          <div>Mesajele și detaliile de comandă pot fi păstrate atât timp cât este necesar pentru gestionarea relației comerciale și soluționarea eventualelor cereri sau reclamații.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-orange">⇄</div>
+        <h2>Cui transmitem datele</h2>
+      </div>
+
+      <p>Putem transmite datele personale numai către categoriile de destinatari necesare desfășurării activității.</p>
+
+      <div class="recipient-grid">
+        <div class="recipient-item">furnizori de servicii de comunicare și transmitere a comenzilor</div>
+        <div class="recipient-item">furnizori de servicii de facturare și contabilitate</div>
+        <div class="recipient-item">furnizori de servicii de curierat și livrare</div>
+        <div class="recipient-item">autorități publice, atunci când există o obligație legală</div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">🌍</div>
+        <h2>Unde sunt prelucrate datele</h2>
+      </div>
+
+      <div class="highlight-box">
+        Datele cu caracter personal sunt prelucrate și stocate, de regulă, în Spațiul Economic European sau prin servicii care oferă garanții adecvate de protecție a datelor, conform cerințelor legale aplicabile.
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">🔒</div>
+        <h2>Securitatea datelor</h2>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Luăm măsuri tehnice și organizatorice rezonabile pentru protejarea datelor cu caracter personal împotriva accesului neautorizat, pierderii sau utilizării abuzive.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Transmiterea datelor se face prin canalele de comunicare folosite pentru preluarea comenzilor, inclusiv WhatsApp, în funcție de opțiunea clientului.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Accesul la date este limitat la persoanele și colaboratorii care au nevoie de ele pentru procesarea comenzii și îndeplinirea obligațiilor legale.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-orange">👤</div>
+        <h2>Drepturile dvs.</h2>
+      </div>
+
+      <p>În condițiile prevăzute de legislație, beneficiați de următoarele drepturi:</p>
+
+      <div class="rights-list">
+        <div class="rights-item">
+          <strong>Dreptul la informare și acces</strong>
+          <p>Puteți solicita informații despre datele prelucrate și puteți cere acces la acestea.</p>
+        </div>
+
+        <div class="rights-item">
+          <strong>Dreptul la rectificare</strong>
+          <p>Puteți cere corectarea datelor inexacte sau completarea datelor incomplete.</p>
+        </div>
+
+        <div class="rights-item">
+          <strong>Dreptul la ștergere</strong>
+          <p>Puteți solicita ștergerea datelor, în măsura în care legea permite acest lucru.</p>
+        </div>
+
+        <div class="rights-item">
+          <strong>Dreptul la restricționarea prelucrării</strong>
+          <p>Puteți solicita limitarea prelucrării în situațiile prevăzute de lege.</p>
+        </div>
+
+        <div class="rights-item">
+          <strong>Dreptul la portabilitatea datelor</strong>
+          <p>Puteți solicita transmiterea datelor furnizate de dvs. într-un format utilizat în mod curent, dacă legea permite.</p>
+        </div>
+
+        <div class="rights-item">
+          <strong>Dreptul de opoziție</strong>
+          <p>Vă puteți opune, în condițiile legii, anumitor prelucrări întemeiate pe interes legitim.</p>
+        </div>
+
+        <div class="rights-item">
+          <strong>Dreptul de a depune o plângere</strong>
+          <p>Puteți depune o plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-yellow">🍪</div>
+        <h2>Cookie-uri</h2>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item">
+          <div class="bullet-dot">•</div>
+          <div>Site-ul poate utiliza elemente tehnice necesare funcționării sale, pentru afișare, navigare și folosirea funcțiilor esențiale.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">•</div>
+          <div>Dacă vor fi introduse ulterior instrumente suplimentare de analiză, marketing sau profilare, această politică va fi actualizată corespunzător.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-links">
+      <a href="index.html">Înapoi la site</a>
+      <span>/</span>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+  </main>
+</body>
+</html>

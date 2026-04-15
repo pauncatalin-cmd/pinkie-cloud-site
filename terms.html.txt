@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms & Conditions, Pinkie Cloud</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-1: #0d1535;
+      --bg-2: #111c45;
+      --card: rgba(20, 33, 72, 0.94);
+      --card-soft: rgba(15, 25, 58, 0.96);
+      --border: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --pink: #ff5cb8;
+      --blue: #4aa3ff;
+      --green: #37d67a;
+      --orange: #ff9c42;
+      --yellow: #ffd84f;
+      --shadow: 0 18px 34px rgba(0,0,0,0.24);
+      --max: 1220px;
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Fredoka', Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(76, 120, 255, 0.14), transparent 22%),
+        radial-gradient(circle at 80% 0%, rgba(255, 92, 184, 0.10), transparent 24%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(12, 20, 48, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .brand-badge {
+      width: 54px;
+      height: 54px;
+      background: url('pinkie.png') center/contain no-repeat;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .hero {
+      padding: 34px 0 18px;
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 26px 24px;
+    }
+
+    .hero-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .hero-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,156,66,0.16);
+      color: #ffab58;
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      line-height: 1.05;
+      color: #ffffff;
+    }
+
+    .updated {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+
+    .page {
+      padding: 22px 0 42px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .section-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.45rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .icon-blue { background: rgba(74,163,255,0.16); color: #72b6ff; }
+    .icon-green { background: rgba(55,214,122,0.16); color: #58e18e; }
+    .icon-purple { background: rgba(183,112,255,0.16); color: #c48cff; }
+    .icon-orange { background: rgba(255,156,66,0.16); color: #ffab58; }
+
+    h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      line-height: 1;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.35rem;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .bullet-dot {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #061523;
+      background: #46e287;
+    }
+
+    .subcards {
+      display: grid;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .subcard {
+      background: var(--card-soft);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .subcard strong {
+      display: block;
+      color: #ffab58;
+      margin-bottom: 6px;
+    }
+
+    .footer-links {
+      padding: 10px 0 34px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    .footer-links span {
+      color: rgba(255,255,255,0.2);
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        min-height: auto;
+        padding: 14px 0;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 1.55rem;
+      }
+
+      .brand-badge {
+        width: 48px;
+        height: 48px;
+      }
+
+      .hero-card,
+      .section-card {
+        padding: 18px;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-badge"></span>
+        <span>Pinkie Cloud</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Înapoi la site</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-title">
+          <div class="hero-icon">📘</div>
+          <div>
+            <h1>Termeni și condiții</h1>
+            <div class="updated">Ultima actualizare: 15.04.2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container page">
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">ℹ</div>
+        <h2>Informații generale</h2>
+      </div>
+
+      <div class="stack">
+        <p>Prezentul document stabilește termenii și condițiile de utilizare a site-ului Pinkie Cloud și regulile aplicabile comenzilor transmise prin intermediul site-ului și continuate prin WhatsApp.</p>
+        <p>Operatorul comercial este <strong style="color:#ffffff;">RUXANDRA BUSINESS MASTERY SRL</strong>, Reg. Com. J52/525/06.05.2021, CUI 44234518.</p>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">🛒</div>
+        <h2>Produse și comenzi</h2>
+      </div>
+
+      <div class="bullet-list">
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Produsele afișate pe site sunt prezentate cu titlu informativ și comercial.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Adăugarea unui produs în coș nu reprezintă finalizarea automată a unei comenzi și nu garantează rezervarea produsului.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>După selectarea produselor, clientul este redirecționat către WhatsApp pentru confirmarea comenzii, transmiterea datelor de facturare și a detaliilor de livrare.</div>
+        </div>
+
+        <div class="bullet-item">
+          <div class="bullet-dot">✓</div>
+          <div>Comanda este considerată transmisă după ce clientul trimite detaliile solicitate și primește confirmarea din partea comerciantului.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-orange">💳</div>
+        <h2>Prețuri și plată</h2>
+      </div>
+
+      <div class="stack">
+        <p>Prețurile afișate pe site sunt exprimate în lei.</p>
+        <p>Prețurile pot fi actualizate de către comerciant, iar valoarea aplicabilă comenzii este cea comunicată la momentul confirmării acesteia.</p>
+        <p>Detaliile finale privind plata, facturarea și livrarea se stabilesc în conversația de comandă transmisă prin WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-purple">🚚</div>
+        <h2>Livrare</h2>
+      </div>
+
+      <div class="stack">
+        <p>Livrarea produselor se realizează pe baza datelor furnizate de client în momentul confirmării comenzii.</p>
+        <p>Termenul de livrare poate varia în funcție de disponibilitatea produselor, volumul comenzilor și serviciul de curierat utilizat.</p>
+        <p>Clientul are obligația de a furniza date corecte și complete pentru emiterea facturii și livrarea comenzii.</p>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">↩</div>
+        <h2>Politica de retur și reclamații</h2>
+      </div>
+
+      <div class="subcards">
+        <div class="subcard">
+          <strong>Produse neconforme</strong>
+          <p>Dacă un produs ajunge deteriorat sau nu corespunde comenzii confirmate, clientul trebuie să anunțe comerciantul într-un termen rezonabil, oferind detalii suficiente pentru analizarea situației.</p>
+        </div>
+
+        <div class="subcard">
+          <strong>Retururi</strong>
+          <p>Condițiile concrete de retur, dacă sunt aplicabile produselor comandate, se comunică în relația directă cu clientul, în funcție de tipul produsului și de starea acestuia.</p>
+        </div>
+
+        <div class="subcard">
+          <strong>Reclamații</strong>
+          <p>Orice sesizare privind comanda, livrarea sau produsul poate fi transmisă prin canalul de comunicare folosit pentru comandă.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">⚖</div>
+        <h2>Limitarea răspunderii</h2>
+      </div>
+
+      <div class="stack">
+        <p>Comerciantul depune toate eforturile rezonabile pentru ca informațiile de pe site să fie corecte și actualizate.</p>
+        <p>Cu toate acestea, pot exista diferențe de afișare, erori tehnice temporare sau actualizări de conținut care nu au fost încă publicate.</p>
+        <p>Comerciantul nu răspunde pentru disfuncționalități cauzate de factori externi, inclusiv rețele de comunicații, servicii terțe sau indisponibilități temporare ale platformelor folosite pentru comandă.</p>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-orange">©</div>
+        <h2>Proprietate intelectuală</h2>
+      </div>
+
+      <div class="stack">
+        <p>Conținutul site-ului, inclusiv textele, imaginile, elementele grafice și structura paginilor, aparține titularului legal sau este folosit cu acordul acestuia.</p>
+        <p>Este interzisă copierea, distribuirea, modificarea sau utilizarea conținutului fără acordul prealabil al titularului drepturilor.</p>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-green">🧾</div>
+        <h2>Protecția datelor</h2>
+      </div>
+
+      <p>Datele personale colectate în procesul de comandă sunt prelucrate conform politicii de confidențialitate disponibile pe site.</p>
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <div class="section-icon icon-blue">📌</div>
+        <h2>Dispoziții finale</h2>
+      </div>
+
+      <div class="stack">
+        <p>Prin utilizarea site-ului și transmiterea unei comenzi, clientul confirmă că a citit și a înțeles acești termeni și condiții.</p>
+        <p>Comerciantul poate actualiza prezentul document ori de câte ori este necesar. Versiunea actualizată va fi publicată pe site.</p>
+      </div>
+    </section>
+
+    <div class="footer-links">
+      <a href="index.html">Înapoi la site</a>
+      <span>/</span>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </main>
+</body>
+</html>
