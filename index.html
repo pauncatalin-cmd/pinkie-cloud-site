@@ -10,7 +10,7 @@
     :root {
       --pink: #ff74c8;
       --pink-dark: #d93692;
-      --purple: #9b72ff;
+      --purple: #8a5cff;
       --blue: #6ebcff;
       --yellow: #ffe56e;
       --orange: #ff9f4c;
@@ -87,149 +87,146 @@
     }
 
     .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(190, 210, 240, 0.76);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255,255,255,0.4);
-  box-shadow: 0 8px 20px rgba(185,95,180,0.06);
-}
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(190, 210, 240, 0.76);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 8px 20px rgba(185,95,180,0.06);
+    }
 
     .nav {
-  min-height: 82px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 0;
-}
+      min-height: 82px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0;
+    }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
 
-.brand-badge {
-  width: 66px;
-  height: 66px;
-  border-radius: 22px;
-  background-image: url('pinkie.png');
-  background-size: cover;
-  background-position: center;
-  border: 3px solid rgba(255,255,255,0.96);
-  box-shadow: var(--shadow-soft);
-  animation: pinkieFloat 5s ease-in-out infinite;
-  flex-shrink: 0;
-}
+    .brand-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      background-image: url('pinkie.png');
+      background-size: cover;
+      background-position: center;
+      border: 3px solid rgba(255,255,255,0.96);
+      box-shadow: var(--shadow-soft);
+      animation: pinkieFloat 5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
 
-.brand-text {
-  font-family: 'Baloo 2', cursive;
-  font-size: clamp(2rem, 3.2vw, 2.9rem);
-  font-weight: 800;
-  line-height: 0.92;
-  color: #ff4db1;
-  text-shadow:
-    0 3px 10px rgba(255, 255, 255, 0.28),
-    0 8px 20px rgba(255, 77, 177, 0.22);
-  letter-spacing: 0.02em;
-}
+    .brand-text {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      color: #ff4db1;
+      text-shadow:
+        0 3px 10px rgba(255, 255, 255, 0.28),
+        0 8px 20px rgba(255, 77, 177, 0.22);
+      letter-spacing: 0.02em;
+    }
 
-.nav-right {
-  display: contents;
-}
+    .nav-right {
+      display: contents;
+    }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: nowrap;
-  min-width: 0;
-}
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
 
-.nav-links a {
-  position: relative;
-  width: 108px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-  font-family: 'Baloo 2', cursive;
-  font-size: 0.98rem;
-  font-weight: 800;
-  line-height: 1;
-  text-align: center;
-  color: #ff4db1;
-  background: linear-gradient(180deg, #ffffff 0%, #ffeefd 100%);
-  border: none;
-  box-shadow:
-    0 6px 12px rgba(185,95,180,0.12),
-    0 0 0 2px rgba(255,255,255,0.88) inset;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  -webkit-mask-image: url('pinkie.png');
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-  mask-image: url('pinkie.png');
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-}
+    .nav-links a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 4px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1;
+      text-align: center;
+      color: #ff4db1;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease, opacity 0.18s ease;
+    }
 
-.nav-links a:hover {
-  transform: translateY(-2px) scale(1.02);
-  background: linear-gradient(180deg, #fff7ff 0%, #ffdff4 100%);
-  box-shadow:
-    0 10px 16px rgba(185,95,180,0.16),
-    0 0 0 2px rgba(255,255,255,0.94) inset;
-}
+    .nav-links a:hover {
+      transform: scale(1.08);
+      color: #ff2e9a;
+      text-shadow: 0 6px 14px rgba(255, 77, 177, 0.18);
+    }
 
-.cart-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-width: 118px;
-  height: 46px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 2px solid rgba(255,255,255,0.88);
-  background: linear-gradient(135deg, #ff73c3 0%, #f05aae 100%);
-  color: #ffffff;
-  font-family: 'Baloo 2', cursive;
-  font-size: 0.96rem;
-  font-weight: 800;
-  box-shadow: 0 8px 16px rgba(240,79,168,0.14);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  white-space: nowrap;
-  justify-self: end;
-}
+    .nav-links a:active {
+      transform: scale(0.94);
+    }
 
-.cart-button:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 18px rgba(240,79,168,0.18);
-}
+    .nav-links a:focus-visible {
+      outline: none;
+      color: #ff2e9a;
+      text-shadow: 0 6px 14px rgba(255, 77, 177, 0.18);
+    }
+
+    .cart-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 118px;
+      height: 46px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,0.88);
+      background: linear-gradient(135deg, #ff73c3 0%, #f05aae 100%);
+      color: #ffffff;
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.96rem;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(240,79,168,0.14);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+      justify-self: end;
+      cursor: pointer;
+    }
+
+    .cart-button:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 18px rgba(240,79,168,0.18);
+    }
 
     .cart-icon {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 1;
     }
 
     .cart-count {
-      min-width: 28px;
-      height: 28px;
+      min-width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: #fff;
       color: #ff4db1;
       display: inline-grid;
       place-items: center;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 800;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     }
 
     .sparkles,
@@ -277,7 +274,7 @@
     .clouds .pinkie-cloud:nth-child(3) { top: 58%; left: -200px; animation-duration: 34s; animation-delay: -15s; transform: scale(0.74); opacity: 0.74; }
 
     .hero {
-      padding: 66px 0 58px;
+      padding: 46px 0 58px;
       position: relative;
       overflow: hidden;
     }
@@ -1223,139 +1220,150 @@
       to { transform: translateX(calc(100vw + 240px)) translateY(2px); }
     }
 
-    @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes pinkieFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(-1deg); } }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pinkieBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pinkieFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(-1deg); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pinkieBob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(-1deg); }
+    }
 
     @media (max-width: 1080px) {
-  .hero-grid,
-  .feature-grid,
-  .contact-grid,
-  .volume-grid,
-  .book-detail-grid,
-  .two-col,
-  .checkout-layout,
-  .price-box {
-    grid-template-columns: 1fr;
-  }
+      .hero-grid,
+      .feature-grid,
+      .contact-grid,
+      .volume-grid,
+      .book-detail-grid,
+      .two-col,
+      .checkout-layout,
+      .price-box {
+        grid-template-columns: 1fr;
+      }
 
-  .hero-proof {
-    grid-template-columns: 1fr;
-  }
+      .hero-proof {
+        grid-template-columns: 1fr;
+      }
 
-  .nav {
-    grid-template-columns: auto 1fr auto;
-    gap: 10px;
-    min-height: 76px;
-    padding: 8px 0;
-  }
+      .nav {
+        grid-template-columns: auto 1fr auto;
+        gap: 10px;
+        min-height: 76px;
+        padding: 8px 0;
+      }
 
-  .nav-links {
-    gap: 8px;
-    flex-wrap: nowrap;
-    justify-content: center;
-  }
+      .nav-links {
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
-  .nav-links a {
-    width: 96px;
-    height: 42px;
-    font-size: 0.88rem;
-    padding: 0 8px;
-  }
+      .nav-links a {
+        font-size: 0.96rem;
+        padding: 6px 2px;
+      }
 
-  .cart-button {
-    min-width: 108px;
-    height: 42px;
-    font-size: 0.9rem;
-    padding: 0 14px;
-  }
-}
+      .cart-button {
+        min-width: 108px;
+        height: 42px;
+        font-size: 0.9rem;
+        padding: 0 14px;
+      }
+    }
 
     @media (max-width: 780px) {
-  .brand-text {
-    font-size: 1.9rem;
-  }
+      .brand-text {
+        font-size: 1.9rem;
+      }
 
-  .brand-badge {
-    width: 58px;
-    height: 58px;
-  }
+      .brand-badge {
+        width: 58px;
+        height: 58px;
+      }
 
-  .hero {
-    padding-top: 28px;
-  }
+      .hero {
+        padding-top: 28px;
+      }
 
-  .pinkie-image {
-    width: min(100%, 340px);
-  }
+      .pinkie-image {
+        width: min(100%, 340px);
+      }
 
-  .hero-title-card {
-    width: 100%;
-  }
+      .hero-title-card {
+        width: 100%;
+      }
 
-  h1 {
-    font-size: 2.5rem;
-  }
+      h1 {
+        font-size: 2.5rem;
+      }
 
-  .section-header h2 {
-    font-size: 2.4rem;
-  }
+      .section-header h2 {
+        font-size: 2.4rem;
+      }
 
-  .book-3d {
-    width: 220px;
-  }
+      .book-3d {
+        width: 220px;
+      }
 
-  .volume-top {
-    min-height: 210px;
-  }
+      .volume-top {
+        min-height: 210px;
+      }
 
-  .nav {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 8px;
-    min-height: auto;
-    padding: 10px 0 12px;
-  }
+      .nav {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 8px;
+        min-height: auto;
+        padding: 10px 0 12px;
+      }
 
-  .brand {
-    justify-content: center;
-  }
+      .brand {
+        justify-content: center;
+      }
 
-  .nav-right {
-    display: contents;
-  }
+      .nav-right {
+        display: contents;
+      }
 
-  .nav-links {
-    width: 100%;
-    justify-content: center;
-    gap: 8px 6px;
-    flex-wrap: wrap;
-  }
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        gap: 12px 16px;
+        flex-wrap: wrap;
+      }
 
-  .nav-links a {
-    width: 102px;
-    height: 44px;
-    font-size: 0.9rem;
-    padding: 0 8px;
-  }
+      .nav-links a {
+        font-size: 1rem;
+        padding: 4px 2px;
+      }
 
-  .cart-button {
-    justify-self: center;
-    min-width: 112px;
-    height: 44px;
-    font-size: 0.92rem;
-    padding: 0 14px;
-  }
+      .cart-button {
+        justify-self: center;
+        min-width: 112px;
+        height: 44px;
+        font-size: 0.92rem;
+        padding: 0 14px;
+      }
 
-  .cart-item {
-    grid-template-columns: 1fr;
-  }
+      .cart-item {
+        grid-template-columns: 1fr;
+      }
 
-  .cart-item-thumb {
-    width: 100%;
-  }
-}
+      .cart-item-thumb {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1402,7 +1410,7 @@
     <div class="container nav">
       <a href="#top" class="brand">
         <span class="brand-badge"></span>
-        <span class="brand-text">Pinkie<br/>Cloud</span>
+        <span class="brand-text">Pinkie<br>Cloud</span>
       </a>
 
       <div class="nav-right">
@@ -1666,7 +1674,7 @@
         <article class="author-card reveal">
           <h3>Ruxandra Ioniță</h3>
           <p>Creatoarea Universului Pinkie Cloud, cu bază solidă în Științele Educației și Management Educațional, completează poveștile cu experiență reală de lucru cu copiii.</p>
-          <br />
+          <br>
           <p>Pinkie s-a născut din convingerea că fiecare copil are nevoie să fie văzut, ascultat și încurajat să fie el însuși.</p>
         </article>
       </div>
@@ -1754,19 +1762,19 @@
       vol1: {
         id: 'vol1',
         name: 'Volumul I, Mimi',
-        price: 58,
+        price: 50,
         thumbClass: 'vol1'
       },
       vol2: {
         id: 'vol2',
         name: 'Volumul II, Vivi',
-        price: 58,
+        price: 50,
         thumbClass: 'vol2'
       },
       vol3: {
         id: 'vol3',
         name: 'Volumul III, Hoppy',
-        price: 58,
+        price: 50,
         thumbClass: 'vol3'
       },
       pack: {
