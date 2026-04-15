@@ -75,6 +75,10 @@
       color: inherit;
     }
 
+    button {
+      font: inherit;
+    }
+
     .container {
       width: min(100% - 28px, var(--max));
       margin: 0 auto;
@@ -104,6 +108,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-shrink: 0;
     }
 
     .brand-badge {
@@ -119,70 +124,119 @@
       flex-shrink: 0;
     }
 
-   .brand-text {
-  font-family: 'Baloo 2', cursive;
-  font-size: clamp(2rem, 3.2vw, 2.9rem);
-  font-weight: 800;
-  line-height: 0.92;
-  color: #ff4db1;
-  text-shadow:
-    0 3px 10px rgba(255, 255, 255, 0.28),
-    0 8px 20px rgba(255, 77, 177, 0.22);
-  letter-spacing: 0.02em;
-}
+    .brand-text {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      font-weight: 800;
+      line-height: 0.92;
+      color: #ff4db1;
+      text-shadow:
+        0 3px 10px rgba(255, 255, 255, 0.28),
+        0 8px 20px rgba(255, 77, 177, 0.22);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
 
     .nav-links {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       align-items: center;
+      justify-content: flex-end;
     }
 
-.nav-links a {
-  position: relative;
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.08rem;
-  font-weight: 700;
-  padding: 11px 22px;
-  border-radius: 999px;
-  color: #ff4db1;
-  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,255,0.95) 100%);
-  border: 2px solid rgba(255,255,255,0.95);
-  box-shadow:
-    0 10px 18px rgba(185,95,180,0.12),
-    inset 0 -4px 8px rgba(235,235,245,0.7);
-  transition: 0.22s ease;
-}
+    .nav-links a {
+      position: relative;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.08rem;
+      font-weight: 700;
+      padding: 11px 22px;
+      border-radius: 999px;
+      color: #ff4db1;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,255,0.95) 100%);
+      border: 2px solid rgba(255,255,255,0.95);
+      box-shadow:
+        0 10px 18px rgba(185,95,180,0.12),
+        inset 0 -4px 8px rgba(235,235,245,0.7);
+      transition: 0.22s ease;
+    }
 
-.nav-links a::before,
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  background: rgba(255,255,255,0.96);
-  border-radius: 50%;
-  z-index: -1;
-}
+    .nav-links a::before,
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.96);
+      border-radius: 50%;
+      z-index: -1;
+    }
 
-.nav-links a::before {
-  width: 18px;
-  height: 18px;
-  left: 12px;
-  top: -6px;
-}
+    .nav-links a::before {
+      width: 18px;
+      height: 18px;
+      left: 12px;
+      top: -6px;
+    }
 
-.nav-links a::after {
-  width: 22px;
-  height: 22px;
-  right: 14px;
-  top: -8px;
-}
+    .nav-links a::after {
+      width: 22px;
+      height: 22px;
+      right: 14px;
+      top: -8px;
+    }
 
-.nav-links a:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow:
-    0 14px 22px rgba(185,95,180,0.16),
-    inset 0 -4px 8px rgba(235,235,245,0.9);
-}
+    .nav-links a:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow:
+        0 14px 22px rgba(185,95,180,0.16),
+        inset 0 -4px 8px rgba(235,235,245,0.9);
+    }
+
+    .cart-button {
+      position: relative;
+      border: 2px solid rgba(255,255,255,0.95);
+      background: linear-gradient(135deg, #ff74c9, #ff52b1);
+      color: #fff;
+      border-radius: 999px;
+      padding: 11px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 22px rgba(255, 82, 177, 0.22);
+      transition: 0.22s ease;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .cart-button:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .cart-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .cart-count {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+      color: #ff4db1;
+      display: inline-grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 800;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    }
 
     .sparkles,
     .clouds {
@@ -313,22 +367,22 @@
       animation: fadeUp 1s ease both;
     }
 
-.gradient-title {
-  display: inline-block;
-  color: #ff4db1;
-  text-shadow:
-    0 4px 14px rgba(255, 255, 255, 0.22),
-    0 8px 22px rgba(255, 77, 177, 0.18);
-}
+    .gradient-title {
+      display: inline-block;
+      color: #ff4db1;
+      text-shadow:
+        0 4px 14px rgba(255, 255, 255, 0.22),
+        0 8px 22px rgba(255, 77, 177, 0.18);
+    }
 
     .hero-subtitle {
-  display: block;
-  margin-top: 4px;
-  color: #8f5fff;
-  text-shadow:
-    0 3px 12px rgba(255, 255, 255, 0.18),
-    0 8px 18px rgba(143, 95, 255, 0.16);
-}
+      display: block;
+      margin-top: 4px;
+      color: #8f5fff;
+      text-shadow:
+        0 3px 12px rgba(255, 255, 255, 0.18),
+        0 8px 18px rgba(143, 95, 255, 0.16);
+    }
 
     .lead {
       font-size: 1.15rem;
@@ -366,16 +420,20 @@
       cursor: pointer;
       box-shadow: var(--shadow-soft);
       text-shadow: 0 2px 0 rgba(0,0,0,0.06);
+      text-decoration: none;
     }
 
     .btn:hover { transform: translateY(-4px) scale(1.04); }
     .btn:active { transform: scale(0.97); }
     .btn-primary { background: linear-gradient(135deg, #ff74c9, #ff52b1); color: white; }
     .btn-secondary { background: linear-gradient(135deg, #82cfff, #6d8cff); color: white; }
+    .btn-light {
+      background: rgba(255,255,255,0.9);
+      color: var(--pink-dark);
+    }
 
     .hero-proof,
     .feature-grid,
-    .gift-grid,
     .contact-grid,
     .volume-grid,
     .book-detail-grid {
@@ -388,15 +446,15 @@
 
     .proof-card,
     .feature-card,
-    .gift-card,
     .workshop-card,
     .author-card,
     .contact-card,
     .final-card,
-    .order-card,
     .volume-card,
     .book-detail-card,
-    .story-band {
+    .story-band,
+    .checkout-card,
+    .product-price-card {
       background: var(--card);
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
@@ -406,42 +464,42 @@
 
     .proof-card,
     .feature-card,
-    .gift-card,
     .workshop-card,
     .author-card,
     .contact-card,
     .final-card,
-    .order-card,
     .volume-card,
-    .book-detail-card {
+    .book-detail-card,
+    .checkout-card,
+    .product-price-card {
       padding: 24px;
       transition: 0.22s ease;
     }
 
     .proof-card:hover,
     .feature-card:hover,
-    .gift-card:hover,
     .workshop-card:hover,
     .author-card:hover,
     .contact-card:hover,
-    .order-card:hover,
     .volume-card:hover,
-    .book-detail-card:hover {
+    .book-detail-card:hover,
+    .checkout-card:hover,
+    .product-price-card:hover {
       transform: translateY(-7px) scale(1.02);
       box-shadow: 0 26px 46px rgba(184,97,188,0.22);
     }
 
     .proof-card strong,
     .feature-card h3,
-    .gift-card h3,
     .workshop-card h3,
     .author-card h3,
     .contact-card h3,
     .final-card h3,
-    .order-card h3,
     .volume-card h3,
     .book-detail-card h3,
-    .story-band h3 {
+    .story-band h3,
+    .checkout-card h3,
+    .product-price-card h4 {
       font-family: 'Baloo 2', cursive;
       font-size: 1.5rem;
       line-height: 1;
@@ -451,15 +509,15 @@
 
     .proof-card p,
     .feature-card p,
-    .gift-card p,
     .workshop-card p,
     .author-card p,
     .contact-card p,
     .final-card p,
-    .order-card p,
     .volume-card p,
     .book-detail-card p,
-    .story-band p {
+    .story-band p,
+    .checkout-card p,
+    .product-price-card p {
       color: var(--muted);
       font-weight: 600;
     }
@@ -593,16 +651,16 @@
       margin: 0 auto 42px;
     }
 
- .section-header h2 {
-  font-family: 'Baloo 2', cursive;
-  font-size: clamp(2.5rem, 4vw, 3.8rem);
-  color: #ff4eb0;
-  text-shadow:
-    0 4px 14px rgba(255, 255, 255, 0.2),
-    0 8px 18px rgba(255, 78, 176, 0.14);
-  margin-bottom: 12px;
-  line-height: 0.98;
-}
+    .section-header h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      color: #ff4eb0;
+      text-shadow:
+        0 4px 14px rgba(255, 255, 255, 0.2),
+        0 8px 18px rgba(255, 78, 176, 0.14);
+      margin-bottom: 12px;
+      line-height: 0.98;
+    }
 
     .section-header p {
       color: #865973;
@@ -784,97 +842,88 @@
       border: 2px solid rgba(255,255,255,0.86);
     }
 
- .price-box {
-  margin-top: 28px;
-  display: grid;
-  gap: 22px;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: stretch;
-}
+    .volume-card .btn {
+      width: 100%;
+      margin-top: 16px;
+    }
 
-.product-price-card {
-  background: rgba(255,255,255,0.82);
-  border: 2px solid rgba(255,255,255,0.9);
-  border-radius: 28px;
-  padding: 18px;
-  box-shadow: var(--shadow);
-  text-align: center;
-  transition: 0.22s ease;
-}
+    .price-box {
+      margin-top: 28px;
+      display: grid;
+      gap: 22px;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+    }
 
-.product-price-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 26px 46px rgba(184,97,188,0.22);
-}
+    .product-price-card {
+      text-align: center;
+    }
 
-.product-cover {
-  width: 100%;
-  aspect-ratio: 1495 / 1056;
-  border-radius: 18px;
-  background-size: cover;
-  background-position: center;
-  border: 2px solid rgba(255,255,255,0.92);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.12);
-  margin-bottom: 14px;
-}
+    .product-cover {
+      width: 100%;
+      aspect-ratio: 1495 / 1056;
+      border-radius: 18px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255,255,255,0.92);
+      box-shadow: 0 14px 26px rgba(0,0,0,0.12);
+      margin-bottom: 14px;
+    }
 
-.product-cover.vol1 {
-  background-image: url("coperta-volum-1.png");
-}
+    .product-cover.vol1 {
+      background-image: url("coperta-volum-1.png");
+    }
 
-.product-cover.vol2 {
-  background-image: url("coperta-volum-2.png");
-}
+    .product-cover.vol2 {
+      background-image: url("coperta-volum-2.png");
+    }
 
-.product-cover.vol3 {
-  background-image: url("coperta-volum-3.png");
-}
+    .product-cover.vol3 {
+      background-image: url("coperta-volum-3.png");
+    }
 
-.product-cover.pachet {
-  background:
-    linear-gradient(rgba(255,255,255,0.16), rgba(255,255,255,0.16)),
-    url("coperta-volum-1.png"),
-    url("coperta-volum-2.png"),
-    url("coperta-volum-3.png");
-  background-size: 100% 100%, 36% auto, 36% auto, 36% auto;
-  background-position: center, left 6% center, center center, right 6% center;
-  background-repeat: no-repeat;
-}
+    .product-cover.pachet {
+      background:
+        linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.14)),
+        url("coperta-volum-1.png"),
+        url("coperta-volum-2.png"),
+        url("coperta-volum-3.png");
+      background-size: 100% 100%, 36% auto, 36% auto, 36% auto;
+      background-position: center, left 6% center, center center, right 6% center;
+      background-repeat: no-repeat;
+    }
 
-.product-price-card h4 {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.45rem;
-  color: var(--pink-dark);
-  margin-bottom: 6px;
-  line-height: 1;
-}
+    .product-price-card h4 {
+      font-size: 1.45rem;
+      margin-bottom: 6px;
+    }
 
-.product-price-subtitle {
-  color: var(--muted);
-  font-weight: 600;
-  min-height: 46px;
-  margin-bottom: 14px;
-}
+    .product-price-subtitle {
+      color: var(--muted);
+      font-weight: 600;
+      min-height: 48px;
+      margin-bottom: 14px;
+    }
 
-.product-price-value {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 110px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #ff74c9, #ff52b1);
-  color: white;
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.4rem;
-  font-weight: 800;
-  box-shadow: 0 12px 22px rgba(255, 82, 177, 0.24);
-  margin-bottom: 14px;
-}
+    .product-price-value {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 110px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff74c9, #ff52b1);
+      color: white;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.4rem;
+      font-weight: 800;
+      box-shadow: 0 12px 22px rgba(255, 82, 177, 0.24);
+      margin-bottom: 14px;
+    }
 
-.product-price-card .btn {
-  width: 100%;
-}
+    .product-price-card .btn {
+      width: 100%;
+    }
 
     .story-band {
       margin-top: 18px;
@@ -883,105 +932,280 @@
     }
 
     .two-col,
-    .order-layout {
+    .checkout-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
 
-    .order-layout {
-      grid-template-columns: 0.94fr 1.06fr;
-      align-items: start;
-    }
-
-    .steps {
-      display: grid;
-      gap: 14px;
+    .checkout-note {
+      background: rgba(255,255,255,0.75);
+      border: 2px solid rgba(255,255,255,0.86);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: var(--muted);
+      font-weight: 600;
       margin-top: 16px;
     }
 
-    .step {
+    .checkout-mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .checkout-mini-item {
       display: flex;
-      gap: 14px;
-      padding: 14px;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
       border-radius: 18px;
       background: rgba(255,255,255,0.74);
       border: 2px solid rgba(255,255,255,0.84);
-      transition: 0.2s ease;
     }
 
-    .step:hover {
-      transform: translateX(5px);
-    }
-
-    .step-number {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink), #ff94da);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-family: 'Baloo 2', cursive;
-      font-size: 1.06rem;
-      font-weight: 700;
-      border: 2px solid rgba(255,255,255,0.92);
-      box-shadow: var(--shadow-soft);
+    .checkout-mini-thumb {
+      width: 74px;
+      aspect-ratio: 1495 / 1056;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
       flex-shrink: 0;
     }
 
-    .order-card form {
-      display: grid;
-      gap: 14px;
+    .thumb-vol1 { background-image: url("coperta-volum-1.png"); }
+    .thumb-vol2 { background-image: url("coperta-volum-2.png"); }
+    .thumb-vol3 { background-image: url("coperta-volum-3.png"); }
+
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(71, 39, 79, 0.34);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease;
+      z-index: 998;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .cart-overlay.show {
+      opacity: 1;
+      visibility: visible;
     }
 
-    label {
-      display: grid;
-      gap: 8px;
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(440px, 100%);
+      height: 100vh;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      border-left: 2px solid rgba(255,255,255,0.9);
+      box-shadow: -18px 0 34px rgba(185,95,180,0.12);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid rgba(220,190,230,0.5);
+    }
+
+    .cart-header h3 {
       font-family: 'Baloo 2', cursive;
-      font-size: 1.08rem;
+      font-size: 2rem;
+      color: var(--pink-dark);
+      line-height: 1;
+    }
+
+    .cart-close {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.9);
+      color: var(--pink-dark);
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 34px 18px;
+      background: rgba(255,255,255,0.74);
+      border: 2px solid rgba(255,255,255,0.86);
+      border-radius: 24px;
+      color: var(--muted);
       font-weight: 700;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.82);
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cart-item-thumb {
+      width: 92px;
+      aspect-ratio: 1495 / 1056;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255,255,255,0.92);
+    }
+
+    .cart-item-thumb.vol1 { background-image: url("coperta-volum-1.png"); }
+    .cart-item-thumb.vol2 { background-image: url("coperta-volum-2.png"); }
+    .cart-item-thumb.vol3 { background-image: url("coperta-volum-3.png"); }
+    .cart-item-thumb.pachet {
+      background:
+        linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.14)),
+        url("coperta-volum-1.png"),
+        url("coperta-volum-2.png"),
+        url("coperta-volum-3.png");
+      background-size: 100% 100%, 36% auto, 36% auto, 36% auto;
+      background-position: center, left 6% center, center center, right 6% center;
+      background-repeat: no-repeat;
+    }
+
+    .cart-item-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.28rem;
+      color: var(--pink-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .cart-item-price {
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.9);
+      border: 2px solid rgba(255,255,255,0.94);
+      border-radius: 999px;
+      padding: 6px;
+    }
+
+    .qty-controls button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff74c9, #ff52b1);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(255, 82, 177, 0.18);
+    }
+
+    .qty-value {
+      min-width: 24px;
+      text-align: center;
+      font-weight: 800;
       color: var(--pink-dark);
     }
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      border: 2px solid rgba(255,255,255,0.9);
-      border-radius: 18px;
-      padding: 14px 16px;
-      font: inherit;
+    .remove-item {
+      border: 0;
+      background: transparent;
+      color: #b96596;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .cart-footer {
+      border-top: 1px solid rgba(220,190,230,0.5);
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 12px;
+      background: rgba(255,255,255,0.86);
+    }
+
+    .cart-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 700;
       color: var(--text);
-      background: rgba(255,255,255,0.88);
-      transition: 0.2s ease;
-      font-weight: 600;
     }
 
-    input:focus,
-    textarea:focus,
-    select:focus {
-      outline: none;
-      border-color: rgba(255,116,199,0.65);
-      box-shadow: 0 0 0 4px rgba(255,116,199,0.14);
-      transform: translateY(-1px);
+    .cart-summary-total {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem;
+      color: var(--pink-dark);
     }
 
-    textarea {
-      min-height: 140px;
-      resize: vertical;
+    .cart-footer .btn {
+      width: 100%;
     }
 
-    .final-card {
-      text-align: center;
-      padding: 42px 24px;
-      background: rgba(255,255,255,0.76);
+    .notice {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(16px);
+      background: rgba(255,255,255,0.96);
+      border: 2px solid rgba(255,255,255,0.95);
+      border-radius: 999px;
+      padding: 12px 18px;
+      color: var(--pink-dark);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      z-index: 1200;
+    }
+
+    .notice.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     footer {
@@ -991,7 +1215,6 @@
       font-family: 'Baloo 2', cursive;
       font-size: 1.4rem;
       font-weight: 700;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.92);
       text-shadow: 0 8px 18px rgba(255,255,255,0.35);
     }
 
@@ -1008,45 +1231,44 @@
 
     @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     @keyframes pinkieFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(-1deg); } }
-    @keyframes bounceSoft { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.03); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pinkieBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
 
     @media (max-width: 1080px) {
-  .hero-grid,
-  .feature-grid,
-  .gift-grid,
-  .contact-grid,
-  .volume-grid,
-  .book-detail-grid,
-  .two-col,
-  .order-layout,
-  .price-box {
-    grid-template-columns: 1fr;
-  }
+      .hero-grid,
+      .feature-grid,
+      .contact-grid,
+      .volume-grid,
+      .book-detail-grid,
+      .two-col,
+      .checkout-layout,
+      .price-box {
+        grid-template-columns: 1fr;
+      }
 
-  .hero-proof {
-    grid-template-columns: 1fr;
-  }
-}
+      .hero-proof {
+        grid-template-columns: 1fr;
+      }
 
-    @media (max-width: 780px) {
       .nav {
         flex-direction: column;
         align-items: flex-start;
         padding: 12px 0;
       }
 
+      .nav-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 780px) {
       .brand-text {
         font-size: 2rem;
       }
 
       .hero {
         padding-top: 34px;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
       }
 
       .pinkie-image {
@@ -1072,6 +1294,27 @@
       .volume-top {
         min-height: 210px;
       }
+
+      .nav-right,
+      .nav-links {
+        width: 100%;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .cart-button {
+        align-self: flex-start;
+      }
+
+      .cart-item {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item-thumb {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -1087,6 +1330,34 @@
     <span>✦</span><span>✦</span><span>✦</span><span>✦</span>
   </div>
 
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-header">
+      <h3>Coșul tău</h3>
+      <button class="cart-close" id="cartClose" aria-label="Închide coșul">×</button>
+    </div>
+
+    <div class="cart-body" id="cartItems">
+      <div class="cart-empty">Coșul este gol. Adaugă volumele preferate și revino aici pentru finalizare.</div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>Produse</span>
+        <span id="cartItemsCountFooter">0</span>
+      </div>
+      <div class="cart-summary-row">
+        <span>Total</span>
+        <span class="cart-summary-total" id="cartTotal">0 lei</span>
+      </div>
+      <button class="btn btn-primary" id="checkoutButton">Finalizează pe WhatsApp</button>
+      <button class="btn btn-light" id="clearCartButton">Golește coșul</button>
+    </div>
+  </aside>
+
+  <div class="notice" id="notice">Produs adăugat în coș</div>
+
   <header class="topbar">
     <div class="container nav">
       <a href="#top" class="brand">
@@ -1094,13 +1365,22 @@
         <span class="brand-text">Pinkie<br/>Cloud</span>
       </a>
 
-      <nav class="nav-links">
-        <a href="#carti">Cărți</a>
-        <a href="#volume">Volume</a>
-        <a href="#ateliere">Ateliere</a>
-        <a href="#autor">Autor</a>
-        <a href="#comanda">Comandă</a>
-      </nav>
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="#carti">Cărți</a>
+          <a href="#volume">Volume</a>
+          <a href="#produse">Produse</a>
+          <a href="#ateliere">Ateliere</a>
+          <a href="#autor">Autor</a>
+          <a href="#checkout">Comandă</a>
+        </nav>
+
+        <button class="cart-button" id="cartOpen" aria-label="Deschide coșul">
+          <span class="cart-icon">🛒</span>
+          <span>Coș</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -1118,8 +1398,8 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#volume">Descoperă volumele</a>
-            <a class="btn btn-secondary" href="#ateliere">Vezi atelierele</a>
+            <a class="btn btn-primary" href="#produse">Vezi produsele</a>
+            <button class="btn btn-secondary" type="button" id="heroOpenCart">Deschide coșul</button>
           </div>
 
           <div class="hero-proof">
@@ -1199,6 +1479,7 @@
               <li>Să își accepte emoțiile</li>
               <li>Să simtă că este suficient exact așa cum este</li>
             </ul>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
           </article>
 
           <article class="volume-card reveal">
@@ -1218,6 +1499,7 @@
               <li>Cooperare</li>
               <li>Comunicare sănătoasă</li>
             </ul>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
           </article>
 
           <article class="volume-card reveal">
@@ -1237,42 +1519,53 @@
               <li>Să ceară ajutor</li>
               <li>Să își spună adevărul</li>
             </ul>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="produse">
+      <div class="container">
+        <div class="section-header">
+          <h2>Alege ce vrei să comanzi</h2>
+          <p>Poți cumpăra un volum separat sau pachetul complet. Adaugă în coș și finalizează rapid comanda.</p>
         </div>
 
         <div class="price-box reveal">
-  <article class="product-price-card">
-    <div class="product-cover vol1"></div>
-    <h4>Volumul I</h4>
-    <div class="product-price-subtitle">Mimi, iubire și acceptare de sine</div>
-    <div class="product-price-value">58 lei</div>
-    <a class="btn btn-primary" href="#comanda">Comandă</a>
-  </article>
+          <article class="product-price-card">
+            <div class="product-cover vol1"></div>
+            <h4>Volumul I</h4>
+            <p class="product-price-subtitle">Mimi, iubire și acceptare de sine</p>
+            <div class="product-price-value">58 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
+          </article>
 
-  <article class="product-price-card">
-    <div class="product-cover vol2"></div>
-    <h4>Volumul II</h4>
-    <div class="product-price-subtitle">Vivi, generozitate și echilibru</div>
-    <div class="product-price-value">58 lei</div>
-    <a class="btn btn-primary" href="#comanda">Comandă</a>
-  </article>
+          <article class="product-price-card">
+            <div class="product-cover vol2"></div>
+            <h4>Volumul II</h4>
+            <p class="product-price-subtitle">Vivi, generozitate și echilibru</p>
+            <div class="product-price-value">58 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
+          </article>
 
-  <article class="product-price-card">
-    <div class="product-cover vol3"></div>
-    <h4>Volumul III</h4>
-    <div class="product-price-subtitle">Hoppy, curaj și încredere</div>
-    <div class="product-price-value">58 lei</div>
-    <a class="btn btn-primary" href="#comanda">Comandă</a>
-  </article>
+          <article class="product-price-card">
+            <div class="product-cover vol3"></div>
+            <h4>Volumul III</h4>
+            <p class="product-price-subtitle">Hoppy, curaj și încredere</p>
+            <div class="product-price-value">58 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
+          </article>
 
-  <article class="product-price-card">
-    <div class="product-cover pachet"></div>
-    <h4>Pachet complet</h4>
-    <div class="product-price-subtitle">Toate cele 3 volume Pinkie Cloud</div>
-    <div class="product-price-value">133 lei</div>
-    <a class="btn btn-primary" href="#comanda">Comandă</a>
-  </article>
-</div>
+          <article class="product-price-card">
+            <div class="product-cover pachet"></div>
+            <h4>Pachet complet</h4>
+            <p class="product-price-subtitle">Toate cele 3 volume Pinkie Cloud</p>
+            <div class="product-price-value">133 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section class="section reveal">
@@ -1313,11 +1606,11 @@
           <article class="workshop-card reveal">
             <div class="icon">🌈</div>
             <h3>Ce se întâmplă în atelier</h3>
-            <div class="steps">
-              <div class="step"><div class="step-number">1</div><div><strong>Ascultă povestea</strong><p>Copilul intră în universul Pinkie și cunoaște personajul.</p></div></div>
-              <div class="step"><div class="step-number">2</div><div><strong>Intră în rol</strong><p>Participă activ și simte experiența, nu doar o ascultă.</p></div></div>
-              <div class="step"><div class="step-number">3</div><div><strong>Exprimă emoții</strong><p>Vorbește, desenează și răspunde la exerciții ghidate.</p></div></div>
-              <div class="step"><div class="step-number">4</div><div><strong>Ia experiența acasă</strong><p>Învață ceva ce poate folosi și în viața reală.</p></div></div>
+            <div class="check-list">
+              <li>Ascultă povestea și intră în universul Pinkie</li>
+              <li>Participă activ și trăiește experiența</li>
+              <li>Exprimă emoții prin joc, desen și exerciții</li>
+              <li>Ia acasă o lecție utilă și blândă</li>
             </div>
           </article>
         </div>
@@ -1339,43 +1632,56 @@
       </div>
     </section>
 
-    <section class="section reveal" id="comanda">
-      <div class="container order-layout">
-        <article class="order-card reveal">
-          <h3>Comandă cărțile Pinkie</h3>
-          <p>Alege volumul dorit sau pachetul complet.</p>
-          <ul class="check-list">
-            <li>Volumul 1, 58 lei</li>
-            <li>Volumul 2, 58 lei</li>
-            <li>Volumul 3, 58 lei</li>
-            <li>Pachet complet, 133 lei</li>
-          </ul>
-        </article>
+    <section class="section reveal" id="checkout">
+      <div class="container">
+        <div class="section-header">
+          <h2>Comandă simplă și rapidă</h2>
+          <p>Adaugi produsele dorite în coș, verifici totalul și trimiți comanda direct pe WhatsApp.</p>
+        </div>
 
-        <article class="order-card reveal">
-          <h3>Trimite comanda</h3>
-          <form>
-            <div class="form-row">
-              <label>Nume<input type="text" name="nume" placeholder="Nume" /></label>
-              <label>Prenume<input type="text" name="prenume" placeholder="Prenume" /></label>
+        <div class="checkout-layout">
+          <article class="checkout-card reveal">
+            <h3>Cum funcționează</h3>
+            <ul class="check-list">
+              <li>Adaugi în coș volumele dorite</li>
+              <li>Deschizi coșul din butonul de sus</li>
+              <li>Modifici cantitatea direct din coș</li>
+              <li>Apeși pe „Finalizează pe WhatsApp”</li>
+            </ul>
+            <div class="checkout-note">
+              În mesajul generat se trimit automat produsele și totalul. Apoi continui direct conversația pentru livrare și plată.
             </div>
-            <div class="form-row">
-              <label>Telefon<input type="tel" name="telefon" placeholder="Telefon" /></label>
-              <label>Email<input type="email" name="email" placeholder="Email" /></label>
+          </article>
+
+          <article class="checkout-card reveal">
+            <h3>Produse disponibile</h3>
+            <div class="checkout-mini-list">
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol1"></div>
+                <div>
+                  <strong>Volumul I</strong>
+                  <p>58 lei</p>
+                </div>
+              </div>
+
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol2"></div>
+                <div>
+                  <strong>Volumul II</strong>
+                  <p>58 lei</p>
+                </div>
+              </div>
+
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol3"></div>
+                <div>
+                  <strong>Volumul III</strong>
+                  <p>58 lei</p>
+                </div>
+              </div>
             </div>
-            <label>Adresă livrare<input type="text" name="adresa" placeholder="Adresă completă" /></label>
-            <label>Ce dorești să comanzi
-              <select name="produs">
-                <option>Volumul 1</option>
-                <option>Volumul 2</option>
-                <option>Volumul 3</option>
-                <option>Pachet complet</option>
-              </select>
-            </label>
-            <label>Mesaj<textarea name="mesaj" placeholder="Scrie aici detalii despre comanda ta"></textarea></label>
-            <button class="btn btn-primary" type="submit">Trimite comanda</button>
-          </form>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -1404,6 +1710,35 @@
   </footer>
 
   <script>
+    const PRODUCTS = {
+      vol1: {
+        id: 'vol1',
+        name: 'Volumul I, Mimi',
+        price: 58,
+        thumbClass: 'vol1'
+      },
+      vol2: {
+        id: 'vol2',
+        name: 'Volumul II, Vivi',
+        price: 58,
+        thumbClass: 'vol2'
+      },
+      vol3: {
+        id: 'vol3',
+        name: 'Volumul III, Hoppy',
+        price: 58,
+        thumbClass: 'vol3'
+      },
+      pack: {
+        id: 'pack',
+        name: 'Pachet complet, toate cele 3 volume',
+        price: 133,
+        thumbClass: 'pachet'
+      }
+    };
+
+    const WHATSAPP_NUMBER = '40784571533';
+
     const reveals = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1416,7 +1751,7 @@
       revealObserver.observe(item);
     });
 
-    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .gift-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .order-card');
+    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .checkout-card, .product-price-card');
     tapItems.forEach((item) => {
       item.addEventListener('mousedown', () => { item.style.transform = 'scale(0.98)'; });
       item.addEventListener('mouseup', () => { item.style.transform = ''; });
@@ -1435,6 +1770,199 @@
         }
       });
     });
+
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartOpen = document.getElementById('cartOpen');
+    const heroOpenCart = document.getElementById('heroOpenCart');
+    const cartClose = document.getElementById('cartClose');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartItemsCountFooterEl = document.getElementById('cartItemsCountFooter');
+    const checkoutButton = document.getElementById('checkoutButton');
+    const clearCartButton = document.getElementById('clearCartButton');
+    const notice = document.getElementById('notice');
+
+    let cart = {};
+
+    function showNotice(message) {
+      notice.textContent = message;
+      notice.classList.add('show');
+      clearTimeout(showNotice.timer);
+      showNotice.timer = setTimeout(() => {
+        notice.classList.remove('show');
+      }, 1800);
+    }
+
+    function openCart() {
+      cartDrawer.classList.add('open');
+      cartOverlay.classList.add('show');
+      cartDrawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('show');
+      cartDrawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function getCartItemsArray() {
+      return Object.values(cart).filter(item => item.quantity > 0);
+    }
+
+    function getCartCount() {
+      return getCartItemsArray().reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function getCartTotal() {
+      return getCartItemsArray().reduce((sum, item) => sum + item.quantity * item.price, 0);
+    }
+
+    function formatLei(value) {
+      return `${value} lei`;
+    }
+
+    function addToCart(productId) {
+      const product = PRODUCTS[productId];
+      if (!product) return;
+
+      if (!cart[productId]) {
+        cart[productId] = { ...product, quantity: 0 };
+      }
+
+      cart[productId].quantity += 1;
+      renderCart();
+      showNotice('Produs adăugat în coș');
+    }
+
+    function decreaseFromCart(productId) {
+      if (!cart[productId]) return;
+      cart[productId].quantity -= 1;
+      if (cart[productId].quantity <= 0) {
+        delete cart[productId];
+      }
+      renderCart();
+    }
+
+    function increaseInCart(productId) {
+      if (!cart[productId]) return;
+      cart[productId].quantity += 1;
+      renderCart();
+    }
+
+    function removeFromCart(productId) {
+      if (!cart[productId]) return;
+      delete cart[productId];
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = {};
+      renderCart();
+      showNotice('Coșul a fost golit');
+    }
+
+    function renderCart() {
+      const items = getCartItemsArray();
+      const totalItems = getCartCount();
+      const totalPrice = getCartTotal();
+
+      cartCountEl.textContent = totalItems;
+      cartItemsCountFooterEl.textContent = totalItems;
+      cartTotalEl.textContent = formatLei(totalPrice);
+
+      if (!items.length) {
+        cartItemsEl.innerHTML = `
+          <div class="cart-empty">
+            Coșul este gol. Adaugă volumele preferate și revino aici pentru finalizare.
+          </div>
+        `;
+        return;
+      }
+
+      cartItemsEl.innerHTML = items.map(item => `
+        <article class="cart-item">
+          <div class="cart-item-thumb ${item.thumbClass}"></div>
+          <div>
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-price">${formatLei(item.price)} / bucată</div>
+            <div class="cart-item-actions">
+              <div class="qty-controls">
+                <button type="button" data-action="decrease" data-id="${item.id}" aria-label="Scade cantitatea">−</button>
+                <span class="qty-value">${item.quantity}</span>
+                <button type="button" data-action="increase" data-id="${item.id}" aria-label="Crește cantitatea">+</button>
+              </div>
+              <button class="remove-item" type="button" data-action="remove" data-id="${item.id}">Elimină</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function buildWhatsAppMessage() {
+      const items = getCartItemsArray();
+      if (!items.length) return '';
+
+      let message = 'Bună! Aș dori să comand:%0A%0A';
+
+      items.forEach(item => {
+        const lineTotal = item.price * item.quantity;
+        message += `• ${item.name} x ${item.quantity} = ${lineTotal} lei%0A`;
+      });
+
+      message += `%0ATotal: ${getCartTotal()} lei%0A%0A`;
+      message += 'Vă rog să îmi spuneți pașii pentru livrare și plată.';
+
+      return message;
+    }
+
+    function checkoutWhatsApp() {
+      const items = getCartItemsArray();
+      if (!items.length) {
+        showNotice('Coșul este gol');
+        return;
+      }
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppMessage()}`;
+      window.open(url, '_blank');
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        addToCart(button.dataset.product);
+      });
+    });
+
+    cartOpen.addEventListener('click', openCart);
+    heroOpenCart.addEventListener('click', openCart);
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCart();
+      }
+    });
+
+    cartItemsEl.addEventListener('click', (e) => {
+      const button = e.target.closest('button[data-action]');
+      if (!button) return;
+
+      const action = button.dataset.action;
+      const id = button.dataset.id;
+
+      if (action === 'increase') increaseInCart(id);
+      if (action === 'decrease') decreaseFromCart(id);
+      if (action === 'remove') removeFromCart(id);
+    });
+
+    clearCartButton.addEventListener('click', clearCart);
+    checkoutButton.addEventListener('click', checkoutWhatsApp);
+
+    renderCart();
   </script>
 </body>
 </html>
