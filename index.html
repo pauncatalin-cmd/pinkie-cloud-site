@@ -513,7 +513,9 @@
     .book-detail-card,
     .story-band,
     .checkout-card,
-    .product-price-card {
+    .product-price-card,
+    .atelier-intro-card,
+    .atelier-accordion-card {
       background: var(--card);
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
@@ -530,7 +532,9 @@
     .volume-card,
     .book-detail-card,
     .checkout-card,
-    .product-price-card {
+    .product-price-card,
+    .atelier-intro-card,
+    .atelier-accordion-card {
       padding: 24px;
       transition: 0.22s ease;
     }
@@ -543,7 +547,9 @@
     .volume-card:hover,
     .book-detail-card:hover,
     .checkout-card:hover,
-    .product-price-card:hover {
+    .product-price-card:hover,
+    .atelier-intro-card:hover,
+    .atelier-accordion-card:hover {
       transform: translateY(-7px) scale(1.02);
       box-shadow: 0 26px 46px rgba(184,97,188,0.22);
     }
@@ -558,7 +564,9 @@
     .book-detail-card h3,
     .story-band h3,
     .checkout-card h3,
-    .product-price-card h4 {
+    .product-price-card h4,
+    .atelier-intro-card h3,
+    .atelier-accordion-button span {
       font-family: 'Baloo 2', cursive;
       font-size: 1.5rem;
       line-height: 1;
@@ -576,7 +584,9 @@
     .book-detail-card p,
     .story-band p,
     .checkout-card p,
-    .product-price-card p {
+    .product-price-card p,
+    .atelier-intro-card p,
+    .atelier-accordion-body p {
       color: var(--muted);
       font-weight: 600;
     }
@@ -1041,6 +1051,102 @@
       min-width: 138px;
     }
 
+    .atelier-intro-card {
+      margin-bottom: 24px;
+    }
+
+    .atelier-intro-card h3 {
+      margin-bottom: 14px;
+    }
+
+    .atelier-intro-card p + p {
+      margin-top: 14px;
+    }
+
+    .atelier-accordion-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .atelier-accordion-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .atelier-accordion-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .atelier-accordion-button span {
+      margin-bottom: 0;
+      font-size: 1.42rem;
+    }
+
+    .atelier-accordion-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,116,199,0.22), rgba(156,124,255,0.2));
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--pink-dark);
+      font-size: 1.4rem;
+      font-weight: 800;
+      transition: transform 0.22s ease;
+    }
+
+    .atelier-accordion-card.open .atelier-accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .atelier-accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 24px;
+    }
+
+    .atelier-accordion-body-inner {
+      padding: 0 0 24px;
+    }
+
+    .atelier-accordion-body p + p,
+    .atelier-accordion-body ul + p,
+    .atelier-accordion-body p + ul {
+      margin-top: 12px;
+    }
+
+    .atelier-accordion-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .atelier-accordion-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .atelier-accordion-list li::before {
+      content: '✨';
+      flex-shrink: 0;
+    }
+
     .cart-overlay {
       position: fixed;
       inset: 0;
@@ -1482,6 +1588,18 @@
         width: 100%;
       }
 
+      .atelier-accordion-button {
+        padding: 18px 18px;
+      }
+
+      .atelier-accordion-body {
+        padding: 0 18px;
+      }
+
+      .atelier-accordion-button span {
+        font-size: 1.25rem;
+      }
+
       .footer-inner {
         flex-direction: column;
         align-items: flex-start;
@@ -1836,6 +1954,12 @@
           <p>Atelierul completează cărțile și duce experiența mai departe. Copiii nu doar ascultă, ei trăiesc povestea.</p>
         </div>
 
+        <article class="atelier-intro-card reveal">
+          <h3>Atelierul Pinkie</h3>
+          <p>Atelierul Pinkie este o experiență interactivă în care copiii nu doar ascultă o poveste, ci intră în ea. O trăiesc, o joacă, o simt și o transformă într-un set de instrumente potrivit vârstei, cuvinte pentru emoții, pași mici pentru liniștire și curajul de a încerca din nou.</p>
+          <p>Fiecare atelier este construit ca o mini-aventură. Copilul pleacă de aici nu cu o lecție, ci cu o amintire frumoasă și cu idei simple pe care le poate folosi în viața reală, la școală, acasă sau cu prietenii.</p>
+        </article>
+
         <div class="two-col">
           <article class="workshop-card reveal">
             <div class="icon">🧠</div>
@@ -1857,6 +1981,131 @@
               <li>Participă activ și trăiește experiența</li>
               <li>Exprimă emoții prin joc, desen și exerciții</li>
               <li>Ia acasă o lecție utilă și blândă</li>
+            </div>
+          </article>
+        </div>
+
+        <div class="atelier-accordion-grid reveal">
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Pentru cine este?</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Atelierul este potrivit pentru copii cu vârste între 3 și 10 ani, cu activități adaptate pe nivel, atât pentru preșcolari, cât și pentru școlarii mici.</p>
+                <p>Este valoros pentru copiii timizi, pentru cei impulsivi, pentru copiii care simt intens, pentru cei care se lovesc de gânduri precum „nu-mi iese” sau „mi-e frică”, dar și pentru orice copil care crește într-o lume în care are nevoie, în același timp, de blândețe și curaj.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Cum se desfășoară?</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Atelierul durează aproximativ 50 de minute și are un flow ușor de urmărit. Totul începe cu o poveste, continuă cu participare activă, explorarea emoțiilor și exerciții ghidate, iar la final copiii pleacă cu un mesaj simplu, de luat cu tine.</p>
+                <p>Totul se desfășoară într-un cadru prietenos și potrivit vârstei, astfel încât copiii să se simtă văzuți, ascultați și încurajați.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Activități semnătură Pinkie</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>În atelier apar trei momente speciale, pe care copiii le iubesc și le țin minte:</p>
+                <ul class="atelier-accordion-list">
+                  <li>Scutul invizibil al lui Pinkie</li>
+                  <li>Bateria magică a lui Pinkie</li>
+                  <li>Ce ar face Pinkie?</li>
+                </ul>
+                <p>Le păstrăm ca repere calde și recognoscibile, iar conținutul lor rămâne parte din universul Pinkie, un mix de joc, emoție și curaj, livrat într-un mod care îi ajută pe copii să își găsească propriile răspunsuri.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Unde se desfășoară?</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>În prezent, atelierul se desfășoară în școli, în cadrul activităților educaționale, inclusiv în perioade precum „Școala Altfel”.</p>
+                <p>Metodologia oficială a programului „Școala Altfel” încurajează activități nonformale și experiențe care completează învățarea, ceea ce face atelierul foarte potrivit în acest context.</p>
+                <p>La cerere, atelierul poate fi organizat și în grădinițe, afterschool-uri, centre educaționale, biblioteci sau la evenimente pentru copii, oriunde există un spațiu potrivit pentru o activitate de grup.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>De ce facem atelierul?</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Pentru că emoțiile nu sunt în plus față de învățare. Ele sunt parte din felul în care copilul trăiește școala, prieteniile și familia.</p>
+                <p>Atunci când un copil are cuvinte pentru ceea ce simte și pași simpli pentru ceea ce poate face, lumea lui devine mai clară și mai sigură.</p>
+                <p>În spatele atelierului stau principii de învățare socio-emoțională, SEL, și învățare prin joc, folosite pe scară largă în educație.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Ce rămâne după atelier?</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>De obicei, părinții și cadrele didactice observă că cei mici vorbesc mai ușor despre ce simt, își amintesc să facă o pauză înainte să reacționeze, au mai mult curaj să încerce din nou și se raportează mai blând la ei și la ceilalți.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Pentru școli și comunități</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Atelierul Pinkie poate completa programe educaționale și inițiative de wellbeing școlar printr-un format simplu, ușor de integrat într-o clasă sau într-o grupă.</p>
+                <p>În anumite contexte, atelierul poate fi organizat și ca parte din proiecte educaționale susținute împreună cu parteneri din comunitate, astfel încât cât mai mulți copii să aibă acces la experiențe care sprijină dezvoltarea socio-emoțională.</p>
+                <p>Lucrăm cu școli, cadre didactice și inițiative educaționale din comunitate pentru a aduce atelierele Pinkie acolo unde copiii au nevoie de un spațiu sigur de explorare emoțională.</p>
+                <p>Dacă dorești să organizăm atelierul pentru o clasă, o grupă sau un eveniment educațional, vă rugăm să ne contactați.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Contact</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Pentru programări, colaborări și detalii de organizare, cum ar fi grupa sau clasa, spațiul și disponibilitatea, vă rugăm să ne contactați.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Notă de protecție</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Conținutul și materialele atelierului sunt originale și aparțin autoarei. Reproducerea, adaptarea sau folosirea acestora fără acord scris nu este permisă.</p>
+              </div>
             </div>
           </article>
         </div>
@@ -1999,7 +2248,7 @@
       revealObserver.observe(item);
     });
 
-    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .checkout-card, .product-price-card');
+    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .checkout-card, .product-price-card, .atelier-intro-card, .atelier-accordion-card');
     tapItems.forEach((item) => {
       item.addEventListener('mousedown', () => { item.style.transform = 'scale(0.98)'; });
       item.addEventListener('mouseup', () => { item.style.transform = ''; });
@@ -2015,6 +2264,23 @@
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           book.classList.toggle("is-flipped");
+        }
+      });
+    });
+
+    document.querySelectorAll('.atelier-accordion-card').forEach((card) => {
+      const button = card.querySelector('.atelier-accordion-button');
+      const body = card.querySelector('.atelier-accordion-body');
+
+      button.addEventListener('click', () => {
+        const isOpen = card.classList.contains('open');
+
+        if (isOpen) {
+          card.classList.remove('open');
+          body.style.maxHeight = null;
+        } else {
+          card.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
         }
       });
     });
