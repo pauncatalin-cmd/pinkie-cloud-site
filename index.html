@@ -1272,14 +1272,51 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    footer {
-      padding: 28px 0 46px;
-      text-align: center;
+    .site-footer {
+      padding: 26px 0 34px;
+      background: rgba(23, 35, 78, 0.26);
+      border-top: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(8px);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
       color: #ff49ab;
       font-family: 'Baloo 2', cursive;
-      font-size: 1.4rem;
+      font-size: 1.28rem;
       font-weight: 700;
-      text-shadow: 0 8px 18px rgba(255,255,255,0.35);
+      text-shadow: 0 8px 18px rgba(255,255,255,0.20);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.86);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.86);
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .footer-links span {
+      color: rgba(255,255,255,0.32);
     }
 
     @keyframes twinkle {
@@ -1443,6 +1480,20 @@
 
       .cart-item-thumb {
         width: 100%;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-brand {
+        font-size: 1.12rem;
+      }
+
+      .footer-links {
+        font-size: 0.95rem;
+        gap: 10px;
       }
     }
 
@@ -1912,8 +1963,18 @@
     </section>
   </main>
 
-  <footer>
-    <div class="container">Pinkie Cloud, un univers colorat pentru dezvoltarea emoțională a copiilor.</div>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        Pinkie Cloud, un univers colorat pentru dezvoltarea emoțională a copiilor.
+      </div>
+
+      <div class="footer-links">
+        <a href="terms.html">Terms & Conditions</a>
+        <span>/</span>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </div>
   </footer>
 
   <script>
