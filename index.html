@@ -18,13 +18,11 @@
       --muted: #8f6d99;
       --white: #ffffff;
       --card: rgba(255,255,255,0.72);
-      --card-strong: rgba(255,255,255,0.84);
       --border: rgba(255,255,255,0.92);
       --shadow: 0 20px 44px rgba(186,95,181,0.18);
       --shadow-soft: 0 10px 24px rgba(255,116,200,0.18);
       --radius-xl: 34px;
       --radius-lg: 24px;
-      --radius-md: 18px;
       --max: 1220px;
     }
 
@@ -89,19 +87,19 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(190, 210, 240, 0.78);
+      z-index: 120;
+      background: rgba(190, 210, 240, 0.82);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255,255,255,0.4);
       box-shadow: 0 8px 20px rgba(185,95,180,0.06);
     }
 
     .nav {
-      min-height: 84px;
+      min-height: 88px;
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 18px;
+      gap: 20px;
       padding: 8px 0;
     }
 
@@ -113,38 +111,41 @@
     }
 
     .brand-badge {
-      width: 76px;
-      height: 76px;
+      width: 92px;
+      height: 92px;
       background-image: url('pinkie.png');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      box-shadow: 0 10px 20px rgba(255,255,255,0.16);
+      filter: drop-shadow(0 10px 18px rgba(255,255,255,0.28));
       animation: pinkieFloat 5s ease-in-out infinite;
       flex-shrink: 0;
     }
 
     .brand-text {
       font-family: 'Baloo 2', cursive;
-      font-size: clamp(1.9rem, 2.8vw, 2.7rem);
+      font-size: clamp(1.95rem, 2.8vw, 2.8rem);
       font-weight: 800;
       line-height: 0.92;
       color: #ff4db1;
       text-shadow:
-        0 3px 10px rgba(255, 255, 255, 0.28),
-        0 8px 20px rgba(255, 77, 177, 0.22);
+        0 3px 10px rgba(255,255,255,0.28),
+        0 8px 20px rgba(255,77,177,0.22);
       letter-spacing: 0.02em;
     }
 
-    .nav-right {
-      display: contents;
+    .nav-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 0;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 22px;
+      gap: 28px;
       flex-wrap: nowrap;
       min-width: 0;
     }
@@ -155,7 +156,7 @@
       justify-content: center;
       padding: 8px 6px;
       font-family: 'Baloo 2', cursive;
-      font-size: 1.06rem;
+      font-size: 1.22rem;
       font-weight: 800;
       line-height: 1;
       text-align: center;
@@ -165,9 +166,9 @@
     }
 
     .nav-links a:hover {
-      transform: scale(1.08);
+      transform: scale(1.09);
       color: #ff2e9a;
-      text-shadow: 0 6px 14px rgba(255, 77, 177, 0.18);
+      text-shadow: 0 6px 14px rgba(255,77,177,0.18);
     }
 
     .nav-links a:active {
@@ -177,7 +178,38 @@
     .nav-links a:focus-visible {
       outline: none;
       color: #ff2e9a;
-      text-shadow: 0 6px 14px rgba(255, 77, 177, 0.18);
+      text-shadow: 0 6px 14px rgba(255,77,177,0.18);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.84);
+      color: var(--pink-dark);
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-toggle span {
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      display: block;
     }
 
     .cart-button {
@@ -198,7 +230,6 @@
       box-shadow: 0 8px 16px rgba(240,79,168,0.14);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       white-space: nowrap;
-      justify-self: end;
       cursor: pointer;
     }
 
@@ -223,6 +254,50 @@
       font-size: 0.84rem;
       font-weight: 800;
       box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .mobile-menu {
+      display: none;
+      background: rgba(255,255,255,0.55);
+      border-top: 1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu-inner {
+      width: min(100% - 28px, var(--max));
+      margin: 0 auto;
+      padding: 14px 0 16px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .mobile-menu a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.86);
+      border: 2px solid rgba(255,255,255,0.95);
+      border-radius: 999px;
+      color: #ff4db1;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a:active {
+      transform: scale(0.98);
+      background: rgba(255,255,255,0.96);
     }
 
     .sparkles,
@@ -358,8 +433,8 @@
       display: inline-block;
       color: #ff4db1;
       text-shadow:
-        0 4px 14px rgba(255, 255, 255, 0.22),
-        0 8px 22px rgba(255, 77, 177, 0.18);
+        0 4px 14px rgba(255,255,255,0.22),
+        0 8px 22px rgba(255,77,177,0.18);
     }
 
     .hero-subtitle {
@@ -367,8 +442,8 @@
       margin-top: 4px;
       color: #8f5fff;
       text-shadow:
-        0 3px 12px rgba(255, 255, 255, 0.18),
-        0 8px 18px rgba(143, 95, 255, 0.16);
+        0 3px 12px rgba(255,255,255,0.18),
+        0 8px 18px rgba(143,95,255,0.16);
     }
 
     .lead {
@@ -640,8 +715,8 @@
       font-size: clamp(2.5rem, 4vw, 3.8rem);
       color: #ff4eb0;
       text-shadow:
-        0 4px 14px rgba(255, 255, 255, 0.2),
-        0 8px 18px rgba(255, 78, 176, 0.14);
+        0 4px 14px rgba(255,255,255,0.2),
+        0 8px 18px rgba(255,78,176,0.14);
       margin-bottom: 12px;
       line-height: 0.98;
     }
@@ -699,7 +774,7 @@
     }
 
     .book-3d:focus-visible {
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.75);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.75);
       border-radius: 22px;
     }
 
@@ -720,7 +795,7 @@
       inset: auto 8% -18px 8%;
       height: 26px;
       border-radius: 999px;
-      background: rgba(0, 0, 0, 0.18);
+      background: rgba(0,0,0,0.18);
       filter: blur(14px);
       transform: translateZ(-40px);
       pointer-events: none;
@@ -736,8 +811,8 @@
       background-repeat: no-repeat;
       background-size: 200% 100%;
       box-shadow:
-        0 28px 42px rgba(0, 0, 0, 0.22),
-        0 10px 16px rgba(0, 0, 0, 0.14);
+        0 28px 42px rgba(0,0,0,0.22),
+        0 10px 16px rgba(0,0,0,0.14);
     }
 
     .book-front {
@@ -765,7 +840,7 @@
         );
       transform: rotateY(90deg) translateZ(6px);
       transform-origin: right center;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.08);
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.08);
       pointer-events: none;
     }
 
@@ -780,7 +855,7 @@
       background: linear-gradient(to right, #b56ca7 0%, #f3d2e3 45%, #a65d98 100%);
       transform: rotateY(-90deg) translateZ(8px);
       transform-origin: left center;
-      box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.25);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.25);
     }
 
     .book-vol1 .book-front {
@@ -854,17 +929,9 @@
       margin-bottom: 14px;
     }
 
-    .product-cover.vol1 {
-      background-image: url("coperta-volum-1.png");
-    }
-
-    .product-cover.vol2 {
-      background-image: url("coperta-volum-2.png");
-    }
-
-    .product-cover.vol3 {
-      background-image: url("coperta-volum-3.png");
-    }
+    .product-cover.vol1 { background-image: url("coperta-volum-1.png"); }
+    .product-cover.vol2 { background-image: url("coperta-volum-2.png"); }
+    .product-cover.vol3 { background-image: url("coperta-volum-3.png"); }
 
     .product-cover.pachet {
       background:
@@ -901,7 +968,7 @@
       font-family: 'Baloo 2', cursive;
       font-size: 1.4rem;
       font-weight: 800;
-      box-shadow: 0 12px 22px rgba(255, 82, 177, 0.24);
+      box-shadow: 0 12px 22px rgba(255,82,177,0.24);
       margin-bottom: 14px;
     }
 
@@ -911,8 +978,14 @@
 
     .story-band {
       margin-top: 18px;
+      margin-bottom: 26px;
       padding: 30px 24px;
       text-align: center;
+    }
+
+    .book-detail-grid {
+      gap: 26px;
+      margin-top: 10px;
     }
 
     .two-col,
@@ -934,12 +1007,13 @@
 
     .checkout-mini-list {
       display: grid;
-      gap: 12px;
+      gap: 14px;
       margin-top: 16px;
     }
 
     .checkout-mini-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 74px 1fr auto;
       align-items: center;
       gap: 12px;
       padding: 12px;
@@ -961,10 +1035,16 @@
     .thumb-vol2 { background-image: url("coperta-volum-2.png"); }
     .thumb-vol3 { background-image: url("coperta-volum-3.png"); }
 
+    .checkout-mini-item .btn {
+      padding: 10px 16px;
+      font-size: 0.98rem;
+      min-width: 138px;
+    }
+
     .cart-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(71, 39, 79, 0.34);
+      background: rgba(71,39,79,0.34);
       opacity: 0;
       visibility: hidden;
       transition: 0.25s ease;
@@ -1122,7 +1202,7 @@
       color: #fff;
       font-size: 1.1rem;
       font-weight: 800;
-      box-shadow: 0 8px 16px rgba(255, 82, 177, 0.18);
+      box-shadow: 0 8px 16px rgba(255,82,177,0.18);
     }
 
     .qty-value {
@@ -1249,22 +1329,12 @@
         grid-template-columns: 1fr;
       }
 
-      .nav {
-        grid-template-columns: auto 1fr auto;
-        gap: 10px;
-        min-height: 76px;
-        padding: 8px 0;
-      }
-
       .nav-links {
-        gap: 14px;
-        flex-wrap: wrap;
-        justify-content: center;
+        gap: 16px;
       }
 
       .nav-links a {
-        font-size: 0.96rem;
-        padding: 8px 4px;
+        font-size: 1.02rem;
       }
 
       .cart-button {
@@ -1275,16 +1345,30 @@
       }
     }
 
-    @media (max-width: 780px) {
-      .brand-text {
-        font-size: 2rem;
+    @media (max-width: 860px) {
+      .nav {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .nav-center {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
       }
 
       .brand-badge {
-        width: 90px;
-        height: 90px;
+        width: 84px;
+        height: 84px;
       }
 
+      .brand-text {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 780px) {
       .hero {
         padding-top: 28px;
       }
@@ -1314,50 +1398,43 @@
       }
 
       .nav {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: 12px;
         min-height: auto;
-        padding: 14px 0 16px;
+        gap: 12px;
+        padding: 12px 0;
       }
 
       .brand {
-        justify-content: center;
-        gap: 12px;
-      }
-
-      .nav-right {
-        display: contents;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: center;
         gap: 10px;
-        flex-wrap: wrap;
       }
 
-      .nav-links a {
-        min-width: 108px;
-        padding: 12px 16px;
-        background: rgba(255,255,255,0.78);
-        border: 2px solid rgba(255,255,255,0.92);
-        border-radius: 999px;
-        box-shadow: 0 8px 16px rgba(185,95,180,0.12);
-        font-size: 1rem;
+      .brand-badge {
+        width: 76px;
+        height: 76px;
       }
 
-      .nav-links a:hover {
-        transform: translateY(-2px) scale(1.02);
-        background: rgba(255,255,255,0.92);
+      .brand-text {
+        font-size: 1.95rem;
       }
 
       .cart-button {
-        justify-self: center;
-        min-width: 128px;
-        height: 46px;
+        min-width: 122px;
+        height: 44px;
         font-size: 0.94rem;
-        padding: 0 16px;
+        padding: 0 14px;
+      }
+
+      .mobile-menu-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .checkout-mini-item {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .checkout-mini-item .btn {
+        width: 100%;
+        min-width: 0;
       }
 
       .cart-item {
@@ -1365,6 +1442,55 @@
       }
 
       .cart-item-thumb {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 20px, var(--max));
+      }
+
+      .nav {
+        grid-template-columns: 1fr auto auto;
+        gap: 10px;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .brand-badge {
+        width: 64px;
+        height: 64px;
+      }
+
+      .brand-text {
+        font-size: 1.72rem;
+      }
+
+      .menu-toggle {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+      }
+
+      .cart-button {
+        min-width: 102px;
+        height: 42px;
+        font-size: 0.88rem;
+        padding: 0 12px;
+      }
+
+      .mobile-menu-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
         width: 100%;
       }
     }
@@ -1417,7 +1543,7 @@
         <span class="brand-text">Pinkie<br>Cloud</span>
       </a>
 
-      <div class="nav-right">
+      <div class="nav-center">
         <nav class="nav-links">
           <a href="#carti">Cărți</a>
           <a href="#volume">Volume</a>
@@ -1426,12 +1552,29 @@
           <a href="#autor">Autor</a>
           <a href="#checkout">Comandă</a>
         </nav>
+      </div>
+
+      <div class="nav-actions">
+        <button class="menu-toggle" id="menuToggle" aria-label="Deschide meniul" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
 
         <button class="cart-button" id="cartOpen" aria-label="Deschide coșul">
           <span class="cart-icon">🛒</span>
           <span>Coș</span>
           <span class="cart-count" id="cartCount">0</span>
         </button>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <a href="#carti">Cărți</a>
+        <a href="#volume">Volume</a>
+        <a href="#produse">Produse</a>
+        <a href="#ateliere">Ateliere</a>
+        <a href="#autor">Autor</a>
+        <a href="#checkout">Comandă</a>
       </div>
     </div>
   </header>
@@ -1613,7 +1756,7 @@
             <div class="product-cover pachet"></div>
             <h4>Pachet complet</h4>
             <p class="product-price-subtitle">Toate cele 3 volume Pinkie Cloud</p>
-            <div class="product-price-value">133 lei</div>
+            <div class="product-price-value">130 lei</div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
           </article>
         </div>
@@ -1714,6 +1857,7 @@
                   <strong>Volumul I</strong>
                   <p>50 lei</p>
                 </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
               </div>
 
               <div class="checkout-mini-item">
@@ -1722,6 +1866,7 @@
                   <strong>Volumul II</strong>
                   <p>50 lei</p>
                 </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
               </div>
 
               <div class="checkout-mini-item">
@@ -1730,6 +1875,16 @@
                   <strong>Volumul III</strong>
                   <p>50 lei</p>
                 </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
+              </div>
+
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol1"></div>
+                <div>
+                  <strong>Pachet complet</strong>
+                  <p>130 lei</p>
+                </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
               </div>
             </div>
           </article>
@@ -1766,7 +1921,7 @@
       vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 50, thumbClass: 'vol1' },
       vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 50, thumbClass: 'vol2' },
       vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 50, thumbClass: 'vol3' },
-      pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 133, thumbClass: 'pachet' }
+      pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 130, thumbClass: 'pachet' }
     };
 
     const WHATSAPP_NUMBER = '40784571533';
@@ -1815,6 +1970,8 @@
     const checkoutButton = document.getElementById('checkoutButton');
     const clearCartButton = document.getElementById('clearCartButton');
     const notice = document.getElementById('notice');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
 
     let cart = {};
 
@@ -1839,6 +1996,16 @@
       cartOverlay.classList.remove('show');
       cartDrawer.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+    }
+
+    function toggleMobileMenu() {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
     }
 
     function getCartItemsArray() {
@@ -1971,8 +2138,17 @@
     cartClose.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
+    menuToggle.addEventListener('click', toggleMobileMenu);
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeCart();
+      if (e.key === 'Escape') {
+        closeCart();
+        closeMobileMenu();
+      }
     });
 
     cartItemsEl.addEventListener('click', (e) => {
