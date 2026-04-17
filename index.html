@@ -1562,6 +1562,522 @@
       50% { transform: translateY(-10px) rotate(-1deg); }
     }
 
+    /* =========================
+   PINKIE SKY GAME
+========================= */
+.game-launch-wrap {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.game-launch-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff63b8, #ff8fd0);
+  box-shadow: 0 12px 28px rgba(255, 99, 184, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.game-launch-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 16px 34px rgba(255, 99, 184, 0.34);
+  filter: brightness(1.03);
+}
+
+.game-launch-btn:active {
+  transform: scale(0.97);
+}
+
+.game-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(13, 20, 46, 0.62);
+  backdrop-filter: blur(8px);
+}
+
+.game-modal.open {
+  display: flex;
+}
+
+.game-shell {
+  width: min(980px, 100%);
+  max-height: 92vh;
+  overflow: hidden;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,247,255,0.95));
+  box-shadow: 0 30px 80px rgba(9, 18, 52, 0.35);
+  border: 1px solid rgba(255,255,255,0.6);
+  position: relative;
+}
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.72);
+  border-bottom: 1px solid rgba(20, 34, 77, 0.08);
+}
+
+.game-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.game-title {
+  margin: 0;
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: #ff4da9;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.game-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #4e5a83;
+  font-weight: 600;
+}
+
+.game-close {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #32406e;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 8px 20px rgba(26, 42, 86, 0.12);
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+
+.game-close:hover {
+  transform: scale(1.06);
+  background: #ffffff;
+}
+
+.game-panel {
+  padding: 18px 20px 22px;
+}
+
+.game-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.game-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.86);
+  box-shadow: 0 10px 24px rgba(31, 44, 92, 0.08);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2f3b66;
+}
+
+.game-pill strong {
+  color: #ff4da9;
+}
+
+.game-stage {
+  position: relative;
+  width: 100%;
+  height: min(62vh, 540px);
+  min-height: 420px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #87d7ff 0%, #bceeff 40%, #f8fdff 100%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+  transition: background 0.5s ease, filter 0.5s ease;
+}
+
+.game-stage.dark-sky {
+  background: linear-gradient(180deg, #1a2448 0%, #2a3566 40%, #3b4b7e 100%);
+}
+
+.game-sun {
+  position: absolute;
+  top: 26px;
+  right: 34px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffbe9, #ffd45c 55%, #ffb347 100%);
+  box-shadow: 0 0 35px rgba(255, 212, 92, 0.45);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.game-stage.dark-sky .game-sun {
+  opacity: 0.18;
+  transform: scale(0.85);
+}
+
+.game-lightning {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(120deg, transparent 44%, rgba(255,255,255,0.95) 48%, transparent 52%),
+    linear-gradient(60deg, transparent 46%, rgba(255,255,255,0.75) 50%, transparent 54%);
+  transition: opacity 0.14s ease;
+}
+
+.game-lightning.flash {
+  opacity: 0.65;
+}
+
+.game-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 80px;
+  background: linear-gradient(180deg, rgba(152, 228, 132, 0.95), rgba(102, 201, 117, 0.98));
+}
+
+.game-cloud {
+  position: absolute;
+  width: 92px;
+  height: 58px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transform-origin: center;
+  transition: transform 0.08s ease;
+}
+
+.game-cloud:hover {
+  transform: scale(1.05);
+}
+
+.game-cloud .cloud-main {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 30px;
+  border-radius: 999px;
+}
+
+.game-cloud .cloud-b1,
+.game-cloud .cloud-b2,
+.game-cloud .cloud-b3 {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.game-cloud .cloud-b1 {
+  width: 28px;
+  height: 28px;
+  left: 10px;
+  top: 16px;
+}
+
+.game-cloud .cloud-b2 {
+  width: 38px;
+  height: 38px;
+  left: 28px;
+  top: 4px;
+}
+
+.game-cloud .cloud-b3 {
+  width: 30px;
+  height: 30px;
+  right: 12px;
+  top: 14px;
+}
+
+.game-cloud.good .cloud-main,
+.game-cloud.good .cloud-b1,
+.game-cloud.good .cloud-b2,
+.game-cloud.good .cloud-b3 {
+  background: linear-gradient(180deg, #ffc3e8, #ff83c6);
+  box-shadow: 0 6px 16px rgba(255, 131, 198, 0.28);
+}
+
+.game-cloud.bad .cloud-main,
+.game-cloud.bad .cloud-b1,
+.game-cloud.bad .cloud-b2,
+.game-cloud.bad .cloud-b3 {
+  background: linear-gradient(180deg, #ff9b9b, #ff5252);
+  box-shadow: 0 6px 16px rgba(255, 82, 82, 0.22);
+}
+
+.game-cloud.special .cloud-main,
+.game-cloud.special .cloud-b1,
+.game-cloud.special .cloud-b2,
+.game-cloud.special .cloud-b3 {
+  background: linear-gradient(180deg, #fff0ae, #ffd45f);
+  box-shadow: 0 6px 16px rgba(255, 212, 95, 0.24);
+}
+
+.game-cloud-label {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  pointer-events: none;
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(3px);
+  z-index: 3;
+}
+
+.game-card {
+  width: min(560px, 100%);
+  border-radius: 24px;
+  padding: 24px 22px;
+  text-align: center;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 18px 40px rgba(18, 32, 70, 0.16);
+}
+
+.game-card h3 {
+  margin: 0 0 10px;
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: #ff4da9;
+  text-shadow: none;
+}
+
+.game-card p {
+  margin: 0 0 16px;
+  color: #4f5a7d;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.game-card .game-mini {
+  display: block;
+  margin-top: 8px;
+  color: #6b7698;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.game-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.game-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff63b8, #ff8fd0);
+  box-shadow: 0 12px 26px rgba(255, 99, 184, 0.24);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.game-btn:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 16px 30px rgba(255, 99, 184, 0.28);
+}
+
+.game-btn.secondary {
+  background: linear-gradient(135deg, #7a8bff, #9bb2ff);
+  box-shadow: 0 12px 26px rgba(122, 139, 255, 0.22);
+}
+
+.game-float-score {
+  position: absolute;
+  font-weight: 800;
+  font-size: 1.1rem;
+  pointer-events: none;
+  animation: floatScore 0.7s ease forwards;
+  z-index: 4;
+}
+
+.game-float-score.plus {
+  color: #ff4da9;
+}
+
+.game-float-score.minus {
+  color: #ff5252;
+}
+
+@keyframes floatScore {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) scale(1.05);
+  }
+}
+
+/* responsive */
+@media (max-width: 780px) {
+  .game-launch-wrap {
+    margin-top: 18px;
+  }
+
+  .game-launch-btn {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 14px 20px;
+  }
+
+  .game-modal {
+    padding: 10px;
+  }
+
+  .game-shell {
+    border-radius: 22px;
+    max-height: 95vh;
+  }
+
+  .game-topbar {
+    padding: 14px 14px;
+  }
+
+  .game-title {
+    font-size: 1.55rem;
+  }
+
+  .game-subtitle {
+    font-size: 0.86rem;
+  }
+
+  .game-close {
+    width: 42px;
+    height: 42px;
+  }
+
+  .game-panel {
+    padding: 12px 12px 14px;
+  }
+
+  .game-stats {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .game-pill {
+    padding: 8px 12px;
+    font-size: 0.86rem;
+  }
+
+  .game-stage {
+    height: 58vh;
+    min-height: 360px;
+    border-radius: 18px;
+  }
+
+  .game-sun {
+    width: 62px;
+    height: 62px;
+    top: 18px;
+    right: 18px;
+  }
+
+  .game-ground {
+    height: 64px;
+  }
+
+  .game-card {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .game-card h3 {
+    font-size: 1.55rem;
+  }
+
+  .game-card p {
+    font-size: 0.94rem;
+  }
+
+  .game-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .game-cloud {
+    width: 78px;
+    height: 50px;
+  }
+
+  .game-cloud .cloud-main {
+    height: 26px;
+  }
+
+  .game-cloud .cloud-b1 {
+    width: 24px;
+    height: 24px;
+    left: 9px;
+    top: 14px;
+  }
+
+  .game-cloud .cloud-b2 {
+    width: 32px;
+    height: 32px;
+    left: 24px;
+    top: 5px;
+  }
+
+  .game-cloud .cloud-b3 {
+    width: 24px;
+    height: 24px;
+    right: 10px;
+    top: 15px;
+  }
+
+  .game-cloud-label {
+    font-size: 0.8rem;
+  }
+}
+
     @media (max-width: 1080px) {
       .hero-grid,
       .feature-grid,
@@ -2380,6 +2896,81 @@
     </section>
   </main>
 
+<!-- =========================
+     PINKIE SKY GAME BUTTON
+========================= -->
+<div class="game-launch-wrap">
+  <button class="game-launch-btn" id="openPinkieGame">
+    ☁️ Joacă Pinkie Sky Game
+  </button>
+</div>
+
+<!-- =========================
+     PINKIE SKY GAME MODAL
+========================= -->
+<div class="game-modal" id="pinkieGameModal" aria-hidden="true">
+  <div class="game-shell">
+    <div class="game-topbar">
+      <div class="game-title-wrap">
+        <h2 class="game-title">Pinkie Sky Game</h2>
+        <p class="game-subtitle">Prinde norii roz, evită norii roșii și adu soarele înapoi ☀️</p>
+      </div>
+
+      <button class="game-close" id="closePinkieGame" aria-label="Închide jocul">×</button>
+    </div>
+
+    <div class="game-panel">
+      <div class="game-stats">
+        <div class="game-pill">Scor: <strong id="gameScore">0</strong></div>
+        <div class="game-pill">Timp: <strong id="gameTimer">30</strong>s</div>
+        <div class="game-pill">Record: <strong id="gameBest">0</strong></div>
+      </div>
+
+      <div class="game-stage" id="gameStage">
+        <div class="game-sun"></div>
+        <div class="game-lightning" id="gameLightning"></div>
+        <div class="game-ground"></div>
+
+        <!-- START SCREEN -->
+        <div class="game-overlay" id="gameStartOverlay">
+          <div class="game-card">
+            <h3>Bine ai venit în cerul lui Pinkie</h3>
+            <p>
+              Apasă pe norii roz ca să aduni puncte.
+              <br>
+              Evită norii roșii, aceștia îți scad scorul.
+              <br>
+              Dacă aduni multe puncte, cerul devine senin și vesel.
+              <br>
+              Dacă pierzi puncte, apar furtuna și fulgerele.
+            </p>
+            <span class="game-mini">Joc scurt, distractiv și perfect pentru copii 💖</span>
+
+            <div class="game-actions">
+              <button class="game-btn" id="startPinkieGame">START</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GAME OVER SCREEN -->
+        <div class="game-overlay" id="gameOverOverlay" style="display:none;">
+          <div class="game-card">
+            <h3>Bravo! Jocul s-a terminat ✨</h3>
+            <p id="gameOverMessage">
+              Pinkie este mândră de tine!
+            </p>
+
+            <div class="game-actions">
+              <button class="game-btn" id="restartPinkieGame">Joacă din nou</button>
+              <button class="game-btn secondary" id="closePinkieGameEnd">Închide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
@@ -2680,6 +3271,373 @@
     checkoutButton.addEventListener('click', checkoutWhatsApp);
 
     renderCart();
+(function () {
+  const openBtn = document.getElementById('openPinkieGame');
+  const modal = document.getElementById('pinkieGameModal');
+  const closeBtn = document.getElementById('closePinkieGame');
+  const closeBtnEnd = document.getElementById('closePinkieGameEnd');
+
+  const startBtn = document.getElementById('startPinkieGame');
+  const restartBtn = document.getElementById('restartPinkieGame');
+
+  const startOverlay = document.getElementById('gameStartOverlay');
+  const gameOverOverlay = document.getElementById('gameOverOverlay');
+  const gameOverMessage = document.getElementById('gameOverMessage');
+
+  const stage = document.getElementById('gameStage');
+  const lightning = document.getElementById('gameLightning');
+
+  const scoreEl = document.getElementById('gameScore');
+  const timerEl = document.getElementById('gameTimer');
+  const bestEl = document.getElementById('gameBest');
+
+  if (
+    !openBtn ||
+    !modal ||
+    !closeBtn ||
+    !startBtn ||
+    !restartBtn ||
+    !startOverlay ||
+    !gameOverOverlay ||
+    !gameOverMessage ||
+    !stage ||
+    !lightning ||
+    !scoreEl ||
+    !timerEl ||
+    !bestEl
+  ) {
+    return;
+  }
+
+  let score = 0;
+  let timeLeft = 30;
+  let bestScore = Number(localStorage.getItem('pinkieSkyBestScore') || 0);
+  let gameRunning = false;
+
+  let gameLoop = null;
+  let timerLoop = null;
+  let lightningLoop = null;
+
+  const activeClouds = new Set();
+
+  bestEl.textContent = bestScore;
+
+  function openGameModal() {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGameModal() {
+    stopGame();
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    startOverlay.style.display = 'flex';
+    gameOverOverlay.style.display = 'none';
+  }
+
+  function resetGameState() {
+    score = 0;
+    timeLeft = 30;
+    gameRunning = false;
+
+    scoreEl.textContent = score;
+    timerEl.textContent = timeLeft;
+
+    clearAllClouds();
+    clearAllLoops();
+
+    stage.classList.remove('dark-sky');
+    lightning.classList.remove('flash');
+
+    startOverlay.style.display = 'flex';
+    gameOverOverlay.style.display = 'none';
+  }
+
+  function startGame() {
+    resetGameState();
+    gameRunning = true;
+    startOverlay.style.display = 'none';
+    gameOverOverlay.style.display = 'none';
+
+    updateSky();
+
+    timerLoop = setInterval(() => {
+      timeLeft -= 1;
+      timerEl.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        finishGame();
+      }
+    }, 1000);
+
+    gameLoop = setInterval(() => {
+      if (!gameRunning) return;
+
+      if (activeClouds.size < getMaxClouds()) {
+        spawnCloud();
+      }
+    }, 700);
+
+    lightningLoop = setInterval(() => {
+      if (!gameRunning) return;
+
+      if (score < 0) {
+        lightning.classList.add('flash');
+        setTimeout(() => {
+          lightning.classList.remove('flash');
+        }, 180);
+      }
+    }, 1400);
+  }
+
+  function stopGame() {
+    gameRunning = false;
+    clearAllLoops();
+    clearAllClouds();
+    stage.classList.remove('dark-sky');
+    lightning.classList.remove('flash');
+  }
+
+  function finishGame() {
+    gameRunning = false;
+    clearAllLoops();
+    clearAllClouds();
+
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem('pinkieSkyBestScore', String(bestScore));
+      bestEl.textContent = bestScore;
+    }
+
+    let finalMessage = '';
+
+    if (score >= 15) {
+      finalMessage = `Ai terminat cu ${score} puncte. Ai adus soarele înapoi pe cerul lui Pinkie ☀️`;
+    } else if (score >= 5) {
+      finalMessage = `Ai terminat cu ${score} puncte. Pinkie este fericită și vrea să mai jucați o dată 💖`;
+    } else if (score >= 0) {
+      finalMessage = `Ai terminat cu ${score} puncte. A fost bine, dar data viitoare poți prinde și mai mulți nori roz ✨`;
+    } else {
+      finalMessage = `Ai terminat cu ${score} puncte. Cerul s-a întristat puțin, dar Pinkie știe că poți reveni 🌧️`;
+    }
+
+    gameOverMessage.textContent = finalMessage;
+    gameOverOverlay.style.display = 'flex';
+  }
+
+  function clearAllLoops() {
+    if (gameLoop) {
+      clearInterval(gameLoop);
+      gameLoop = null;
+    }
+
+    if (timerLoop) {
+      clearInterval(timerLoop);
+      timerLoop = null;
+    }
+
+    if (lightningLoop) {
+      clearInterval(lightningLoop);
+      lightningLoop = null;
+    }
+  }
+
+  function clearAllClouds() {
+    activeClouds.forEach((cloud) => {
+      if (cloud && cloud.parentNode) {
+        cloud.parentNode.removeChild(cloud);
+      }
+    });
+    activeClouds.clear();
+  }
+
+  function getMaxClouds() {
+    if (window.innerWidth <= 520) return 4;
+    if (window.innerWidth <= 780) return 5;
+    return 6;
+  }
+
+  function randomBetween(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function updateSky() {
+    if (score < 0) {
+      stage.classList.add('dark-sky');
+    } else {
+      stage.classList.remove('dark-sky');
+    }
+  }
+
+  function createCloudElement(type) {
+    const cloud = document.createElement('button');
+    cloud.type = 'button';
+    cloud.className = `game-cloud ${type}`;
+
+    const main = document.createElement('div');
+    main.className = 'cloud-main';
+
+    const b1 = document.createElement('div');
+    b1.className = 'cloud-b1';
+
+    const b2 = document.createElement('div');
+    b2.className = 'cloud-b2';
+
+    const b3 = document.createElement('div');
+    b3.className = 'cloud-b3';
+
+    const label = document.createElement('div');
+    label.className = 'game-cloud-label';
+    label.textContent = type === 'good' ? '+1' : '-2';
+
+    cloud.appendChild(main);
+    cloud.appendChild(b1);
+    cloud.appendChild(b2);
+    cloud.appendChild(b3);
+    cloud.appendChild(label);
+
+    return cloud;
+  }
+
+  function spawnCloud() {
+    const type = Math.random() < 0.72 ? 'good' : 'bad';
+    const cloud = createCloudElement(type);
+
+    const stageRect = stage.getBoundingClientRect();
+    const stageHeight = stage.clientHeight;
+    const cloudWidth = window.innerWidth <= 780 ? 78 : 92;
+    const startX = -cloudWidth - 20;
+    const minY = 55;
+    const maxY = Math.max(70, stageHeight - 150);
+    const y = randomBetween(minY, maxY);
+
+    let x = startX;
+    const speed = window.innerWidth <= 780 ? randomBetween(1.8, 2.8) : randomBetween(2.3, 3.5);
+
+    cloud.style.left = `${x}px`;
+    cloud.style.top = `${y}px`;
+
+    stage.appendChild(cloud);
+    activeClouds.add(cloud);
+
+    let clicked = false;
+
+    function removeCloud() {
+      if (cloud._animFrame) {
+        cancelAnimationFrame(cloud._animFrame);
+      }
+      activeClouds.delete(cloud);
+      if (cloud.parentNode) {
+        cloud.parentNode.removeChild(cloud);
+      }
+    }
+
+    cloud.addEventListener('click', (event) => {
+      if (!gameRunning || clicked) return;
+      clicked = true;
+
+      const rect = cloud.getBoundingClientRect();
+      const popX = rect.left - stageRect.left + rect.width / 2;
+      const popY = rect.top - stageRect.top + rect.height / 2;
+
+      if (type === 'good') {
+        score += 1;
+        showFloatingScore('+1', popX, popY, 'plus');
+      } else {
+        score -= 2;
+        showFloatingScore('-2', popX, popY, 'minus');
+      }
+
+      scoreEl.textContent = score;
+      updateSky();
+      removeCloud();
+    });
+
+    function animate() {
+      if (!gameRunning) {
+        removeCloud();
+        return;
+      }
+
+      x += speed;
+      cloud.style.left = `${x}px`;
+
+      if (x > stage.clientWidth + 40) {
+        removeCloud();
+        return;
+      }
+
+      cloud._animFrame = requestAnimationFrame(animate);
+    }
+
+    cloud._animFrame = requestAnimationFrame(animate);
+  }
+
+  function showFloatingScore(text, x, y, type) {
+    const el = document.createElement('div');
+    el.className = `game-float-score ${type}`;
+    el.textContent = text;
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+
+    stage.appendChild(el);
+
+    setTimeout(() => {
+      if (el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+    }, 700);
+  }
+
+  openBtn.addEventListener('click', () => {
+    openGameModal();
+    resetGameState();
+  });
+
+  closeBtn.addEventListener('click', closeGameModal);
+
+  if (closeBtnEnd) {
+    closeBtnEnd.addEventListener('click', closeGameModal);
+  }
+
+  startBtn.addEventListener('click', startGame);
+  restartBtn.addEventListener('click', startGame);
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeGameModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('open')) {
+      closeGameModal();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (!gameRunning) return;
+
+    const tooMany = activeClouds.size - getMaxClouds();
+    if (tooMany > 0) {
+      let count = 0;
+      activeClouds.forEach((cloud) => {
+        if (count < tooMany) {
+          if (cloud && cloud.parentNode) {
+            if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
+            cloud.parentNode.removeChild(cloud);
+          }
+          activeClouds.delete(cloud);
+          count += 1;
+        }
+      });
+    }
+  });
+
+  resetGameState();
+})();    
   </script>
 </body>
 </html>
