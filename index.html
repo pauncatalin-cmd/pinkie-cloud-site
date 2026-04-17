@@ -1594,9 +1594,6 @@
       50% { transform: translateY(-10px) rotate(-1deg); }
     }
 
-    /* =========================
-       PINKIE SKY GAME
-    ========================= */
     .game-modal {
       position: fixed;
       inset: 0;
@@ -1770,6 +1767,8 @@
       touch-action: manipulation;
       transform-origin: center;
       transition: transform 0.08s ease;
+      border: 0;
+      background: transparent;
     }
 
     .game-cloud:hover {
@@ -2728,8 +2727,7 @@
         </div>
       </div>
     </section>
-
-    <section class="section reveal" id="autor">
+        <section class="section reveal" id="autor">
       <div class="container">
         <div class="section-header">
           <h2>Despre autor</h2>
@@ -2893,7 +2891,7 @@
       <div class="game-topbar">
         <div class="game-title-wrap">
           <h2 class="game-title">Pinkie Sky Game</h2>
-          <p class="game-subtitle">Prinde norii roz, evită norii roșii și adu soarele înapoi ☀️</p>
+          <p class="game-subtitle">Prinde norii roz, evită norii roșii și treci prin niveluri ☀️</p>
         </div>
 
         <button class="game-close" id="closePinkieGame" aria-label="Închide jocul">×</button>
@@ -2902,7 +2900,9 @@
       <div class="game-panel">
         <div class="game-stats">
           <div class="game-pill">Scor: <strong id="gameScore">0</strong></div>
-          <div class="game-pill">Timp: <strong id="gameTimer">30</strong>s</div>
+          <div class="game-pill">Timp: <strong id="gameTimer">45</strong>s</div>
+          <div class="game-pill">Nivel: <strong id="gameLevel">1</strong></div>
+          <div class="game-pill">Vieți: <strong id="gameLives">3</strong></div>
           <div class="game-pill">Record: <strong id="gameBest">0</strong></div>
         </div>
 
@@ -2917,17 +2917,15 @@
               <p>
                 Apasă pe norii roz ca să aduni puncte.
                 <br>
-                Evită norii roșii, aceștia îți scad scorul.
+                Evită norii roșii, aceștia îți scad scorul și viețile.
                 <br>
-                Dacă aduni multe puncte, cerul devine senin și vesel.
+                Jocul urcă pe niveluri și devine mai rapid.
                 <br>
-                Dacă pierzi puncte, apar furtuna și fulgerele.
-                <br>
-               Norii aurii aduc bonus mare.
+                Norii aurii aduc bonus mare.
                 <br>
                 Curcubeul încetinește jocul, inimioara îți dă scut, iar steluța oferă puncte duble.
-             </p>
-              <span class="game-mini">Joc scurt, distractiv și perfect pentru copii 💖</span>
+              </p>
+              <span class="game-mini">Acum jocul durează mai mult și este pe nivele 💖</span>
 
               <div class="game-actions">
                 <button class="game-btn" id="startPinkieGame">START</button>
@@ -3120,7 +3118,6 @@
 
       cart[productId].quantity += 1;
       renderCart();
-      Cart();
       showNotice('Produs adăugat în coș');
     }
 
@@ -3256,687 +3253,723 @@
     renderCart();
 
     (function () {
-  const openBtnDesktop = document.getElementById('openPinkieGameDesktop');
-  const openBtnMobile = document.getElementById('openPinkieGameMobile');
-  const modal = document.getElementById('pinkieGameModal');
-  const closeBtn = document.getElementById('closePinkieGame');
-  const closeBtnEnd = document.getElementById('closePinkieGameEnd');
+      const openBtnDesktop = document.getElementById('openPinkieGameDesktop');
+      const openBtnMobile = document.getElementById('openPinkieGameMobile');
+      const modal = document.getElementById('pinkieGameModal');
+      const closeBtn = document.getElementById('closePinkieGame');
+      const closeBtnEnd = document.getElementById('closePinkieGameEnd');
 
-  const startBtn = document.getElementById('startPinkieGame');
-  const restartBtn = document.getElementById('restartPinkieGame');
+      const startBtn = document.getElementById('startPinkieGame');
+      const restartBtn = document.getElementById('restartPinkieGame');
 
-  const startOverlay = document.getElementById('gameStartOverlay');
-  const gameOverOverlay = document.getElementById('gameOverOverlay');
-  const gameOverMessage = document.getElementById('gameOverMessage');
+      const startOverlay = document.getElementById('gameStartOverlay');
+      const gameOverOverlay = document.getElementById('gameOverOverlay');
+      const gameOverMessage = document.getElementById('gameOverMessage');
 
-  const stage = document.getElementById('gameStage');
-  const lightning = document.getElementById('gameLightning');
+      const stage = document.getElementById('gameStage');
+      const lightning = document.getElementById('gameLightning');
 
-  const scoreEl = document.getElementById('gameScore');
-  const timerEl = document.getElementById('gameTimer');
-  const bestEl = document.getElementById('gameBest');
+      const scoreEl = document.getElementById('gameScore');
+      const timerEl = document.getElementById('gameTimer');
+      const bestEl = document.getElementById('gameBest');
+      const levelEl = document.getElementById('gameLevel');
+      const livesEl = document.getElementById('gameLives');
 
-  if (
-    (!openBtnDesktop && !openBtnMobile) ||
-    !modal ||
-    !closeBtn ||
-    !startBtn ||
-    !restartBtn ||
-    !startOverlay ||
-    !gameOverOverlay ||
-    !gameOverMessage ||
-    !stage ||
-    !lightning ||
-    !scoreEl ||
-    !timerEl ||
-    !bestEl
-  ) {
-    return;
-  }
-
-  let score = 0;
-  let timeLeft = 30;
-  let bestScore = Number(localStorage.getItem('pinkieSkyBestScore') || 0);
-  let gameRunning = false;
-
-  let gameLoop = null;
-  let timerLoop = null;
-  let lightningLoop = null;
-
-  let combo = 0;
-  let comboBonusReady = false;
-  let shieldActive = false;
-  let doublePointsUntil = 0;
-  let slowMotionUntil = 0;
-
-  const activeClouds = new Set();
-
-  bestEl.textContent = bestScore;
-
-  injectGameEnhancements();
-
-  const comboPill = document.getElementById('gameCombo');
-  const badgePill = document.getElementById('gameBadge');
-
-  function injectGameEnhancements() {
-    if (!document.getElementById('pinkieGameEnhancements')) {
-      const style = document.createElement('style');
-      style.id = 'pinkieGameEnhancements';
-      style.textContent = `
-        .game-stage.sunset-sky {
-          background: linear-gradient(180deg, #ffb6d9 0%, #ffd7ef 35%, #fff3c9 100%);
-        }
-        .game-stage.rainbow-sky {
-          background:
-            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.45), transparent 18%),
-            linear-gradient(180deg, #ffb4dc 0%, #ffd7f0 22%, #fff0be 45%, #d9ffd2 70%, #cde6ff 100%);
-        }
-        .game-stage.stage-shake {
-          animation: pinkieStageShake 0.24s ease;
-        }
-        .game-stage.slow-mode {
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 0 24px rgba(122,139,255,0.22);
-        }
-        .game-stage.double-mode {
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 0 26px rgba(255,212,95,0.28);
-        }
-        .game-combo-text {
-          position: absolute;
-          left: 50%;
-          top: 24px;
-          transform: translateX(-50%);
-          z-index: 5;
-          pointer-events: none;
-          padding: 10px 18px;
-          border-radius: 999px;
-          background: rgba(255,255,255,0.92);
-          color: #ff4da9;
-          font-family: 'Baloo 2', cursive;
-          font-size: 1.2rem;
-          font-weight: 800;
-          box-shadow: 0 10px 24px rgba(31,44,92,0.12);
-          opacity: 0;
-          animation: pinkieComboPop 0.9s ease forwards;
-        }
-        .game-particle {
-          position: absolute;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          pointer-events: none;
-          z-index: 4;
-          animation: pinkieParticleFly 0.7s ease forwards;
-        }
-        .game-end-badge {
-          margin-top: 12px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 10px 16px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #ff73c3, #ffd45f);
-          color: #ffffff;
-          font-family: 'Baloo 2', cursive;
-          font-size: 1rem;
-          font-weight: 800;
-          box-shadow: 0 10px 22px rgba(255,99,184,0.22);
-        }
-        @keyframes pinkieStageShake {
-          0% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          50% { transform: translateX(5px); }
-          75% { transform: translateX(-3px); }
-          100% { transform: translateX(0); }
-        }
-        @keyframes pinkieComboPop {
-          0% { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.88); }
-          20% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-          80% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-          100% { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(1.06); }
-        }
-        @keyframes pinkieParticleFly {
-          0% { opacity: 1; transform: translate(0,0) scale(1); }
-          100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    if (!document.getElementById('gameCombo')) {
-      const comboItem = document.createElement('div');
-      comboItem.className = 'game-pill';
-      comboItem.innerHTML = 'Combo: <strong id="gameCombo">0</strong>';
-      document.querySelector('.game-stats').appendChild(comboItem);
-    }
-
-    if (!document.getElementById('gameBadge')) {
-      const badgeItem = document.createElement('div');
-      badgeItem.className = 'game-pill';
-      badgeItem.innerHTML = 'Putere: <strong id="gameBadge">Normal</strong>';
-      document.querySelector('.game-stats').appendChild(badgeItem);
-    }
-  }
-
-  function openGameModal() {
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeGameModal() {
-    stopGame();
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    startOverlay.style.display = 'flex';
-    gameOverOverlay.style.display = 'none';
-  }
-
-  function resetGameState() {
-    score = 0;
-    timeLeft = 30;
-    combo = 0;
-    comboBonusReady = false;
-    shieldActive = false;
-    doublePointsUntil = 0;
-    slowMotionUntil = 0;
-    gameRunning = false;
-
-    scoreEl.textContent = score;
-    timerEl.textContent = timeLeft;
-    comboPill.textContent = combo;
-    badgePill.textContent = 'Normal';
-
-    clearAllClouds();
-    clearAllLoops();
-
-    stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky', 'slow-mode', 'double-mode', 'stage-shake');
-    lightning.classList.remove('flash');
-
-    startOverlay.style.display = 'flex';
-    gameOverOverlay.style.display = 'none';
-  }
-
-  function startGame() {
-    resetGameState();
-    gameRunning = true;
-    startOverlay.style.display = 'none';
-    gameOverOverlay.style.display = 'none';
-
-    updateSky();
-    updateModes();
-
-    timerLoop = setInterval(() => {
-      timeLeft -= 1;
-      timerEl.textContent = timeLeft;
-      updateModes();
-
-      if (timeLeft <= 0) {
-        finishGame();
+      if (
+        (!openBtnDesktop && !openBtnMobile) ||
+        !modal ||
+        !closeBtn ||
+        !startBtn ||
+        !restartBtn ||
+        !startOverlay ||
+        !gameOverOverlay ||
+        !gameOverMessage ||
+        !stage ||
+        !lightning ||
+        !scoreEl ||
+        !timerEl ||
+        !bestEl ||
+        !levelEl ||
+        !livesEl
+      ) {
+        return;
       }
-    }, 1000);
 
-    gameLoop = setInterval(() => {
-      if (!gameRunning) return;
+      let score = 0;
+      let timeLeft = 45;
+      let bestScore = Number(localStorage.getItem('pinkieSkyBestScore') || 0);
+      let gameRunning = false;
+      let level = 1;
+      let lives = 3;
 
-      if (activeClouds.size < getMaxClouds()) {
-        spawnCloud();
-      }
-    }, 520);
+      let gameLoop = null;
+      let timerLoop = null;
+      let lightningLoop = null;
+      let levelLoop = null;
 
-    lightningLoop = setInterval(() => {
-      if (!gameRunning) return;
+      let combo = 0;
+      let comboBonusReady = false;
+      let shieldActive = false;
+      let doublePointsUntil = 0;
+      let slowMotionUntil = 0;
 
-      if (score < 0) {
-        lightning.classList.add('flash');
-        setTimeout(() => {
-          lightning.classList.remove('flash');
-        }, 180);
-      }
-    }, 1200);
-  }
+      const activeClouds = new Set();
 
-  function stopGame() {
-    gameRunning = false;
-    clearAllLoops();
-    clearAllClouds();
-    stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky', 'slow-mode', 'double-mode', 'stage-shake');
-    lightning.classList.remove('flash');
-  }
-
-  function finishGame() {
-    gameRunning = false;
-    clearAllLoops();
-    clearAllClouds();
-
-    if (score > bestScore) {
-      bestScore = score;
-      localStorage.setItem('pinkieSkyBestScore', String(bestScore));
       bestEl.textContent = bestScore;
-    }
 
-    let finalMessage = '';
-    let badge = '';
+      injectGameEnhancements();
 
-    if (score >= 28) {
-      finalMessage = `Ai terminat cu ${score} puncte. Ai salvat complet cerul lui Pinkie, iar curcubeul a revenit în toată magia lui.`;
-      badge = 'Rainbow Hero';
-    } else if (score >= 18) {
-      finalMessage = `Ai terminat cu ${score} puncte. Pinkie zâmbește, cerul este vesel și ai făcut o treabă minunată.`;
-      badge = 'Pinkie Champion';
-    } else if (score >= 10) {
-      finalMessage = `Ai terminat cu ${score} puncte. Ai adus lumină și ai ajutat cerul să devină mai senin.`;
-      badge = 'Cloud Helper';
-    } else if (score >= 0) {
-      finalMessage = `Ai terminat cu ${score} puncte. Te-ai descurcat bine și data viitoare poți aduna și mai multă lumină pentru Pinkie.`;
-      badge = 'Little Dreamer';
-    } else {
-      finalMessage = `Ai terminat cu ${score} puncte. Cerul s-a întristat puțin, dar Pinkie știe că revii mai puternic.`;
-      badge = 'Brave Starter';
-    }
+      const comboPill = document.getElementById('gameCombo');
+      const badgePill = document.getElementById('gameBadge');
 
-    gameOverMessage.innerHTML = `${finalMessage}<br><span class="game-end-badge">${badge}</span>`;
-    gameOverOverlay.style.display = 'flex';
-  }
+      function injectGameEnhancements() {
+        if (!document.getElementById('pinkieGameEnhancements')) {
+          const style = document.createElement('style');
+          style.id = 'pinkieGameEnhancements';
+          style.textContent = `
+            .game-stage.sunset-sky {
+              background: linear-gradient(180deg, #ffb6d9 0%, #ffd7ef 35%, #fff3c9 100%);
+            }
+            .game-stage.rainbow-sky {
+              background:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.45), transparent 18%),
+                linear-gradient(180deg, #ffb4dc 0%, #ffd7f0 22%, #fff0be 45%, #d9ffd2 70%, #cde6ff 100%);
+            }
+            .game-stage.stage-shake {
+              animation: pinkieStageShake 0.24s ease;
+            }
+            .game-stage.slow-mode {
+              box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 0 24px rgba(122,139,255,0.22);
+            }
+            .game-stage.double-mode {
+              box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 0 26px rgba(255,212,95,0.28);
+            }
+            .game-combo-text {
+              position: absolute;
+              left: 50%;
+              top: 24px;
+              transform: translateX(-50%);
+              z-index: 5;
+              pointer-events: none;
+              padding: 10px 18px;
+              border-radius: 999px;
+              background: rgba(255,255,255,0.92);
+              color: #ff4da9;
+              font-family: 'Baloo 2', cursive;
+              font-size: 1.2rem;
+              font-weight: 800;
+              box-shadow: 0 10px 24px rgba(31,44,92,0.12);
+              opacity: 0;
+              animation: pinkieComboPop 0.9s ease forwards;
+            }
+            .game-particle {
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              pointer-events: none;
+              z-index: 4;
+              animation: pinkieParticleFly 0.7s ease forwards;
+            }
+            .game-end-badge {
+              margin-top: 12px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              padding: 10px 16px;
+              border-radius: 999px;
+              background: linear-gradient(135deg, #ff73c3, #ffd45f);
+              color: #ffffff;
+              font-family: 'Baloo 2', cursive;
+              font-size: 1rem;
+              font-weight: 800;
+              box-shadow: 0 10px 22px rgba(255,99,184,0.22);
+            }
+            @keyframes pinkieStageShake {
+              0% { transform: translateX(0); }
+              25% { transform: translateX(-5px); }
+              50% { transform: translateX(5px); }
+              75% { transform: translateX(-3px); }
+              100% { transform: translateX(0); }
+            }
+            @keyframes pinkieComboPop {
+              0% { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.88); }
+              20% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+              80% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+              100% { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(1.06); }
+            }
+            @keyframes pinkieParticleFly {
+              0% { opacity: 1; transform: translate(0,0) scale(1); }
+              100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
 
-  function clearAllLoops() {
-    if (gameLoop) {
-      clearInterval(gameLoop);
-      gameLoop = null;
-    }
+        if (!document.getElementById('gameCombo')) {
+          const comboItem = document.createElement('div');
+          comboItem.className = 'game-pill';
+          comboItem.innerHTML = 'Combo: <strong id="gameCombo">0</strong>';
+          document.querySelector('.game-stats').appendChild(comboItem);
+        }
 
-    if (timerLoop) {
-      clearInterval(timerLoop);
-      timerLoop = null;
-    }
-
-    if (lightningLoop) {
-      clearInterval(lightningLoop);
-      lightningLoop = null;
-    }
-  }
-
-  function clearAllClouds() {
-    activeClouds.forEach((cloud) => {
-      if (cloud && cloud.parentNode) {
-        if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
-        cloud.parentNode.removeChild(cloud);
-      }
-    });
-    activeClouds.clear();
-  }
-
-  function getMaxClouds() {
-    if (window.innerWidth <= 520) return 4;
-    if (window.innerWidth <= 780) return 5;
-    return 7;
-  }
-
-  function randomBetween(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  function getDifficultySpeed() {
-    const elapsed = 30 - timeLeft;
-    let baseMin = 2.2;
-    let baseMax = 3.2;
-
-    if (elapsed >= 10) {
-      baseMin = 2.8;
-      baseMax = 4.0;
-    }
-
-    if (elapsed >= 20) {
-      baseMin = 3.4;
-      baseMax = 4.8;
-    }
-
-    if (window.innerWidth <= 780) {
-      baseMin -= 0.5;
-      baseMax -= 0.6;
-    }
-
-    if (Date.now() < slowMotionUntil) {
-      baseMin *= 0.65;
-      baseMax *= 0.65;
-    }
-
-    return randomBetween(baseMin, baseMax);
-  }
-
-  function updateSky() {
-    stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky');
-
-    if (score < 0) {
-      stage.classList.add('dark-sky');
-    } else if (score >= 18) {
-      stage.classList.add('rainbow-sky');
-    } else if (score >= 8) {
-      stage.classList.add('sunset-sky');
-    }
-  }
-
-  function updateModes() {
-    const now = Date.now();
-    stage.classList.toggle('slow-mode', now < slowMotionUntil);
-    stage.classList.toggle('double-mode', now < doublePointsUntil);
-
-    if (shieldActive) {
-      badgePill.textContent = 'Scut activ';
-      return;
-    }
-
-    if (now < doublePointsUntil) {
-      badgePill.textContent = 'Puncte duble';
-      return;
-    }
-
-    if (now < slowMotionUntil) {
-      badgePill.textContent = 'Slow motion';
-      return;
-    }
-
-    badgePill.textContent = 'Normal';
-  }
-
-  function createCloudElement(type) {
-    const cloud = document.createElement('button');
-    cloud.type = 'button';
-    cloud.className = `game-cloud ${type}`;
-
-    const main = document.createElement('div');
-    main.className = 'cloud-main';
-
-    const b1 = document.createElement('div');
-    b1.className = 'cloud-b1';
-
-    const b2 = document.createElement('div');
-    b2.className = 'cloud-b2';
-
-    const b3 = document.createElement('div');
-    b3.className = 'cloud-b3';
-
-    const label = document.createElement('div');
-    label.className = 'game-cloud-label';
-
-    if (type === 'good') label.textContent = '+1';
-    if (type === 'bad') label.textContent = '-2';
-    if (type === 'gold') label.textContent = '+5';
-    if (type === 'rainbow') label.textContent = 'SLOW';
-    if (type === 'heart') label.textContent = 'SCUT';
-    if (type === 'star') label.textContent = 'x2';
-
-    cloud.appendChild(main);
-    cloud.appendChild(b1);
-    cloud.appendChild(b2);
-    cloud.appendChild(b3);
-    cloud.appendChild(label);
-
-    return cloud;
-  }
-
-  function getRandomCloudType() {
-    const roll = Math.random();
-
-    if (roll < 0.58) return 'good';
-    if (roll < 0.8) return 'bad';
-    if (roll < 0.88) return 'gold';
-    if (roll < 0.93) return 'rainbow';
-    if (roll < 0.97) return 'heart';
-    return 'star';
-  }
-
-  function spawnCloud() {
-    const type = getRandomCloudType();
-    const cloud = createCloudElement(type);
-
-    const stageRect = stage.getBoundingClientRect();
-    const stageHeight = stage.clientHeight;
-    const cloudWidth = window.innerWidth <= 780 ? 78 : 92;
-    const startX = -cloudWidth - 20;
-    const minY = 55;
-    const maxY = Math.max(70, stageHeight - 150);
-    const y = randomBetween(minY, maxY);
-
-    let x = startX;
-    const speed = getDifficultySpeed();
-
-    cloud.style.left = `${x}px`;
-    cloud.style.top = `${y}px`;
-
-    stage.appendChild(cloud);
-    activeClouds.add(cloud);
-
-    let clicked = false;
-
-    function removeCloud() {
-      if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
-      activeClouds.delete(cloud);
-      if (cloud.parentNode) {
-        cloud.parentNode.removeChild(cloud);
-      }
-    }
-
-    cloud.addEventListener('click', () => {
-      if (!gameRunning || clicked) return;
-      clicked = true;
-
-      const rect = cloud.getBoundingClientRect();
-      const popX = rect.left - stageRect.left + rect.width / 2;
-      const popY = rect.top - stageRect.top + rect.height / 2;
-
-      handleCloudHit(type, popX, popY);
-      removeCloud();
-    });
-
-    function animate() {
-      if (!gameRunning) {
-        removeCloud();
-        return;
+        if (!document.getElementById('gameBadge')) {
+          const badgeItem = document.createElement('div');
+          badgeItem.className = 'game-pill';
+          badgeItem.innerHTML = 'Putere: <strong id="gameBadge">Normal</strong>';
+          document.querySelector('.game-stats').appendChild(badgeItem);
+        }
       }
 
-      x += speed;
-      cloud.style.left = `${x}px`;
-
-      if (x > stage.clientWidth + 40) {
-        removeCloud();
-        return;
+      function openGameModal() {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
       }
 
-      cloud._animFrame = requestAnimationFrame(animate);
-    }
+      function closeGameModal() {
+        stopGame();
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        startOverlay.style.display = 'flex';
+        gameOverOverlay.style.display = 'none';
+      }
 
-    cloud._animFrame = requestAnimationFrame(animate);
-  }
-
-  function handleCloudHit(type, x, y) {
-    const now = Date.now();
-    let points = 0;
-
-    if (type === 'good') {
-      combo += 1;
-      points = now < doublePointsUntil ? 2 : 1;
-      score += points;
-      showFloatingScore(`+${points}`, x, y, 'plus');
-      burstParticles(x, y, ['#ff83c6', '#ffd1eb', '#fff0f8']);
-    }
-
-    if (type === 'bad') {
-      if (shieldActive) {
+      function resetGameState() {
+        score = 0;
+        timeLeft = 45;
+        level = 1;
+        lives = 3;
+        combo = 0;
+        comboBonusReady = false;
         shieldActive = false;
-        combo = 0;
-        showFloatingScore('Scut!', x, y, 'plus');
-        burstParticles(x, y, ['#9bb2ff', '#ffffff', '#d8e4ff']);
-      } else {
-        combo = 0;
-        points = -2;
-        score += points;
-        showFloatingScore('-2', x, y, 'minus');
-        burstParticles(x, y, ['#ff5252', '#ff9b9b', '#ffd7d7']);
-        shakeStage();
+        doublePointsUntil = 0;
+        slowMotionUntil = 0;
+        gameRunning = false;
+
+        scoreEl.textContent = score;
+        timerEl.textContent = timeLeft;
+        levelEl.textContent = level;
+        livesEl.textContent = lives;
+        comboPill.textContent = combo;
+        badgePill.textContent = 'Normal';
+
+        clearAllClouds();
+        clearAllLoops();
+
+        stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky', 'slow-mode', 'double-mode', 'stage-shake');
+        lightning.classList.remove('flash');
+
+        startOverlay.style.display = 'flex';
+        gameOverOverlay.style.display = 'none';
       }
-    }
 
-    if (type === 'gold') {
-      combo += 1;
-      points = now < doublePointsUntil ? 10 : 5;
-      score += points;
-      showFloatingScore(`+${points}`, x, y, 'plus');
-      burstParticles(x, y, ['#ffd45f', '#fff0ae', '#fff7d6']);
-      showComboText('Nor auriu!');
-    }
+      function startGame() {
+        resetGameState();
+        gameRunning = true;
+        startOverlay.style.display = 'none';
+        gameOverOverlay.style.display = 'none';
 
-    if (type === 'rainbow') {
-      combo += 1;
-      slowMotionUntil = now + 4000;
-      showFloatingScore('Slow!', x, y, 'plus');
-      burstParticles(x, y, ['#ff83c6', '#ffd45f', '#8ad6ff', '#b7ffb0']);
-      showComboText('Slow motion');
-    }
+        updateSky();
+        updateModes();
+        startSpawnLoop();
 
-    if (type === 'heart') {
-      combo += 1;
-      shieldActive = true;
-      showFloatingScore('Scut!', x, y, 'plus');
-      burstParticles(x, y, ['#ff9ed5', '#ffffff', '#ffd9ef']);
-      showComboText('Scut activ');
-    }
+        timerLoop = setInterval(() => {
+          timeLeft -= 1;
+          timerEl.textContent = timeLeft;
+          updateModes();
 
-    if (type === 'star') {
-      combo += 1;
-      doublePointsUntil = now + 5000;
-      showFloatingScore('x2', x, y, 'plus');
-      burstParticles(x, y, ['#fff0ae', '#ffffff', '#ffe08a']);
-      showComboText('Puncte duble');
-    }
+          if (timeLeft <= 0) {
+            finishGame();
+          }
+        }, 1000);
 
-    applyComboBonus(x, y);
-    comboPill.textContent = combo;
-    scoreEl.textContent = score;
-    updateSky();
-    updateModes();
-  }
+        levelLoop = setInterval(() => {
+          if (!gameRunning) return;
+          level += 1;
+          levelEl.textContent = level;
+          showComboText(`Nivel ${level}`);
+          startSpawnLoop();
+        }, 12000);
 
-  function applyComboBonus(x, y) {
-    if (combo > 0 && combo % 3 === 0 && !comboBonusReady) {
-      comboBonusReady = true;
-      score += 2;
-      scoreEl.textContent = score;
-      showFloatingScore('+2', x + 30, y - 16, 'plus');
-      showComboText(`Combo x${combo}`);
-      burstParticles(x, y, ['#ff83c6', '#ffd45f', '#ffffff']);
-      updateSky();
-    }
+        lightningLoop = setInterval(() => {
+          if (!gameRunning) return;
 
-    if (combo % 3 !== 0) {
-      comboBonusReady = false;
-    }
-  }
+          if (score < 0) {
+            lightning.classList.add('flash');
+            setTimeout(() => {
+              lightning.classList.remove('flash');
+            }, 180);
+          }
+        }, 1200);
+      }
 
-  function showFloatingScore(text, x, y, type) {
-    const el = document.createElement('div');
-    el.className = `game-float-score ${type}`;
-    el.textContent = text;
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
+      function startSpawnLoop() {
+        if (gameLoop) {
+          clearInterval(gameLoop);
+          gameLoop = null;
+        }
 
-    stage.appendChild(el);
+        gameLoop = setInterval(() => {
+          if (!gameRunning) return;
 
-    setTimeout(() => {
-      if (el.parentNode) el.parentNode.removeChild(el);
-    }, 700);
-  }
+          if (activeClouds.size < getMaxClouds()) {
+            spawnCloud();
+          }
+        }, getSpawnInterval());
+      }
 
-  function showComboText(text) {
-    const el = document.createElement('div');
-    el.className = 'game-combo-text';
-    el.textContent = text;
-    stage.appendChild(el);
+      function stopGame() {
+        gameRunning = false;
+        clearAllLoops();
+        clearAllClouds();
+        stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky', 'slow-mode', 'double-mode', 'stage-shake');
+        lightning.classList.remove('flash');
+      }
 
-    setTimeout(() => {
-      if (el.parentNode) el.parentNode.removeChild(el);
-    }, 900);
-  }
+      function finishGame() {
+        gameRunning = false;
+        clearAllLoops();
+        clearAllClouds();
 
-  function burstParticles(x, y, colors) {
-    for (let i = 0; i < 10; i += 1) {
-      const p = document.createElement('div');
-      p.className = 'game-particle';
-      p.style.left = `${x}px`;
-      p.style.top = `${y}px`;
-      p.style.background = colors[i % colors.length];
-      p.style.setProperty('--dx', `${randomBetween(-34, 34)}px`);
-      p.style.setProperty('--dy', `${randomBetween(-34, 34)}px`);
-      stage.appendChild(p);
+        if (score > bestScore) {
+          bestScore = score;
+          localStorage.setItem('pinkieSkyBestScore', String(bestScore));
+          bestEl.textContent = bestScore;
+        }
 
-      setTimeout(() => {
-        if (p.parentNode) p.parentNode.removeChild(p);
-      }, 700);
-    }
-  }
+        let finalMessage = '';
+        let badge = '';
 
-  function shakeStage() {
-    stage.classList.remove('stage-shake');
-    void stage.offsetWidth;
-    stage.classList.add('stage-shake');
-  }
+        if (score >= 45) {
+          finalMessage = `Ai terminat cu ${score} puncte. Ai trecut prin toate nivelurile și ai salvat complet cerul lui Pinkie.`;
+          badge = 'Rainbow Hero';
+        } else if (score >= 30) {
+          finalMessage = `Ai terminat cu ${score} puncte. Pinkie zâmbește, cerul este vesel și ai făcut o treabă minunată.`;
+          badge = 'Pinkie Champion';
+        } else if (score >= 15) {
+          finalMessage = `Ai terminat cu ${score} puncte. Ai adus lumină și ai ajutat cerul să devină mai senin.`;
+          badge = 'Cloud Helper';
+        } else if (score >= 0) {
+          finalMessage = `Ai terminat cu ${score} puncte. Te-ai descurcat bine și data viitoare poți merge și mai departe.`;
+          badge = 'Little Dreamer';
+        } else {
+          finalMessage = `Ai terminat cu ${score} puncte. Cerul s-a întristat puțin, dar Pinkie știe că revii mai puternic.`;
+          badge = 'Brave Starter';
+        }
 
-  function handleOpenGame() {
-    closeMobileMenu();
-    openGameModal();
-    resetGameState();
-  }
+        gameOverMessage.innerHTML = `${finalMessage}<br><br>Nivel atins: <strong>${level}</strong><br><span class="game-end-badge">${badge}</span>`;
+        gameOverOverlay.style.display = 'flex';
+      }
 
-  if (openBtnDesktop) {
-    openBtnDesktop.addEventListener('click', handleOpenGame);
-  }
+      function clearAllLoops() {
+        if (gameLoop) {
+          clearInterval(gameLoop);
+          gameLoop = null;
+        }
 
-  if (openBtnMobile) {
-    openBtnMobile.addEventListener('click', handleOpenGame);
-  }
+        if (timerLoop) {
+          clearInterval(timerLoop);
+          timerLoop = null;
+        }
 
-  closeBtn.addEventListener('click', closeGameModal);
+        if (lightningLoop) {
+          clearInterval(lightningLoop);
+          lightningLoop = null;
+        }
 
-  if (closeBtnEnd) {
-    closeBtnEnd.addEventListener('click', closeGameModal);
-  }
+        if (levelLoop) {
+          clearInterval(levelLoop);
+          levelLoop = null;
+        }
+      }
 
-  startBtn.addEventListener('click', startGame);
-  restartBtn.addEventListener('click', startGame);
-
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      closeGameModal();
-    }
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.classList.contains('open')) {
-      closeGameModal();
-    }
-  });
-
-  window.addEventListener('resize', () => {
-    if (!gameRunning) return;
-
-    const tooMany = activeClouds.size - getMaxClouds();
-    if (tooMany > 0) {
-      let count = 0;
-      activeClouds.forEach((cloud) => {
-        if (count < tooMany) {
+      function clearAllClouds() {
+        activeClouds.forEach((cloud) => {
           if (cloud && cloud.parentNode) {
             if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
             cloud.parentNode.removeChild(cloud);
           }
+        });
+        activeClouds.clear();
+      }
+
+      function getMaxClouds() {
+        const base = window.innerWidth <= 520 ? 4 : window.innerWidth <= 780 ? 5 : 7;
+        return Math.min(base + Math.floor((level - 1) / 2), base + 3);
+      }
+
+      function getSpawnInterval() {
+        const base = window.innerWidth <= 780 ? 800 : 700;
+        const faster = base - (level - 1) * 55;
+        return Math.max(320, faster);
+      }
+
+      function randomBetween(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function getDifficultySpeed() {
+        let baseMin = 2.2 + (level - 1) * 0.35;
+        let baseMax = 3.2 + (level - 1) * 0.45;
+
+        if (window.innerWidth <= 780) {
+          baseMin -= 0.5;
+          baseMax -= 0.6;
+        }
+
+        if (Date.now() < slowMotionUntil) {
+          baseMin *= 0.65;
+          baseMax *= 0.65;
+        }
+
+        return randomBetween(baseMin, baseMax);
+      }
+
+      function updateSky() {
+        stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky');
+
+        if (score < 0) {
+          stage.classList.add('dark-sky');
+        } else if (score >= 22) {
+          stage.classList.add('rainbow-sky');
+        } else if (score >= 8) {
+          stage.classList.add('sunset-sky');
+        }
+      }
+
+      function updateModes() {
+        const now = Date.now();
+        stage.classList.toggle('slow-mode', now < slowMotionUntil);
+        stage.classList.toggle('double-mode', now < doublePointsUntil);
+
+        if (shieldActive) {
+          badgePill.textContent = 'Scut activ';
+          return;
+        }
+
+        if (now < doublePointsUntil) {
+          badgePill.textContent = 'Puncte duble';
+          return;
+        }
+
+        if (now < slowMotionUntil) {
+          badgePill.textContent = 'Slow motion';
+          return;
+        }
+
+        badgePill.textContent = 'Normal';
+      }
+
+      function createCloudElement(type) {
+        const cloud = document.createElement('button');
+        cloud.type = 'button';
+        cloud.className = `game-cloud ${type === 'gold' || type === 'rainbow' || type === 'heart' || type === 'star' ? 'special' : type}`;
+
+        const main = document.createElement('div');
+        main.className = 'cloud-main';
+
+        const b1 = document.createElement('div');
+        b1.className = 'cloud-b1';
+
+        const b2 = document.createElement('div');
+        b2.className = 'cloud-b2';
+
+        const b3 = document.createElement('div');
+        b3.className = 'cloud-b3';
+
+        const label = document.createElement('div');
+        label.className = 'game-cloud-label';
+
+        if (type === 'good') label.textContent = '+1';
+        if (type === 'bad') label.textContent = '-2';
+        if (type === 'gold') label.textContent = '+5';
+        if (type === 'rainbow') label.textContent = 'SLOW';
+        if (type === 'heart') label.textContent = 'SCUT';
+        if (type === 'star') label.textContent = 'x2';
+
+        cloud.appendChild(main);
+        cloud.appendChild(b1);
+        cloud.appendChild(b2);
+        cloud.appendChild(b3);
+        cloud.appendChild(label);
+
+        return cloud;
+      }
+
+      function getRandomCloudType() {
+        const roll = Math.random();
+
+        if (roll < 0.56) return 'good';
+        if (roll < 0.78) return 'bad';
+        if (roll < 0.86) return 'gold';
+        if (roll < 0.91) return 'rainbow';
+        if (roll < 0.96) return 'heart';
+        return 'star';
+      }
+
+      function spawnCloud() {
+        const type = getRandomCloudType();
+        const cloud = createCloudElement(type);
+
+        const stageRect = stage.getBoundingClientRect();
+        const stageHeight = stage.clientHeight;
+        const cloudWidth = window.innerWidth <= 780 ? 78 : 92;
+        const startX = -cloudWidth - 20;
+        const minY = 55;
+        const maxY = Math.max(70, stageHeight - 150);
+        const y = randomBetween(minY, maxY);
+
+        let x = startX;
+        const speed = getDifficultySpeed();
+
+        cloud.style.left = `${x}px`;
+        cloud.style.top = `${y}px`;
+
+        stage.appendChild(cloud);
+        activeClouds.add(cloud);
+
+        let clicked = false;
+
+        function removeCloud() {
+          if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
           activeClouds.delete(cloud);
-          count += 1;
+          if (cloud.parentNode) {
+            cloud.parentNode.removeChild(cloud);
+          }
+        }
+
+        cloud.addEventListener('click', () => {
+          if (!gameRunning || clicked) return;
+          clicked = true;
+
+          const rect = cloud.getBoundingClientRect();
+          const popX = rect.left - stageRect.left + rect.width / 2;
+          const popY = rect.top - stageRect.top + rect.height / 2;
+
+          handleCloudHit(type, popX, popY);
+          removeCloud();
+        });
+
+        function animate() {
+          if (!gameRunning) {
+            removeCloud();
+            return;
+          }
+
+          x += speed;
+          cloud.style.left = `${x}px`;
+
+          if (x > stage.clientWidth + 40) {
+            removeCloud();
+            return;
+          }
+
+          cloud._animFrame = requestAnimationFrame(animate);
+        }
+
+        cloud._animFrame = requestAnimationFrame(animate);
+      }
+
+      function handleCloudHit(type, x, y) {
+        const now = Date.now();
+        let points = 0;
+
+        if (type === 'good') {
+          combo += 1;
+          points = now < doublePointsUntil ? 2 : 1;
+          score += points;
+          showFloatingScore(`+${points}`, x, y, 'plus');
+          burstParticles(x, y, ['#ff83c6', '#ffd1eb', '#fff0f8']);
+        }
+
+        if (type === 'bad') {
+          if (shieldActive) {
+            shieldActive = false;
+            combo = 0;
+            showFloatingScore('Scut!', x, y, 'plus');
+            burstParticles(x, y, ['#9bb2ff', '#ffffff', '#d8e4ff']);
+          } else {
+            combo = 0;
+            points = -2;
+            score += points;
+            lives -= 1;
+            livesEl.textContent = lives;
+            showFloatingScore('-2', x, y, 'minus');
+            burstParticles(x, y, ['#ff5252', '#ff9b9b', '#ffd7d7']);
+            shakeStage();
+
+            if (lives <= 0) {
+              scoreEl.textContent = score;
+              updateSky();
+              updateModes();
+              finishGame();
+              return;
+            }
+          }
+        }
+
+        if (type === 'gold') {
+          combo += 1;
+          points = now < doublePointsUntil ? 10 : 5;
+          score += points;
+          showFloatingScore(`+${points}`, x, y, 'plus');
+          burstParticles(x, y, ['#ffd45f', '#fff0ae', '#fff7d6']);
+          showComboText('Nor auriu!');
+        }
+
+        if (type === 'rainbow') {
+          combo += 1;
+          slowMotionUntil = now + 4000;
+          showFloatingScore('Slow!', x, y, 'plus');
+          burstParticles(x, y, ['#ff83c6', '#ffd45f', '#8ad6ff', '#b7ffb0']);
+          showComboText('Slow motion');
+        }
+
+        if (type === 'heart') {
+          combo += 1;
+          shieldActive = true;
+          showFloatingScore('Scut!', x, y, 'plus');
+          burstParticles(x, y, ['#ff9ed5', '#ffffff', '#ffd9ef']);
+          showComboText('Scut activ');
+        }
+
+        if (type === 'star') {
+          combo += 1;
+          doublePointsUntil = now + 5000;
+          showFloatingScore('x2', x, y, 'plus');
+          burstParticles(x, y, ['#fff0ae', '#ffffff', '#ffe08a']);
+          showComboText('Puncte duble');
+        }
+
+        applyComboBonus(x, y);
+        comboPill.textContent = combo;
+        scoreEl.textContent = score;
+        updateSky();
+        updateModes();
+      }
+
+      function applyComboBonus(x, y) {
+        if (combo > 0 && combo % 3 === 0 && !comboBonusReady) {
+          comboBonusReady = true;
+          score += 2;
+          scoreEl.textContent = score;
+          showFloatingScore('+2', x + 30, y - 16, 'plus');
+          showComboText(`Combo x${combo}`);
+          burstParticles(x, y, ['#ff83c6', '#ffd45f', '#ffffff']);
+          updateSky();
+        }
+
+        if (combo % 3 !== 0) {
+          comboBonusReady = false;
+        }
+      }
+
+      function showFloatingScore(text, x, y, type) {
+        const el = document.createElement('div');
+        el.className = `game-float-score ${type}`;
+        el.textContent = text;
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+
+        stage.appendChild(el);
+
+        setTimeout(() => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, 700);
+      }
+
+      function showComboText(text) {
+        const el = document.createElement('div');
+        el.className = 'game-combo-text';
+        el.textContent = text;
+        stage.appendChild(el);
+
+        setTimeout(() => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, 900);
+      }
+
+      function burstParticles(x, y, colors) {
+        for (let i = 0; i < 10; i += 1) {
+          const p = document.createElement('div');
+          p.className = 'game-particle';
+          p.style.left = `${x}px`;
+          p.style.top = `${y}px`;
+          p.style.background = colors[i % colors.length];
+          p.style.setProperty('--dx', `${randomBetween(-34, 34)}px`);
+          p.style.setProperty('--dy', `${randomBetween(-34, 34)}px`);
+          stage.appendChild(p);
+
+          setTimeout(() => {
+            if (p.parentNode) p.parentNode.removeChild(p);
+          }, 700);
+        }
+      }
+
+      function shakeStage() {
+        stage.classList.remove('stage-shake');
+        void stage.offsetWidth;
+        stage.classList.add('stage-shake');
+      }
+
+      function handleOpenGame() {
+        closeMobileMenu();
+        openGameModal();
+        resetGameState();
+      }
+
+      if (openBtnDesktop) {
+        openBtnDesktop.addEventListener('click', handleOpenGame);
+      }
+
+      if (openBtnMobile) {
+        openBtnMobile.addEventListener('click', handleOpenGame);
+      }
+
+      closeBtn.addEventListener('click', closeGameModal);
+
+      if (closeBtnEnd) {
+        closeBtnEnd.addEventListener('click', closeGameModal);
+      }
+
+      startBtn.addEventListener('click', startGame);
+      restartBtn.addEventListener('click', startGame);
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          closeGameModal();
         }
       });
-    }
-  });
 
-  resetGameState();
-})();
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('open')) {
+          closeGameModal();
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (!gameRunning) return;
+
+        const tooMany = activeClouds.size - getMaxClouds();
+        if (tooMany > 0) {
+          let count = 0;
+          activeClouds.forEach((cloud) => {
+            if (count < tooMany) {
+              if (cloud && cloud.parentNode) {
+                if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
+                cloud.parentNode.removeChild(cloud);
+              }
+              activeClouds.delete(cloud);
+              count += 1;
+            }
+          });
+        }
+      });
+
+      resetGameState();
+    })();
   </script>
 </body>
 </html>
