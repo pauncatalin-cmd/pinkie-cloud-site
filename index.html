@@ -515,7 +515,9 @@
     .checkout-card,
     .product-price-card,
     .atelier-intro-card,
-    .atelier-accordion-card {
+    .atelier-accordion-card,
+    .author-quote-card,
+    .author-story-card {
       background: var(--card);
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
@@ -534,7 +536,9 @@
     .checkout-card,
     .product-price-card,
     .atelier-intro-card,
-    .atelier-accordion-card {
+    .atelier-accordion-card,
+    .author-quote-card,
+    .author-story-card {
       padding: 24px;
       transition: 0.22s ease;
     }
@@ -549,7 +553,9 @@
     .checkout-card:hover,
     .product-price-card:hover,
     .atelier-intro-card:hover,
-    .atelier-accordion-card:hover {
+    .atelier-accordion-card:hover,
+    .author-quote-card:hover,
+    .author-story-card:hover {
       transform: translateY(-7px) scale(1.02);
       box-shadow: 0 26px 46px rgba(184,97,188,0.22);
     }
@@ -566,7 +572,9 @@
     .checkout-card h3,
     .product-price-card h4,
     .atelier-intro-card h3,
-    .atelier-accordion-button span {
+    .atelier-accordion-button span,
+    .author-quote-title,
+    .author-story-button span {
       font-family: 'Baloo 2', cursive;
       font-size: 1.5rem;
       line-height: 1;
@@ -586,7 +594,9 @@
     .checkout-card p,
     .product-price-card p,
     .atelier-intro-card p,
-    .atelier-accordion-body p {
+    .atelier-accordion-body p,
+    .author-quote-card p,
+    .author-story-body p {
       color: var(--muted);
       font-weight: 600;
     }
@@ -1147,6 +1157,102 @@
       flex-shrink: 0;
     }
 
+    .author-quote-card {
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .author-quote-mark {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      font-family: Georgia, serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,116,200,0.22);
+      pointer-events: none;
+    }
+
+    .author-quote-content {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .author-quote-title {
+      margin-bottom: 14px;
+    }
+
+    .author-quote-text {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .author-signature {
+      margin-top: 16px;
+      color: var(--pink-dark);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.12rem;
+      font-weight: 700;
+    }
+
+    .author-story-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .author-story-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .author-story-button span {
+      margin-bottom: 0;
+      font-size: 1.42rem;
+    }
+
+    .author-story-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,116,199,0.22), rgba(156,124,255,0.2));
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--pink-dark);
+      font-size: 1.4rem;
+      font-weight: 800;
+      transition: transform 0.22s ease;
+    }
+
+    .author-story-card.open .author-story-icon {
+      transform: rotate(45deg);
+    }
+
+    .author-story-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.32s ease;
+      padding: 0 24px;
+    }
+
+    .author-story-body-inner {
+      padding: 0 0 24px;
+    }
+
+    .author-story-body p + p {
+      margin-top: 12px;
+    }
+
     .cart-overlay {
       position: fixed;
       inset: 0;
@@ -1588,15 +1694,18 @@
         width: 100%;
       }
 
-      .atelier-accordion-button {
+      .atelier-accordion-button,
+      .author-story-button {
         padding: 18px 18px;
       }
 
-      .atelier-accordion-body {
+      .atelier-accordion-body,
+      .author-story-body {
         padding: 0 18px;
       }
 
-      .atelier-accordion-button span {
+      .atelier-accordion-button span,
+      .author-story-button span {
         font-size: 1.25rem;
       }
 
@@ -1901,7 +2010,7 @@
             <div class="product-cover vol1"></div>
             <h4>Volumul I</h4>
             <p class="product-price-subtitle">Mimi, iubire și acceptare de sine</p>
-            <div class="product-price-value">50 lei</div>
+            <div class="product-price-value">58 lei</div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
           </article>
 
@@ -1909,7 +2018,7 @@
             <div class="product-cover vol2"></div>
             <h4>Volumul II</h4>
             <p class="product-price-subtitle">Vivi, generozitate și echilibru</p>
-            <div class="product-price-value">50 lei</div>
+            <div class="product-price-value">58 lei</div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
           </article>
 
@@ -1917,7 +2026,7 @@
             <div class="product-cover vol3"></div>
             <h4>Volumul III</h4>
             <p class="product-price-subtitle">Hoppy, curaj și încredere</p>
-            <div class="product-price-value">50 lei</div>
+            <div class="product-price-value">58 lei</div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
           </article>
 
@@ -1925,7 +2034,7 @@
             <div class="product-cover pachet"></div>
             <h4>Pachet complet</h4>
             <p class="product-price-subtitle">Toate cele 3 volume Pinkie Cloud</p>
-            <div class="product-price-value">130 lei</div>
+            <div class="product-price-value">133 lei</div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
           </article>
         </div>
@@ -2080,7 +2189,7 @@
                 <p>Atelierul Pinkie poate completa programe educaționale și inițiative de wellbeing școlar printr-un format simplu, ușor de integrat într-o clasă sau într-o grupă.</p>
                 <p>În anumite contexte, atelierul poate fi organizat și ca parte din proiecte educaționale susținute împreună cu parteneri din comunitate, astfel încât cât mai mulți copii să aibă acces la experiențe care sprijină dezvoltarea socio-emoțională.</p>
                 <p>Lucrăm cu școli, cadre didactice și inițiative educaționale din comunitate pentru a aduce atelierele Pinkie acolo unde copiii au nevoie de un spațiu sigur de explorare emoțională.</p>
-                <p>Dacă doriți să organizăm atelierul pentru o clasă, o grupă sau un eveniment educațional, vă rugăm să ne contactați.</p>
+                <p>Dacă dorești să organizăm atelierul pentru o clasă, o grupă sau un eveniment educațional, vă rugăm să ne contactați.</p>
               </div>
             </div>
           </article>
@@ -2116,13 +2225,72 @@
       <div class="container">
         <div class="section-header">
           <h2>Despre autor</h2>
-          <p>Universul Pinkie vine din educație, experiență și dorința de a crea un spațiu în care copilul să fie înțeles.</p>
+          <p>O declarație personală despre drumul care a dus la nașterea universului Pinkie Cloud.</p>
         </div>
-        <article class="author-card reveal">
-          <h3>Ruxandra Ioniță</h3>
-          <p>Creatoarea Universului Pinkie Cloud, cu bază solidă în Științele Educației și Management Educațional, completează poveștile cu experiență reală de lucru cu copiii.</p>
-          <br>
-          <p>Pinkie s-a născut din convingerea că fiecare copil are nevoie să fie văzut, ascultat și încurajat să fie el însuși.</p>
+
+        <article class="author-quote-card reveal">
+          <div class="author-quote-mark">“</div>
+          <div class="author-quote-content">
+            <div class="author-quote-title">Din partea autoarei</div>
+            <p class="author-quote-text">
+              „Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc. Pentru că eu cred că în fiecare copil există mai mult decât se vede. Iar uneori, tot ce are nevoie, este cineva care să îi arate asta.”
+            </p>
+            <div class="author-signature">Ruxandra Ioniță</div>
+          </div>
+        </article>
+
+        <article class="author-story-card reveal">
+          <button class="author-story-button" type="button">
+            <span>Citește povestea autoarei</span>
+            <div class="author-story-icon">+</div>
+          </button>
+
+          <div class="author-story-body">
+            <div class="author-story-body-inner">
+              <p>Sunt Ruxandra Ioniță, profesoară și creatoarea universului Pinkie Cloud.</p>
+              <p>Drumul meu în educație nu a început întâmplător.</p>
+              <p>A început cu un apel.</p>
+              <p>Un apel din partea doamnei director a școlii în care am învățat, care m-a sunat să mă felicite pentru rezultatele la bacalaureat și să îmi propună să lucrez în grădinița din cadrul acelei școli.</p>
+              <p>Pentru mine, acel moment a fost mai mult decât o oportunitate.</p>
+              <p>A fost un început.</p>
+              <p>Un început în care cineva a avut încredere în mine înainte ca eu să știu cât pot.</p>
+              <p>Am spus „da” cu emoție și bucurie, fără să știu că acel „da” avea să-mi definească direcția.</p>
+              <p>În timp, lucrul cu copiii a devenit locul în care am înțeles cu adevărat ce înseamnă educația.</p>
+              <p>Nu doar lecții.</p>
+              <p>Nu doar activități.</p>
+              <p>Ci prezență.</p>
+              <p>Relație.</p>
+              <p>Încredere.</p>
+              <p>Am fost primită cu deschidere, susținută și încurajată, iar pe parcurs am primit ceva ce nu se învață din cărți, aprecierea sinceră a părinților și conexiunea reală cu copiii.</p>
+              <p>Pentru felul în care le vorbeam.</p>
+              <p>Pentru liniștea pe care o aduceam.</p>
+              <p>Pentru modul în care îi făceam să se simtă.</p>
+              <p>Acea energie m-a dus mai departe.</p>
+              <p>Am ales să continui cu Pedagogia Învățământului Primar și Preșcolar, să aprofundez printr-un master în Management Educațional și să explorez experiențe de formare, inclusiv în contexte internaționale.</p>
+              <p>Dar adevărul este acesta, cea mai importantă formare a mea nu a fost într-o sală de curs.</p>
+              <p>A fost în fiecare clasă.</p>
+              <p>În fiecare copil.</p>
+              <p>În fiecare moment în care am învățat să ascult mai mult decât să explic.</p>
+              <p>După ce am devenit profesoară, lucrurile s-au confirmat.</p>
+              <p>Am continuat să primesc același tip de reacții, pentru felul în care țineam spațiul emoțional al copiilor și pentru activitățile care îi făceau să se deschidă.</p>
+              <p>Colegele îmi cereau materialele mele, iar eu le ofeream cu bucurie.</p>
+              <p>Și au început să apară întrebările, cum pot duce asta mai departe?</p>
+              <p>Cum pot ajunge la mai mulți copii?</p>
+              <p>Așa s-a născut Pinkie Cloud.</p>
+              <p>Nu ca un proiect.</p>
+              <p>Nu ca un brand.</p>
+              <p>Ci ca o extensie firească a tot ceea ce am trăit și am construit în relația cu copiii.</p>
+              <p>Un univers în care povestea devine punte.</p>
+              <p>În care emoțiile nu sunt corectate, ci înțelese.</p>
+              <p>În care copilul nu este grăbit să fie „mai mult”, ci susținut să fie exact acolo unde este.</p>
+              <p>Ceea ce definește cu adevărat Pinkie Cloud este felul în care aceste cunoștințe se transformă în experiențe vii, pe înțelesul copiilor.</p>
+              <p>Pentru că eu nu creez doar cărți și ateliere.</p>
+              <p>Creez contexte în care copilul se simte văzut, se simte în siguranță și începe, pas cu pas, să aibă încredere în el.</p>
+              <p>Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc.</p>
+              <p>Pentru că eu cred că în fiecare copil există mai mult decât se vede.</p>
+              <p>Iar uneori, tot ce are nevoie, este cineva care să îi arate asta.</p>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -2155,7 +2323,7 @@
                 <div class="checkout-mini-thumb thumb-vol1"></div>
                 <div>
                   <strong>Volumul I</strong>
-                  <p>50 lei</p>
+                  <p>58 lei</p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
               </div>
@@ -2164,7 +2332,7 @@
                 <div class="checkout-mini-thumb thumb-vol2"></div>
                 <div>
                   <strong>Volumul II</strong>
-                  <p>50 lei</p>
+                  <p>58 lei</p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
               </div>
@@ -2173,7 +2341,7 @@
                 <div class="checkout-mini-thumb thumb-vol3"></div>
                 <div>
                   <strong>Volumul III</strong>
-                  <p>50 lei</p>
+                  <p>58 lei</p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
               </div>
@@ -2182,7 +2350,7 @@
                 <div class="checkout-mini-thumb thumb-vol1"></div>
                 <div>
                   <strong>Pachet complet</strong>
-                  <p>130 lei</p>
+                  <p>133 lei</p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
               </div>
@@ -2228,10 +2396,10 @@
 
   <script>
     const PRODUCTS = {
-      vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 50, thumbClass: 'vol1' },
-      vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 50, thumbClass: 'vol2' },
-      vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 50, thumbClass: 'vol3' },
-      pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 130, thumbClass: 'pachet' }
+      vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 58, thumbClass: 'vol1' },
+      vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 58, thumbClass: 'vol2' },
+      vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 58, thumbClass: 'vol3' },
+      pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 133, thumbClass: 'pachet' }
     };
 
     const WHATSAPP_NUMBER = '40784571533';
@@ -2248,7 +2416,7 @@
       revealObserver.observe(item);
     });
 
-    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .checkout-card, .product-price-card, .atelier-intro-card, .atelier-accordion-card');
+    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .checkout-card, .product-price-card, .atelier-intro-card, .atelier-accordion-card, .author-quote-card, .author-story-card');
     tapItems.forEach((item) => {
       item.addEventListener('mousedown', () => { item.style.transform = 'scale(0.98)'; });
       item.addEventListener('mouseup', () => { item.style.transform = ''; });
@@ -2284,6 +2452,24 @@
         }
       });
     });
+
+    const authorStoryCard = document.querySelector('.author-story-card');
+    if (authorStoryCard) {
+      const authorButton = authorStoryCard.querySelector('.author-story-button');
+      const authorBody = authorStoryCard.querySelector('.author-story-body');
+
+      authorButton.addEventListener('click', () => {
+        const isOpen = authorStoryCard.classList.contains('open');
+
+        if (isOpen) {
+          authorStoryCard.classList.remove('open');
+          authorBody.style.maxHeight = null;
+        } else {
+          authorStoryCard.classList.add('open');
+          authorBody.style.maxHeight = authorBody.scrollHeight + 'px';
+        }
+      });
+    }
 
     const cartDrawer = document.getElementById('cartDrawer');
     const cartOverlay = document.getElementById('cartOverlay');
