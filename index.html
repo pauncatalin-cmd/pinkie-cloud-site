@@ -1,444 +1,2319 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinkie Cloud</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{
-      --pink:#ff5cb7;
-      --pink2:#ff82ca;
-      --purple:#8c66ff;
-      --blue:#7cc9ff;
-      --yellow:#ffe46f;
-      --text:#6d4b80;
-      --muted:#866897;
-      --white:#fff;
-      --glass:rgba(255,255,255,.76);
-      --line:rgba(255,255,255,.88);
-      --shadow:0 16px 38px rgba(181,95,176,.18);
-      --r:24px;
-      --max:1180px;
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap');
+
+    :root {
+      --pink: #ff74c8;
+      --pink-dark: #d93692;
+      --purple: #8a5cff;
+      --blue: #6ebcff;
+      --yellow: #ffe56e;
+      --orange: #ff9f4c;
+      --text: #724e86;
+      --muted: #8f6d99;
+      --white: #ffffff;
+      --card: rgba(255,255,255,0.72);
+      --border: rgba(255,255,255,0.92);
+      --shadow: 0 20px 44px rgba(186,95,181,0.18);
+      --shadow-soft: 0 10px 24px rgba(255,116,200,0.18);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --max: 1220px;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Fredoka',sans-serif;
-      color:var(--text);
-      line-height:1.55;
-      overflow-x:hidden;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Fredoka', Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.55;
+      overflow-x: hidden;
+      min-height: 100vh;
       background:
-        radial-gradient(circle at 20% 10%, rgba(255,245,183,.8), transparent 16%),
-        radial-gradient(circle at 80% 15%, rgba(255,203,233,.7), transparent 18%),
-        linear-gradient(180deg,#7ebfff 0%,#b9d7ff 12%,#ffd6a8 32%,#ffb1d4 52%,#fff0c8 82%,#a5ee92 100%);
-      min-height:100vh;
-    }
-    a{text-decoration:none;color:inherit}
-    button{font:inherit}
-    .container{width:min(100% - 24px,var(--max));margin:auto}
-    .glass{
-      background:var(--glass);
-      border:2px solid var(--line);
-      border-radius:var(--r);
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(10px);
-    }
-    .topbar{
-      position:sticky;top:0;z-index:100;
-      background:rgba(220,232,255,.72);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,.5);
-    }
-    .nav{
-      min-height:84px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:8px 0;
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand-logo{
-      width:74px;height:74px;
-      background:url('pinkie.png') center/contain no-repeat;
-      filter:drop-shadow(0 10px 18px rgba(255,255,255,.35));
-    }
-    .brand-text{
-      font-family:'Baloo 2',cursive;
-      font-size:2rem;
-      font-weight:800;
-      line-height:.92;
-      color:#ff42a9;
-    }
-    .nav-links{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-    .nav-links a,.nav-links button{
-      border:0;background:transparent;cursor:pointer;
-      color:#ff42a9;font-family:'Baloo 2',cursive;
-      font-size:1.15rem;font-weight:800;
-    }
-    .nav-links .game-nav-btn,
-    .btn,
-    .cart-btn{
-      border:2px solid rgba(255,255,255,.9);
-      border-radius:999px;
-      box-shadow:0 10px 20px rgba(255,92,183,.16);
-    }
-    .game-nav-btn,.btn-primary,.cart-btn{
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
-      color:#fff !important;
-      padding:10px 16px;
-    }
-    .cart-btn{
-      display:inline-flex;align-items:center;gap:8px;
-      cursor:pointer;font-weight:700;
-    }
-    .cart-count{
-      width:24px;height:24px;border-radius:50%;
-      display:grid;place-items:center;
-      background:#fff;color:var(--pink);font-weight:800;
+        radial-gradient(circle at 18% 14%, rgba(255,248,184,0.72) 0%, transparent 18%),
+        radial-gradient(circle at 82% 18%, rgba(255,219,241,0.42) 0%, transparent 20%),
+        radial-gradient(circle at 50% 10%, rgba(255,191,128,0.32) 0%, transparent 18%),
+        linear-gradient(180deg, #79b6ff 0%, #adcaff 12%, #ffd4a5 30%, #ffa7cf 50%, #ffd8ef 69%, #fff1c8 82%, #d1f2a8 92%, #7ed96d 100%);
+      position: relative;
     }
 
-    .hero{padding:42px 0 56px}
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.02fr .98fr;
-      gap:28px;
-      align-items:center;
-    }
-    .pill{
-      display:inline-block;
-      padding:10px 16px;
-      border-radius:999px;
-      margin-bottom:16px;
-      background:rgba(255,255,255,.82);
-      border:2px solid rgba(255,255,255,.92);
-      font-family:'Baloo 2',cursive;
-      font-weight:700;color:#d93f95;
-    }
-    h1,h2,h3,h4{
-      font-family:'Baloo 2',cursive;
-      line-height:1;
-      color:#ff42a9;
-    }
-    h1{font-size:clamp(2.6rem,5vw,4.9rem);margin-bottom:16px}
-    .lead{
-      padding:18px 20px;
-      font-weight:600;
-      color:#7a567f;
-      border-radius:20px;
-      background:rgba(255,255,255,.6);
-      border:2px solid rgba(255,255,255,.8);
-      margin-bottom:18px;
-    }
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:14px 22px;
-      cursor:pointer;
-      font-family:'Baloo 2',cursive;
-      font-weight:800;
-    }
-    .btn-secondary{background:linear-gradient(135deg,#79bfff,#7f86ff);color:#fff}
-    .btn-light{background:#fff;color:#d93f95}
-    .proof-grid,.book-grid,.prod-grid,.info-grid,.contact-grid{
-      display:grid;gap:18px;
-    }
-    .proof-grid{grid-template-columns:repeat(3,1fr)}
-    .book-grid,.prod-grid,.info-grid,.contact-grid{grid-template-columns:repeat(3,1fr)}
-    .card{padding:22px}
-    .card p{color:var(--muted);font-weight:600}
-    .card h3,.card h4{margin-bottom:8px}
-    .icon{
-      width:64px;height:64px;border-radius:20px;
-      display:grid;place-items:center;
-      margin-bottom:14px;font-size:1.7rem;
-      background:linear-gradient(135deg,rgba(255,92,183,.22),rgba(255,228,111,.22),rgba(124,201,255,.22));
-      border:2px solid rgba(255,255,255,.88);
-    }
-    .hero-visual{
-      min-height:520px;display:grid;place-items:center;
-      position:relative;
-    }
-    .pinkie-show{
-      width:min(100%,460px);
-      aspect-ratio:764/527;
-      background:url('pinkie.png') center/contain no-repeat;
-      filter:drop-shadow(0 18px 28px rgba(255,255,255,.35));
-    }
-    .hero-note{
-      margin-top:18px;
-      text-align:center;
-      padding:18px;
-    }
-
-    .section{padding:78px 0}
-    .section-head{
-      text-align:center;
-      max-width:860px;
-      margin:0 auto 34px;
-    }
-    .section-head h2{font-size:clamp(2.2rem,4vw,3.6rem);margin-bottom:10px}
-    .section-head p{
-      color:#855a76;font-weight:600;
-      padding:14px 18px;border-radius:18px;
-      background:rgba(255,255,255,.55);
-      border:2px solid rgba(255,255,255,.78);
-    }
-
-    .book-cover{
-      width:100%;
-      aspect-ratio:1495/1056;
-      border-radius:18px;
-      background-size:cover;
-      background-position:center;
-      border:2px solid rgba(255,255,255,.9);
-      margin-bottom:14px;
-      cursor:pointer;
-      transition:transform .2s ease;
-    }
-    .book-cover:hover{transform:scale(1.02)}
-    .vol1{background-image:url('coperta-volum-1.png')}
-    .vol2{background-image:url('coperta-volum-2.png')}
-    .vol3{background-image:url('coperta-volum-3.png')}
-    .pack{
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
       background:
-        linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)),
-        url('coperta-volum-1.png'),
-        url('coperta-volum-2.png'),
-        url('coperta-volum-3.png');
-      background-size:100% 100%,35% auto,35% auto,35% auto;
-      background-position:center,left 4% center,center,right 4% center;
-      background-repeat:no-repeat;
-    }
-    .price{
-      display:inline-block;
-      margin:10px 0 14px;
-      padding:10px 16px;
-      border-radius:999px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
-      color:#fff;font-family:'Baloo 2',cursive;font-size:1.35rem;font-weight:800;
-    }
-    .list{list-style:none;display:grid;gap:8px;margin:12px 0 14px}
-    .list li{display:flex;gap:8px;color:var(--muted);font-weight:600}
-    .list li::before{content:'✨'}
-    .band{text-align:center;padding:28px}
-
-    .accordion{display:grid;gap:14px}
-    .acc-item{overflow:hidden}
-    .acc-btn{
-      width:100%;border:0;background:transparent;cursor:pointer;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:20px;
-    }
-    .acc-btn span{font-family:'Baloo 2',cursive;font-size:1.35rem;color:#ff42a9}
-    .acc-icon{
-      width:38px;height:38px;border-radius:50%;
-      display:grid;place-items:center;
-      background:rgba(255,255,255,.88);color:#ff42a9;font-weight:800;
-    }
-    .acc-body{max-height:0;overflow:hidden;transition:max-height .28s ease;padding:0 20px}
-    .acc-body-inner{padding:0 0 20px}
-    .acc-body p{color:var(--muted);font-weight:600}
-    .acc-body p + p{margin-top:10px}
-
-    .author-quote{padding:24px}
-    .author-quote p{font-style:italic}
-    .author-sign{margin-top:12px;font-family:'Baloo 2',cursive;font-size:1.1rem;color:#d93f95}
-
-    .site-footer{
-      padding:28px 0;
-      background:rgba(30,40,88,.22);
-      border-top:1px solid rgba(255,255,255,.2);
-      color:#fff;
-    }
-    .footer-inner{
-      display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-      align-items:center;
+        radial-gradient(circle at 10% 90%, rgba(255, 200, 98, 0.24) 0 4px, transparent 5px),
+        radial-gradient(circle at 20% 86%, rgba(255, 133, 193, 0.32) 0 5px, transparent 6px),
+        radial-gradient(circle at 30% 92%, rgba(255,255,255,0.88) 0 3px, transparent 4px),
+        radial-gradient(circle at 42% 88%, rgba(255, 200, 98, 0.24) 0 4px, transparent 5px),
+        radial-gradient(circle at 54% 92%, rgba(255, 133, 193, 0.32) 0 5px, transparent 6px),
+        radial-gradient(circle at 66% 88%, rgba(255,255,255,0.88) 0 3px, transparent 4px),
+        radial-gradient(circle at 78% 91%, rgba(255, 200, 98, 0.24) 0 4px, transparent 5px),
+        radial-gradient(circle at 90% 87%, rgba(255, 133, 193, 0.32) 0 5px, transparent 6px);
+      opacity: 0.9;
     }
 
-    .cart-overlay,.game-modal{
-      position:fixed;inset:0;z-index:9998;
-      background:rgba(20,20,45,.48);
-      backdrop-filter:blur(8px);
-      display:none;
-    }
-    .cart-overlay.show,.game-modal.open{display:block}
-    .cart{
-      position:fixed;right:0;top:0;z-index:9999;
-      width:min(420px,100%);height:100vh;
-      background:rgba(255,255,255,.96);
-      transform:translateX(100%);
-      transition:transform .25s ease;
-      display:flex;flex-direction:column;
-      border-left:2px solid rgba(255,255,255,.9);
-    }
-    .cart.open{transform:translateX(0)}
-    .cart-head,.cart-foot{
-      padding:18px;border-bottom:1px solid rgba(0,0,0,.06)
-    }
-    .cart-foot{border-top:1px solid rgba(0,0,0,.06);border-bottom:0}
-    .cart-head{display:flex;justify-content:space-between;align-items:center}
-    .cart-body{padding:16px;overflow:auto;display:grid;gap:12px;flex:1}
-    .cart-item{
-      display:grid;grid-template-columns:88px 1fr;gap:12px;padding:12px;
-      border-radius:18px;background:rgba(255,255,255,.9);
-      border:2px solid rgba(255,255,255,.92);box-shadow:var(--shadow);
-    }
-    .cart-thumb{width:88px;aspect-ratio:1495/1056;border-radius:12px;background-size:cover;background-position:center}
-    .qty{display:inline-flex;align-items:center;gap:8px;margin-top:8px}
-    .qty button,.close-x{
-      width:34px;height:34px;border:0;border-radius:50%;
-      cursor:pointer;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;font-weight:800;
-    }
-    .empty{padding:20px;text-align:center;color:var(--muted);font-weight:700}
-
-    .notice{
-      position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
-      z-index:12000;
-      background:#fff;border:2px solid rgba(255,255,255,.95);
-      border-radius:999px;padding:12px 18px;
-      color:#d93f95;font-family:'Baloo 2',cursive;font-weight:800;
-      box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;
-    }
-    .notice.show{opacity:1}
-
-    .game-modal{overflow:auto}
-    .game-wrap{
-      width:min(960px,calc(100% - 20px));
-      margin:24px auto;
-      background:rgba(255,255,255,.96);
-      border-radius:28px;
-      overflow:hidden;
-      box-shadow:0 30px 70px rgba(0,0,0,.24);
-    }
-    .game-top{
-      padding:18px 20px;
-      display:flex;justify-content:space-between;gap:16px;align-items:center;
-      background:rgba(255,255,255,.82);
-      border-bottom:1px solid rgba(0,0,0,.06);
-    }
-    .game-title{font-size:2rem}
-    .game-sub{color:#607099;font-weight:600}
-    .game-panel{padding:16px}
-    .stats{
-      display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px;
-    }
-    .pill-stat{
-      padding:10px 12px;border-radius:999px;text-align:center;
-      background:#fff;box-shadow:0 8px 20px rgba(31,44,92,.08);
-      font-weight:700;color:#314068;
-    }
-    .pill-stat strong{color:#ff42a9}
-    .stage{
-      position:relative;height:min(62vh,540px);min-height:420px;
-      overflow:hidden;border-radius:24px;
-      background:linear-gradient(180deg,#84d6ff 0%,#c6efff 45%,#fff8d9 100%);
-    }
-    .stage.dark{background:linear-gradient(180deg,#1d2548 0%,#2a3766 50%,#45588a 100%)}
-    .stage.sunset{background:linear-gradient(180deg,#ffb9d9 0%,#ffd8ee 42%,#fff1b8 100%)}
-    .sun{
-      position:absolute;top:24px;right:24px;width:76px;height:76px;border-radius:50%;
-      background:radial-gradient(circle at 35% 35%,#fffbe6,#ffd45a 58%,#ffb24d 100%);
-      box-shadow:0 0 30px rgba(255,212,90,.45);
-    }
-    .ground{
-      position:absolute;left:0;right:0;bottom:0;height:72px;
-      background:linear-gradient(180deg,#9ce88a,#67cb72);
-    }
-    .overlay{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-      padding:20px;background:rgba(255,255,255,.16);z-index:5;
-    }
-    .game-card{
-      width:min(560px,100%);
-      padding:24px;border-radius:24px;text-align:center;
-      background:rgba(255,255,255,.93);box-shadow:var(--shadow);
-    }
-    .game-card p{color:#556483;font-weight:600}
-    .game-card .mini{display:block;margin-top:8px;color:#7684a5;font-size:.95rem}
-    .game-cloud{
-      position:absolute;width:92px;height:58px;border:0;background:transparent;cursor:pointer;
-    }
-    .m,.b1,.b2,.b3{position:absolute}
-    .m{left:10px;right:10px;bottom:0;height:30px;border-radius:999px}
-    .b1{width:28px;height:28px;left:10px;top:16px;border-radius:50%}
-    .b2{width:38px;height:38px;left:28px;top:4px;border-radius:50%}
-    .b3{width:30px;height:30px;right:12px;top:14px;border-radius:50%}
-    .game-cloud.good .m,.game-cloud.good .b1,.game-cloud.good .b2,.game-cloud.good .b3{
-      background:linear-gradient(180deg,#ffc8e9,#ff7cc5);
-      box-shadow:0 6px 16px rgba(255,124,197,.22);
-    }
-    .game-cloud.bad .m,.game-cloud.bad .b1,.game-cloud.bad .b2,.game-cloud.bad .b3{
-      background:linear-gradient(180deg,#ffb6b6,#ff5656);
-      box-shadow:0 6px 16px rgba(255,86,86,.2);
-    }
-    .game-cloud.bonus .m,.game-cloud.bonus .b1,.game-cloud.bonus .b2,.game-cloud.bonus .b3{
-      background:linear-gradient(180deg,#fff0ae,#ffd55f);
-      box-shadow:0 6px 16px rgba(255,213,95,.24);
-    }
-    .cloud-label{
-      position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
-      color:#fff;font-size:.9rem;font-weight:800;pointer-events:none;
-    }
-    .float{
-      position:absolute;z-index:6;font-weight:800;pointer-events:none;
-      animation:up .7s ease forwards;
-    }
-    .float.plus{color:#ff42a9}
-    .float.minus{color:#ff5656}
-    .leaderboard{
-      margin-top:14px;padding:14px;border-radius:18px;
-      background:rgba(255,255,255,.7);border:2px solid rgba(255,255,255,.9)
-    }
-    .leaderboard h4{margin-bottom:8px}
-    .leaderboard ol{padding-left:18px;text-align:left;color:#5a6888;font-weight:700}
-    .leaderboard li + li{margin-top:4px}
-
-    @keyframes up{
-      0%{opacity:0;transform:translateY(0) scale(.8)}
-      20%{opacity:1;transform:translateY(-6px) scale(1)}
-      100%{opacity:0;transform:translateY(-28px) scale(1.06)}
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    @media (max-width:980px){
-      .hero-grid,.proof-grid,.book-grid,.prod-grid,.info-grid,.contact-grid{grid-template-columns:1fr}
-      .stats{grid-template-columns:repeat(3,1fr)}
-      .nav{flex-wrap:wrap}
+    button {
+      font: inherit;
     }
-    @media (max-width:640px){
-      .brand-logo{width:60px;height:60px}
-      .brand-text{font-size:1.7rem}
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .game-cloud{width:78px;height:50px}
-      .m{height:26px}
-      .b1{width:24px;height:24px;left:9px;top:14px}
-      .b2{width:32px;height:32px;left:24px;top:5px}
-      .b3{width:24px;height:24px;right:10px;top:15px}
-      .cloud-label{font-size:.78rem}
-      .footer-inner{flex-direction:column;align-items:flex-start}
+
+    .container {
+      width: min(100% - 28px, var(--max));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      background: rgba(190, 210, 240, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 8px 20px rgba(185,95,180,0.06);
+    }
+
+    .nav {
+      min-height: 88px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 8px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .brand-badge {
+      width: 92px;
+      height: 92px;
+      background-image: url('pinkie.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: drop-shadow(0 10px 18px rgba(255,255,255,0.28));
+      animation: pinkieFloat 5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.95rem, 2.8vw, 2.8rem);
+      font-weight: 800;
+      line-height: 0.92;
+      color: #ff4db1;
+      text-shadow:
+        0 3px 10px rgba(255,255,255,0.28),
+        0 8px 20px rgba(255,77,177,0.22);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 6px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.22rem;
+      font-weight: 800;
+      line-height: 1;
+      text-align: center;
+      color: #ff4db1;
+      border-radius: 999px;
+      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease, background 0.18s ease;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover {
+      transform: scale(1.09);
+      color: #ff2e9a;
+      text-shadow: 0 6px 14px rgba(255,77,177,0.18);
+    }
+
+    .nav-links a:active,
+    .nav-links button:active {
+      transform: scale(0.94);
+    }
+
+    .nav-links a:focus-visible,
+    .nav-links button:focus-visible {
+      outline: none;
+      color: #ff2e9a;
+      text-shadow: 0 6px 14px rgba(255,77,177,0.18);
+    }
+
+    .nav-game-btn {
+      padding: 10px 16px !important;
+      background: linear-gradient(135deg, #ff73c3 0%, #f05aae 100%) !important;
+      color: #ffffff !important;
+      border: 2px solid rgba(255,255,255,0.88) !important;
+      box-shadow: 0 8px 16px rgba(240,79,168,0.14);
+      white-space: nowrap;
+    }
+
+    .nav-game-btn:hover {
+      transform: translateY(-2px) scale(1.03) !important;
+      box-shadow: 0 10px 18px rgba(240,79,168,0.18);
+      color: #ffffff !important;
+      text-shadow: none !important;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.84);
+      color: var(--pink-dark);
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-toggle span {
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      display: block;
+    }
+
+    .cart-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 112px;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,0.88);
+      background: linear-gradient(135deg, #ff73c3 0%, #f05aae 100%);
+      color: #ffffff;
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.94rem;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(240,79,168,0.14);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .cart-button:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 18px rgba(240,79,168,0.18);
+    }
+
+    .cart-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .cart-count {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      color: #ff4db1;
+      display: inline-grid;
+      place-items: center;
+      font-size: 0.84rem;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .mobile-menu {
+      display: none;
+      background: rgba(255,255,255,0.55);
+      border-top: 1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu-inner {
+      width: min(100% - 28px, var(--max));
+      margin: 0 auto;
+      padding: 14px 0 16px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .mobile-menu a,
+    .mobile-menu button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.86);
+      border: 2px solid rgba(255,255,255,0.95);
+      border-radius: 999px;
+      color: #ff4db1;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.18s ease, background 0.18s ease;
+      cursor: pointer;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a:active,
+    .mobile-menu button:hover,
+    .mobile-menu button:active {
+      transform: scale(0.98);
+      background: rgba(255,255,255,0.96);
+    }
+
+    .mobile-game-btn {
+      background: linear-gradient(135deg, #ff73c3 0%, #f05aae 100%) !important;
+      color: #ffffff !important;
+    }
+
+    .sparkles,
+    .clouds {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .sparkles span {
+      position: absolute;
+      color: #fff5ad;
+      font-size: 24px;
+      text-shadow: 0 0 10px rgba(255,255,180,0.9), 0 0 22px rgba(255,255,255,0.76);
+      animation: twinkle 3.4s ease-in-out infinite;
+      opacity: 0.94;
+    }
+
+    .sparkles span:nth-child(1) { top: 8%; left: 9%; animation-delay: 0s; }
+    .sparkles span:nth-child(2) { top: 13%; left: 22%; animation-delay: 1s; }
+    .sparkles span:nth-child(3) { top: 9%; left: 72%; animation-delay: 2s; }
+    .sparkles span:nth-child(4) { top: 17%; left: 87%; animation-delay: 1.4s; }
+    .sparkles span:nth-child(5) { top: 36%; left: 14%; animation-delay: 2.8s; }
+    .sparkles span:nth-child(6) { top: 39%; left: 78%; animation-delay: 0.6s; }
+    .sparkles span:nth-child(7) { top: 62%; left: 8%; animation-delay: 1.8s; }
+    .sparkles span:nth-child(8) { top: 66%; left: 88%; animation-delay: 2.4s; }
+
+    .clouds .pinkie-cloud {
+      position: absolute;
+      width: 126px;
+      height: 78px;
+      background-image: url('pinkie.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.86;
+      filter: drop-shadow(0 10px 18px rgba(255,255,255,0.26));
+      animation: driftPinkie linear infinite;
+    }
+
+    .clouds .pinkie-cloud:nth-child(1) { top: 12%; left: -180px; animation-duration: 28s; transform: scale(0.78); }
+    .clouds .pinkie-cloud:nth-child(2) { top: 30%; left: -220px; animation-duration: 38s; animation-delay: -8s; transform: scale(0.62); opacity: 0.7; }
+    .clouds .pinkie-cloud:nth-child(3) { top: 58%; left: -200px; animation-duration: 34s; animation-delay: -15s; transform: scale(0.74); opacity: 0.74; }
+
+    .hero {
+      padding: 46px 0 58px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: min(1700px, 128vw);
+      height: 860px;
+      left: 50%;
+      top: -408px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at center,
+          transparent 0 41%,
+          #ff628d 41% 45%,
+          transparent 45% 49%,
+          #ff9349 49% 53%,
+          transparent 53% 57%,
+          #ffe15d 57% 61%,
+          transparent 61% 65%,
+          #79dd79 65% 69%,
+          transparent 69% 73%,
+          #6ae4e8 73% 77%,
+          transparent 77% 81%,
+          #77b2ff 81% 85%,
+          transparent 85% 89%,
+          #a37dff 89% 93%,
+          transparent 93% 100%);
+      filter: saturate(1.12);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 25%, rgba(255,255,255,0.95) 0 26px, transparent 27px),
+        radial-gradient(circle at 17% 25%, rgba(255,255,255,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 22% 25%, rgba(255,255,255,0.95) 0 23px, transparent 24px),
+        radial-gradient(circle at 76% 20%, rgba(255,255,255,0.95) 0 28px, transparent 29px),
+        radial-gradient(circle at 81% 20%, rgba(255,255,255,0.95) 0 18px, transparent 19px),
+        radial-gradient(circle at 86% 20%, rgba(255,255,255,0.95) 0 23px, transparent 24px);
+      opacity: 0.92;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.03fr 0.97fr;
+      gap: 32px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.84);
+      color: var(--pink-dark);
+      border: 2px solid rgba(255,255,255,0.95);
+      font-family: 'Baloo 2', cursive;
+      font-weight: 700;
+      font-size: 1.12rem;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-soft);
+      animation: fadeUp 0.8s ease both;
+    }
+
+    h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(3rem, 5vw, 5.2rem);
+      line-height: 0.95;
+      margin-bottom: 18px;
+      animation: fadeUp 1s ease both;
+    }
+
+    .gradient-title {
+      display: inline-block;
+      color: #ff4db1;
+      text-shadow:
+        0 4px 14px rgba(255,255,255,0.22),
+        0 8px 22px rgba(255,77,177,0.18);
+    }
+
+    .hero-subtitle {
+      display: block;
+      margin-top: 4px;
+      color: #8f5fff;
+      text-shadow:
+        0 3px 12px rgba(255,255,255,0.18),
+        0 8px 18px rgba(143,95,255,0.16);
+    }
+
+    .lead {
+      font-size: 1.15rem;
+      color: #7a4a7f;
+      max-width: 720px;
+      margin-bottom: 26px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.58);
+      border: 2px solid rgba(255,255,255,0.78);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px;
+      border-radius: 24px;
+      animation: fadeUp 1.15s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 26px;
+      animation: fadeUp 1.3s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 26px;
+      border-radius: 999px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.18rem;
+      font-weight: 700;
+      border: 3px solid rgba(255,255,255,0.95);
+      transition: transform 0.18s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      text-shadow: 0 2px 0 rgba(0,0,0,0.06);
+      text-decoration: none;
+    }
+
+    .btn:hover { transform: translateY(-4px) scale(1.04); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: linear-gradient(135deg, #ff74c9, #ff52b1); color: white; }
+    .btn-secondary { background: linear-gradient(135deg, #82cfff, #6d8cff); color: white; }
+    .btn-light { background: rgba(255,255,255,0.9); color: var(--pink-dark); }
+
+    .hero-proof,
+    .feature-grid,
+    .contact-grid,
+    .volume-grid,
+    .book-detail-grid {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .hero-proof { gap: 14px; animation: fadeUp 1.45s ease both; }
+
+    .proof-card,
+    .feature-card,
+    .workshop-card,
+    .author-card,
+    .contact-card,
+    .final-card,
+    .volume-card,
+    .book-detail-card,
+    .story-band,
+    .checkout-card,
+    .product-price-card,
+    .atelier-intro-card,
+    .atelier-accordion-card,
+    .author-quote-card,
+    .author-story-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .proof-card,
+    .feature-card,
+    .workshop-card,
+    .author-card,
+    .contact-card,
+    .final-card,
+    .volume-card,
+    .book-detail-card,
+    .checkout-card,
+    .product-price-card,
+    .atelier-intro-card,
+    .atelier-accordion-card,
+    .author-quote-card,
+    .author-story-card {
+      padding: 24px;
+      transition: 0.22s ease;
+    }
+
+    .proof-card:hover,
+    .feature-card:hover,
+    .workshop-card:hover,
+    .author-card:hover,
+    .contact-card:hover,
+    .volume-card:hover,
+    .book-detail-card:hover,
+    .checkout-card:hover,
+    .product-price-card:hover,
+    .atelier-intro-card:hover,
+    .atelier-accordion-card:hover,
+    .author-quote-card:hover,
+    .author-story-card:hover {
+      transform: translateY(-7px) scale(1.02);
+      box-shadow: 0 26px 46px rgba(184,97,188,0.22);
+    }
+
+    .proof-card strong,
+    .feature-card h3,
+    .workshop-card h3,
+    .author-card h3,
+    .contact-card h3,
+    .final-card h3,
+    .volume-card h3,
+    .book-detail-card h3,
+    .story-band h3,
+    .checkout-card h3,
+    .product-price-card h4,
+    .atelier-intro-card h3,
+    .atelier-accordion-button span,
+    .author-quote-title,
+    .author-story-button span {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--pink-dark);
+      margin-bottom: 10px;
+    }
+
+    .proof-card p,
+    .feature-card p,
+    .workshop-card p,
+    .author-card p,
+    .contact-card p,
+    .final-card p,
+    .volume-card p,
+    .book-detail-card p,
+    .story-band p,
+    .checkout-card p,
+    .product-price-card p,
+    .atelier-intro-card p,
+    .atelier-accordion-body p,
+    .author-quote-card p,
+    .author-story-body p {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(255,116,199,0.26), rgba(255,216,92,0.24), rgba(120,180,255,0.22));
+      border: 2px solid rgba(255,255,255,0.86);
+      margin-bottom: 16px;
+      font-size: 1.9rem;
+      box-shadow: var(--shadow-soft);
+      animation: floaty 4s ease-in-out infinite;
+    }
+
+    .check-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .check-list li::before {
+      content: '✨';
+      flex-shrink: 0;
+    }
+
+    .hero-visual {
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: floaty 4.8s ease-in-out infinite;
+      position: relative;
+    }
+
+    .pinkie-wrap {
+      position: relative;
+      width: min(100%, 560px);
+      min-height: 570px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pinkie-glow,
+    .pinkie-glow-2 {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(24px);
+      opacity: 0.48;
+      z-index: 0;
+    }
+
+    .pinkie-glow { width: 240px; height: 240px; background: rgba(255,116,199,0.42); top: 84px; right: 18px; }
+    .pinkie-glow-2 { width: 230px; height: 230px; background: rgba(255,182,92,0.28); bottom: 88px; left: 26px; }
+
+    .pinkie-image {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 470px);
+      aspect-ratio: 764 / 527;
+      background-image: url('pinkie.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: drop-shadow(0 18px 28px rgba(255,255,255,0.24));
+      animation: pinkieBob 4.2s ease-in-out infinite;
+    }
+
+    .pinkie-spark {
+      position: absolute;
+      color: #fff8b0;
+      font-size: 30px;
+      text-shadow: 0 0 16px rgba(255,255,180,0.95), 0 0 28px rgba(255,255,255,0.78);
+      z-index: 3;
+      animation: twinkle 2.6s ease-in-out infinite;
+    }
+
+    .pinkie-spark.s1 { top: 126px; left: 74px; }
+    .pinkie-spark.s2 { top: 150px; right: 72px; animation-delay: 0.8s; }
+    .pinkie-spark.s3 { top: 210px; left: 30px; animation-delay: 1.4s; }
+    .pinkie-spark.s4 { top: 220px; right: 26px; animation-delay: 0.4s; }
+
+    .hero-title-card {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 94%;
+      padding: 22px;
+      background: rgba(255,255,255,0.78);
+      border-radius: var(--radius-xl);
+      border: 2px solid rgba(255,255,255,0.94);
+      text-align: center;
+      box-shadow: var(--shadow);
+      z-index: 4;
+    }
+
+    .hero-title-card h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: var(--pink-dark);
+      margin-bottom: 6px;
+    }
+
+    .hero-title-card p {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 84px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 920px;
+      margin: 0 auto 42px;
+    }
+
+    .section-header h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      color: #ff4eb0;
+      text-shadow:
+        0 4px 14px rgba(255,255,255,0.2),
+        0 8px 18px rgba(255,78,176,0.14);
+      margin-bottom: 12px;
+      line-height: 0.98;
+    }
+
+    .section-header p {
+      color: #865973;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.5);
+      border-radius: 18px;
+      padding: 14px 18px;
+      border: 2px solid rgba(255,255,255,0.75);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .volume-card {
+      overflow: hidden;
+    }
+
+    .volume-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 2200px;
+      margin-bottom: 20px;
+      min-height: 240px;
+    }
+
+    .book-3d {
+      position: relative;
+      width: 260px;
+      aspect-ratio: 1495 / 1056;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transform: rotateX(6deg) rotateY(-10deg);
+      transition: transform 0.95s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .book-3d:focus {
+      outline: none;
+    }
+
+    .book-3d:focus-visible {
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.75);
+      border-radius: 22px;
+    }
+
+    .book-3d:hover {
+      transform: rotateX(2deg) rotateY(-18deg) translateY(-4px) scale(1.03);
+    }
+
+    .book-3d.is-flipped {
+      transform: rotateX(4deg) rotateY(180deg);
+    }
+
+    .book-3d.is-flipped:hover {
+      transform: rotateX(2deg) rotateY(196deg) translateY(-4px) scale(1.03);
+    }
+
+    .book-shadow {
+      position: absolute;
+      inset: auto 8% -18px 8%;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.18);
+      filter: blur(14px);
+      transform: translateZ(-40px);
+      pointer-events: none;
+    }
+
+    .book-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background-repeat: no-repeat;
+      background-size: 200% 100%;
+      box-shadow:
+        0 28px 42px rgba(0,0,0,0.22),
+        0 10px 16px rgba(0,0,0,0.14);
+    }
+
+    .book-front {
+      transform: translateZ(14px);
+    }
+
+    .book-back {
+      transform: rotateY(180deg) translateZ(14px);
+    }
+
+    .book-pages {
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      right: -8px;
+      width: 16px;
+      border-radius: 0 10px 10px 0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          #fffdf8 0px,
+          #fffdf8 3px,
+          #f1eadf 3px,
+          #f1eadf 4px
+        );
+      transform: rotateY(90deg) translateZ(6px);
+      transform-origin: right center;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.08);
+      pointer-events: none;
+    }
+
+    .book-3d::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: -8px;
+      width: 16px;
+      border-radius: 10px 0 0 10px;
+      background: linear-gradient(to right, #b56ca7 0%, #f3d2e3 45%, #a65d98 100%);
+      transform: rotateY(-90deg) translateZ(8px);
+      transform-origin: left center;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.25);
+    }
+
+    .book-vol1 .book-front {
+      background-image: url("coperta-volum-1.png");
+      background-position: right center;
+    }
+
+    .book-vol1 .book-back {
+      background-image: url("coperta-volum-1.png");
+      background-position: left center;
+    }
+
+    .book-vol2 .book-front {
+      background-image: url("coperta-volum-2.png");
+      background-position: right center;
+    }
+
+    .book-vol2 .book-back {
+      background-image: url("coperta-volum-2.png");
+      background-position: left center;
+    }
+
+    .book-vol3 .book-front {
+      background-image: url("coperta-volum-3.png");
+      background-position: right center;
+    }
+
+    .book-vol3 .book-back {
+      background-image: url("coperta-volum-3.png");
+      background-position: left center;
+    }
+
+    .volume-tag {
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,116,199,0.22), rgba(156,124,255,0.2));
+      color: var(--pink-dark);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.04rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      border: 2px solid rgba(255,255,255,0.86);
+    }
+
+    .volume-card .btn {
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .price-box {
+      margin-top: 28px;
+      display: grid;
+      gap: 22px;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+    }
+
+    .product-price-card {
+      text-align: center;
+    }
+
+    .product-cover {
+      width: 100%;
+      aspect-ratio: 1495 / 1056;
+      border-radius: 18px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255,255,255,0.92);
+      box-shadow: 0 14px 26px rgba(0,0,0,0.12);
+      margin-bottom: 14px;
+    }
+
+    .product-cover.vol1 { background-image: url("coperta-volum-1.png"); }
+    .product-cover.vol2 { background-image: url("coperta-volum-2.png"); }
+    .product-cover.vol3 { background-image: url("coperta-volum-3.png"); }
+
+    .product-cover.pachet {
+      background:
+        linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.14)),
+        url("coperta-volum-1.png"),
+        url("coperta-volum-2.png"),
+        url("coperta-volum-3.png");
+      background-size: 100% 100%, 36% auto, 36% auto, 36% auto;
+      background-position: center, left 6% center, center center, right 6% center;
+      background-repeat: no-repeat;
+    }
+
+    .product-price-card h4 {
+      font-size: 1.45rem;
+      margin-bottom: 6px;
+    }
+
+    .product-price-subtitle {
+      color: var(--muted);
+      font-weight: 600;
+      min-height: 48px;
+      margin-bottom: 14px;
+    }
+
+    .product-price-value {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 110px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff74c9, #ff52b1);
+      color: white;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.4rem;
+      font-weight: 800;
+      box-shadow: 0 12px 22px rgba(255,82,177,0.24);
+      margin-bottom: 14px;
+    }
+
+    .product-price-card .btn {
+      width: 100%;
+    }
+
+    .story-band {
+      margin-top: 18px;
+      margin-bottom: 26px;
+      padding: 30px 24px;
+      text-align: center;
+    }
+
+    .book-detail-grid {
+      gap: 26px;
+      margin-top: 10px;
+    }
+
+    .two-col,
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .checkout-note {
+      background: rgba(255,255,255,0.75);
+      border: 2px solid rgba(255,255,255,0.86);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 16px;
+    }
+
+    .checkout-mini-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .checkout-mini-item {
+      display: grid;
+      grid-template-columns: 74px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.74);
+      border: 2px solid rgba(255,255,255,0.84);
+    }
+
+    .checkout-mini-thumb {
+      width: 74px;
+      aspect-ratio: 1495 / 1056;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .thumb-vol1 { background-image: url("coperta-volum-1.png"); }
+    .thumb-vol2 { background-image: url("coperta-volum-2.png"); }
+    .thumb-vol3 { background-image: url("coperta-volum-3.png"); }
+
+    .checkout-mini-item .btn {
+      padding: 10px 16px;
+      font-size: 0.98rem;
+      min-width: 138px;
+    }
+
+    .atelier-intro-card {
+      margin-bottom: 24px;
+    }
+
+    .atelier-intro-card h3 {
+      margin-bottom: 14px;
+    }
+
+    .atelier-intro-card p + p {
+      margin-top: 14px;
+    }
+
+    .atelier-accordion-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .atelier-accordion-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .atelier-accordion-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .atelier-accordion-button span {
+      margin-bottom: 0;
+      font-size: 1.42rem;
+    }
+
+    .atelier-accordion-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,116,199,0.22), rgba(156,124,255,0.2));
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--pink-dark);
+      font-size: 1.4rem;
+      font-weight: 800;
+      transition: transform 0.22s ease;
+    }
+
+    .atelier-accordion-card.open .atelier-accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .atelier-accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 24px;
+    }
+
+    .atelier-accordion-body-inner {
+      padding: 0 0 24px;
+    }
+
+    .atelier-accordion-body p + p,
+    .atelier-accordion-body ul + p,
+    .atelier-accordion-body p + ul {
+      margin-top: 12px;
+    }
+
+    .atelier-accordion-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .atelier-accordion-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .atelier-accordion-list li::before {
+      content: '✨';
+      flex-shrink: 0;
+    }
+
+    .author-quote-card {
+      position: relative;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .author-quote-mark {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      font-family: Georgia, serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,116,200,0.22);
+      pointer-events: none;
+    }
+
+    .author-quote-content {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .author-quote-title {
+      margin-bottom: 14px;
+    }
+
+    .author-quote-text {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .author-signature {
+      margin-top: 16px;
+      color: var(--pink-dark);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.12rem;
+      font-weight: 700;
+    }
+
+    .author-story-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .author-story-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .author-story-button span {
+      margin-bottom: 0;
+      font-size: 1.42rem;
+    }
+
+    .author-story-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,116,199,0.22), rgba(156,124,255,0.2));
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--pink-dark);
+      font-size: 1.4rem;
+      font-weight: 800;
+      transition: transform 0.22s ease;
+    }
+
+    .author-story-card.open .author-story-icon {
+      transform: rotate(45deg);
+    }
+
+    .author-story-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.32s ease;
+      padding: 0 24px;
+    }
+
+    .author-story-body-inner {
+      padding: 0 0 24px;
+    }
+
+    .author-story-body p + p {
+      margin-top: 12px;
+    }
+
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(71,39,79,0.34);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease;
+      z-index: 998;
+    }
+
+    .cart-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(440px, 100%);
+      height: 100vh;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      border-left: 2px solid rgba(255,255,255,0.9);
+      box-shadow: -18px 0 34px rgba(185,95,180,0.12);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid rgba(220,190,230,0.5);
+    }
+
+    .cart-header h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: var(--pink-dark);
+      line-height: 1;
+    }
+
+    .cart-close {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.9);
+      color: var(--pink-dark);
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 34px 18px;
+      background: rgba(255,255,255,0.74);
+      border: 2px solid rgba(255,255,255,0.86);
+      border-radius: 24px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.82);
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cart-item-thumb {
+      width: 92px;
+      aspect-ratio: 1495 / 1056;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255,255,255,0.92);
+    }
+
+    .cart-item-thumb.vol1 { background-image: url("coperta-volum-1.png"); }
+    .cart-item-thumb.vol2 { background-image: url("coperta-volum-2.png"); }
+    .cart-item-thumb.vol3 { background-image: url("coperta-volum-3.png"); }
+    .cart-item-thumb.pachet {
+      background:
+        linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.14)),
+        url("coperta-volum-1.png"),
+        url("coperta-volum-2.png"),
+        url("coperta-volum-3.png");
+      background-size: 100% 100%, 36% auto, 36% auto, 36% auto;
+      background-position: center, left 6% center, center center, right 6% center;
+      background-repeat: no-repeat;
+    }
+
+    .cart-item-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.28rem;
+      color: var(--pink-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .cart-item-price {
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.9);
+      border: 2px solid rgba(255,255,255,0.94);
+      border-radius: 999px;
+      padding: 6px;
+    }
+
+    .qty-controls button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff74c9, #ff52b1);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(255,82,177,0.18);
+    }
+
+    .qty-value {
+      min-width: 24px;
+      text-align: center;
+      font-weight: 800;
+      color: var(--pink-dark);
+    }
+
+    .remove-item {
+      border: 0;
+      background: transparent;
+      color: #b96596;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .cart-footer {
+      border-top: 1px solid rgba(220,190,230,0.5);
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 12px;
+      background: rgba(255,255,255,0.86);
+    }
+
+    .cart-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cart-summary-total {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem;
+      color: var(--pink-dark);
+    }
+
+    .cart-footer .btn {
+      width: 100%;
+    }
+
+    .notice {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(16px);
+      background: rgba(255,255,255,0.96);
+      border: 2px solid rgba(255,255,255,0.95);
+      border-radius: 999px;
+      padding: 12px 18px;
+      color: var(--pink-dark);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      z-index: 1200;
+    }
+
+    .notice.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .site-footer {
+      padding: 26px 0 34px;
+      background: rgba(23, 35, 78, 0.26);
+      border-top: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(8px);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      color: #ff49ab;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.28rem;
+      font-weight: 700;
+      text-shadow: 0 8px 18px rgba(255,255,255,0.20);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.86);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.86);
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .footer-links span {
+      color: rgba(255,255,255,0.32);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { transform: scale(0.9); opacity: 0.35; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+
+    @keyframes driftPinkie {
+      from { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(55vw) translateY(-10px); }
+      to { transform: translateX(calc(100vw + 240px)) translateY(2px); }
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pinkieFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(-1deg); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pinkieBob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(-1deg); }
+    }
+
+    .game-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(13, 20, 46, 0.62);
+      backdrop-filter: blur(8px);
+    }
+
+    .game-modal.open {
+      display: flex;
+    }
+
+    .game-shell {
+      width: min(980px, 100%);
+      max-height: 92vh;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,247,255,0.95));
+      box-shadow: 0 30px 80px rgba(9, 18, 52, 0.35);
+      border: 1px solid rgba(255,255,255,0.6);
+      position: relative;
+    }
+
+    .game-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(20, 34, 77, 0.08);
+    }
+
+    .game-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .game-title {
+      margin: 0;
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: #ff4da9;
+      line-height: 1;
+      text-shadow: none;
+    }
+
+    .game-subtitle {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #4e5a83;
+      font-weight: 600;
+    }
+
+    .game-close {
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #32406e;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 8px 20px rgba(26, 42, 86, 0.12);
+      transition: transform 0.16s ease, background 0.16s ease;
+    }
+
+    .game-close:hover {
+      transform: scale(1.06);
+      background: #ffffff;
+    }
+
+    .game-panel {
+      padding: 18px 20px 22px;
+    }
+
+    .game-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .game-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.86);
+      box-shadow: 0 10px 24px rgba(31, 44, 92, 0.08);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #2f3b66;
+    }
+
+    .game-pill strong {
+      color: #ff4da9;
+    }
+
+    .game-stage {
+      position: relative;
+      width: 100%;
+      height: min(62vh, 540px);
+      min-height: 420px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #87d7ff 0%, #bceeff 40%, #f8fdff 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+      transition: background 0.5s ease, filter 0.5s ease;
+    }
+
+    .game-stage.dark-sky {
+      background: linear-gradient(180deg, #1a2448 0%, #2a3566 40%, #3b4b7e 100%);
+    }
+
+    .game-sun {
+      position: absolute;
+      top: 26px;
+      right: 34px;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fffbe9, #ffd45c 55%, #ffb347 100%);
+      box-shadow: 0 0 35px rgba(255, 212, 92, 0.45);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .game-stage.dark-sky .game-sun {
+      opacity: 0.18;
+      transform: scale(0.85);
+    }
+
+    .game-lightning {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        linear-gradient(120deg, transparent 44%, rgba(255,255,255,0.95) 48%, transparent 52%),
+        linear-gradient(60deg, transparent 46%, rgba(255,255,255,0.75) 50%, transparent 54%);
+      transition: opacity 0.14s ease;
+    }
+
+    .game-lightning.flash {
+      opacity: 0.65;
+    }
+
+    .game-ground {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 80px;
+      background: linear-gradient(180deg, rgba(152, 228, 132, 0.95), rgba(102, 201, 117, 0.98));
+    }
+
+    .game-cloud {
+      position: absolute;
+      width: 92px;
+      height: 58px;
+      cursor: pointer;
+      user-select: none;
+      touch-action: manipulation;
+      transform-origin: center;
+      transition: transform 0.08s ease;
+      border: 0;
+      background: transparent;
+    }
+
+    .game-cloud:hover {
+      transform: scale(1.05);
+    }
+
+    .game-cloud .cloud-main {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 0;
+      height: 30px;
+      border-radius: 999px;
+    }
+
+    .game-cloud .cloud-b1,
+    .game-cloud .cloud-b2,
+    .game-cloud .cloud-b3 {
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .game-cloud .cloud-b1 {
+      width: 28px;
+      height: 28px;
+      left: 10px;
+      top: 16px;
+    }
+
+    .game-cloud .cloud-b2 {
+      width: 38px;
+      height: 38px;
+      left: 28px;
+      top: 4px;
+    }
+
+    .game-cloud .cloud-b3 {
+      width: 30px;
+      height: 30px;
+      right: 12px;
+      top: 14px;
+    }
+
+    .game-cloud.good .cloud-main,
+    .game-cloud.good .cloud-b1,
+    .game-cloud.good .cloud-b2,
+    .game-cloud.good .cloud-b3 {
+      background: linear-gradient(180deg, #ffc3e8, #ff83c6);
+      box-shadow: 0 6px 16px rgba(255, 131, 198, 0.28);
+    }
+
+    .game-cloud.bad .cloud-main,
+    .game-cloud.bad .cloud-b1,
+    .game-cloud.bad .cloud-b2,
+    .game-cloud.bad .cloud-b3 {
+      background: linear-gradient(180deg, #ff9b9b, #ff5252);
+      box-shadow: 0 6px 16px rgba(255, 82, 82, 0.22);
+    }
+
+    .game-cloud.special .cloud-main,
+    .game-cloud.special .cloud-b1,
+    .game-cloud.special .cloud-b2,
+    .game-cloud.special .cloud-b3 {
+      background: linear-gradient(180deg, #fff0ae, #ffd45f);
+      box-shadow: 0 6px 16px rgba(255, 212, 95, 0.24);
+    }
+
+    .game-cloud-label {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.92);
+      pointer-events: none;
+    }
+
+    .game-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(3px);
+      z-index: 3;
+    }
+
+    .game-card {
+      width: min(560px, 100%);
+      border-radius: 24px;
+      padding: 24px 22px;
+      text-align: center;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 18px 40px rgba(18, 32, 70, 0.16);
+    }
+
+    .game-card h3 {
+      margin: 0 0 10px;
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: #ff4da9;
+      text-shadow: none;
+    }
+
+    .game-card p {
+      margin: 0 0 16px;
+      color: #4f5a7d;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .game-card .game-mini {
+      display: block;
+      margin-top: 8px;
+      color: #6b7698;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .game-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .game-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ff63b8, #ff8fd0);
+      box-shadow: 0 12px 26px rgba(255, 99, 184, 0.24);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .game-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 16px 30px rgba(255, 99, 184, 0.28);
+    }
+
+    .game-btn.secondary {
+      background: linear-gradient(135deg, #7a8bff, #9bb2ff);
+      box-shadow: 0 12px 26px rgba(122, 139, 255, 0.22);
+    }
+
+    .game-float-score {
+      position: absolute;
+      font-weight: 800;
+      font-size: 1.1rem;
+      pointer-events: none;
+      animation: floatScore 0.7s ease forwards;
+      z-index: 4;
+    }
+
+    .game-float-score.plus {
+      color: #ff4da9;
+    }
+
+    .game-float-score.minus {
+      color: #ff5252;
+    }
+
+    @keyframes floatScore {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8);
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-28px) scale(1.05);
+      }
+    }
+
+    @media (max-width: 780px) {
+      .game-modal {
+        padding: 10px;
+      }
+
+      .game-shell {
+        border-radius: 22px;
+        max-height: 95vh;
+      }
+
+      .game-topbar {
+        padding: 14px 14px;
+      }
+
+      .game-title {
+        font-size: 1.55rem;
+      }
+
+      .game-subtitle {
+        font-size: 0.86rem;
+      }
+
+      .game-close {
+        width: 42px;
+        height: 42px;
+      }
+
+      .game-panel {
+        padding: 12px 12px 14px;
+      }
+
+      .game-stats {
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .game-pill {
+        padding: 8px 12px;
+        font-size: 0.86rem;
+      }
+
+      .game-stage {
+        height: 58vh;
+        min-height: 360px;
+        border-radius: 18px;
+      }
+
+      .game-sun {
+        width: 62px;
+        height: 62px;
+        top: 18px;
+        right: 18px;
+      }
+
+      .game-ground {
+        height: 64px;
+      }
+
+      .game-card {
+        padding: 18px 16px;
+        border-radius: 18px;
+      }
+
+      .game-card h3 {
+        font-size: 1.55rem;
+      }
+
+      .game-card p {
+        font-size: 0.94rem;
+      }
+
+      .game-btn {
+        width: 100%;
+        max-width: 260px;
+      }
+
+      .game-cloud {
+        width: 78px;
+        height: 50px;
+      }
+
+      .game-cloud .cloud-main {
+        height: 26px;
+      }
+
+      .game-cloud .cloud-b1 {
+        width: 24px;
+        height: 24px;
+        left: 9px;
+        top: 14px;
+      }
+
+      .game-cloud .cloud-b2 {
+        width: 32px;
+        height: 32px;
+        left: 24px;
+        top: 5px;
+      }
+
+      .game-cloud .cloud-b3 {
+        width: 24px;
+        height: 24px;
+        right: 10px;
+        top: 15px;
+      }
+
+      .game-cloud-label {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .feature-grid,
+      .contact-grid,
+      .volume-grid,
+      .book-detail-grid,
+      .two-col,
+      .checkout-layout,
+      .price-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-proof {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a,
+      .nav-links button {
+        font-size: 1.02rem;
+      }
+
+      .cart-button {
+        min-width: 104px;
+        height: 40px;
+        font-size: 0.88rem;
+        padding: 0 12px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .nav {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .nav-center {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .brand-badge {
+        width: 84px;
+        height: 84px;
+      }
+
+      .brand-text {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .hero {
+        padding-top: 28px;
+      }
+
+      .pinkie-image {
+        width: min(100%, 340px);
+      }
+
+      .hero-title-card {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .section-header h2 {
+        font-size: 2.4rem;
+      }
+
+      .book-3d {
+        width: 220px;
+      }
+
+      .volume-top {
+        min-height: 210px;
+      }
+
+      .nav {
+        min-height: auto;
+        gap: 12px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .brand-badge {
+        width: 76px;
+        height: 76px;
+      }
+
+      .brand-text {
+        font-size: 1.95rem;
+      }
+
+      .cart-button {
+        min-width: 122px;
+        height: 44px;
+        font-size: 0.94rem;
+        padding: 0 14px;
+      }
+
+      .mobile-menu-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .checkout-mini-item {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .checkout-mini-item .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .cart-item {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item-thumb {
+        width: 100%;
+      }
+
+      .atelier-accordion-button,
+      .author-story-button {
+        padding: 18px 18px;
+      }
+
+      .atelier-accordion-body,
+      .author-story-body {
+        padding: 0 18px;
+      }
+
+      .atelier-accordion-button span,
+      .author-story-button span {
+        font-size: 1.25rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-brand {
+        font-size: 1.12rem;
+      }
+
+      .footer-links {
+        font-size: 0.95rem;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 20px, var(--max));
+      }
+
+      .nav {
+        grid-template-columns: 1fr auto auto;
+        gap: 10px;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .brand-badge {
+        width: 64px;
+        height: 64px;
+      }
+
+      .brand-text {
+        font-size: 1.72rem;
+      }
+
+      .menu-toggle {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+      }
+
+      .cart-button {
+        min-width: 102px;
+        height: 42px;
+        font-size: 0.88rem;
+        padding: 0 12px;
+      }
+
+      .mobile-menu-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="clouds">
+    <span class="pinkie-cloud"></span>
+    <span class="pinkie-cloud"></span>
+    <span class="pinkie-cloud"></span>
+  </div>
+
+  <div class="sparkles">
+    <span>✦</span><span>✦</span><span>✦</span><span>✦</span>
+    <span>✦</span><span>✦</span><span>✦</span><span>✦</span>
+  </div>
+
   <div class="cart-overlay" id="cartOverlay"></div>
 
-  <aside class="cart" id="cartDrawer">
-    <div class="cart-head">
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-header">
       <h3>Coșul tău</h3>
-      <button class="close-x" id="closeCart">×</button>
+      <button class="cart-close" id="cartClose" aria-label="Închide coșul">×</button>
     </div>
-    <div class="cart-body" id="cartItems"></div>
-    <div class="cart-foot">
-      <p><strong>Produse:</strong> <span id="cartQty">0</span></p>
-      <p style="margin:8px 0 14px"><strong>Total:</strong> <span id="cartTotal">0 lei</span></p>
-      <div style="display:grid;gap:10px">
-        <button class="btn btn-primary" id="checkoutBtn">Finalizează pe WhatsApp</button>
-        <button class="btn btn-light" id="clearCartBtn">Golește coșul</button>
+
+    <div class="cart-body" id="cartItems">
+      <div class="cart-empty">Coșul este gol. Adaugă volumele preferate și revino aici pentru finalizare.</div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>Produse</span>
+        <span id="cartItemsCountFooter">0</span>
       </div>
+      <div class="cart-summary-row">
+        <span>Total</span>
+        <span class="cart-summary-total" id="cartTotal">0 lei</span>
+      </div>
+      <button class="btn btn-primary" id="checkoutButton">Finalizează pe WhatsApp</button>
+      <button class="btn btn-light" id="clearCartButton">Golește coșul</button>
     </div>
   </aside>
 
@@ -447,22 +2322,45 @@
   <header class="topbar">
     <div class="container nav">
       <a href="#top" class="brand">
-        <span class="brand-logo"></span>
+        <span class="brand-badge"></span>
         <span class="brand-text">Pinkie<br>Cloud</span>
       </a>
 
-      <nav class="nav-links">
+      <div class="nav-center">
+        <nav class="nav-links">
+          <a href="#carti">Cărți</a>
+          <a href="#volume">Volume</a>
+          <a href="#produse">Produse</a>
+          <a href="#ateliere">Ateliere</a>
+          <a href="#autor">Autor</a>
+          <a href="#checkout">Comandă</a>
+          <button type="button" class="nav-game-btn" id="openPinkieGameDesktop">☁️ Joc</button>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <button class="menu-toggle" id="menuToggle" aria-label="Deschide meniul" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <button class="cart-button" id="cartOpen" aria-label="Deschide coșul">
+          <span class="cart-icon">🛒</span>
+          <span>Coș</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
         <a href="#carti">Cărți</a>
         <a href="#volume">Volume</a>
         <a href="#produse">Produse</a>
         <a href="#ateliere">Ateliere</a>
         <a href="#autor">Autor</a>
-        <a href="#contact">Contact</a>
-        <button type="button" class="game-nav-btn" id="openGameBtn">Joc</button>
-        <button class="cart-btn" id="openCartBtn">
-          🛒 <span>Coș</span> <span class="cart-count" id="cartCount">0</span>
-        </button>
-      </nav>
+        <a href="#checkout">Comandă</a>
+        <button type="button" class="mobile-game-btn" id="openPinkieGameMobile">☁️ Joacă Pinkie Sky Game</button>
+      </div>
     </div>
   </header>
 
@@ -471,379 +2369,580 @@
       <div class="container hero-grid">
         <div>
           <div class="pill">Povești și activități interactive cu Pinkie</div>
-          <h1>Pinkie Cloud, mai mult decât povești pentru copii</h1>
+          <h1>
+            <span class="gradient-title">Pinkie Cloud</span>
+            <span class="hero-subtitle">mai mult decât povești pentru copii</span>
+          </h1>
           <p class="lead">
-            Un univers cald și colorat, inspirat de cele 3 volume Pinkie. Copilul descoperă iubirea, generozitatea și curajul prin povești, jocuri și activități interactive.
+            Un univers cald, colorat și emoțional, inspirat de cele 3 volume Pinkie. Copilul descoperă iubirea, generozitatea și curajul prin povești, jocuri, jurnale și activități interactive.
           </p>
+
           <div class="hero-actions">
-            <a href="#produse" class="btn btn-primary">Vezi produsele</a>
-            <button class="btn btn-secondary" id="heroCartBtn">Deschide coșul</button>
-            <button class="btn btn-light" id="heroGameBtn">Joacă acum</button>
+            <a class="btn btn-primary" href="#produse">Vezi produsele</a>
+            <button class="btn btn-secondary" type="button" id="heroOpenCart">Deschide coșul</button>
           </div>
 
-          <div class="proof-grid">
-            <article class="glass card">
-              <h3>3 volume diferite</h3>
-              <p>Iubire, generozitate și curaj, fiecare cu propria lecție.</p>
-            </article>
-            <article class="glass card">
-              <h3>Univers vizual cald</h3>
-              <p>Pinkie, curcubeu, flori și sclipiri pentru o experiență memorabilă.</p>
-            </article>
-            <article class="glass card">
-              <h3>Dezvoltare emoțională</h3>
-              <p>Copilul înțelege mai bine ce simte și învață să se exprime.</p>
-            </article>
+          <div class="hero-proof">
+            <div class="proof-card">
+              <strong>3 volume diferite</strong>
+              <p>Iubire, Generozitate și Curaj, fiecare cu propria lecție și propriul personaj.</p>
+            </div>
+            <div class="proof-card">
+              <strong>Univers vizual de poveste</strong>
+              <p>Curcubeu, flori, sclipiri și Pinkie creează o experiență memorabilă pentru copii.</p>
+            </div>
+            <div class="proof-card">
+              <strong>Dezvoltare emoțională reală</strong>
+              <p>Copilul înțelege mai bine ce simte și învață să se exprime sănătos.</p>
+            </div>
           </div>
         </div>
 
         <div class="hero-visual">
-          <div class="pinkie-show"></div>
-          <div class="glass hero-note">
-            <h3>Pinkie, norul roz</h3>
-            <p>Personajul central al universului Pinkie Cloud.</p>
+          <div class="pinkie-wrap">
+            <span class="pinkie-glow"></span>
+            <span class="pinkie-glow-2"></span>
+            <span class="pinkie-spark s1">✦</span>
+            <span class="pinkie-spark s2">✦</span>
+            <span class="pinkie-spark s3">✦</span>
+            <span class="pinkie-spark s4">✦</span>
+            <div class="pinkie-image"></div>
+            <div class="hero-title-card">
+              <h3>Pinkie, norul roz</h3>
+              <p>Personajul central al universului Pinkie Cloud, prezent în toate cele 3 volume.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="carti">
+    <section class="section reveal" id="carti">
       <div class="container">
-        <div class="section-head">
-          <h2>Ce conține fiecare carte</h2>
+        <div class="section-header">
+          <h2>Ce conține fiecare carte Pinkie</h2>
           <p>Fiecare volum transformă lectura într-o experiență activă, emoțională și creativă.</p>
         </div>
 
-        <div class="info-grid">
-          <article class="glass card">
-            <div class="icon">📖</div>
-            <h3>Povești educative</h3>
-            <p>Personaje blânde și situații pe înțelesul copiilor.</p>
-          </article>
-          <article class="glass card">
-            <div class="icon">🎨</div>
-            <h3>Creativitate</h3>
-            <p>Ilustrații calde și activități de desen.</p>
-          </article>
-          <article class="glass card">
-            <div class="icon">✍️</div>
-            <h3>Jurnale ghidate</h3>
-            <p>Pagini în care copilul își exprimă emoțiile.</p>
-          </article>
-          <article class="glass card">
-            <div class="icon">🌙</div>
-            <h3>Calm și somn</h3>
-            <p>Exerciții și momente de liniștire.</p>
-          </article>
-          <article class="glass card">
-            <div class="icon">🤝</div>
-            <h3>Empatie și comunicare</h3>
-            <p>Jocuri care întăresc relațiile și conexiunea emoțională.</p>
-          </article>
-          <article class="glass card">
-            <div class="icon">🏅</div>
-            <h3>Certificat Pinkie</h3>
-            <p>Un final frumos care celebrează lecția învățată.</p>
-          </article>
+        <div class="feature-grid">
+          <article class="feature-card reveal"><div class="icon">📖</div><h3>Povești cu mesaje educative</h3><p>Personaje blânde și situații pe înțelesul copiilor.</p></article>
+          <article class="feature-card reveal"><div class="icon">🎨</div><h3>Ilustrații și creativitate</h3><p>Imagini calde și activități de desen care stimulează imaginația.</p></article>
+          <article class="feature-card reveal"><div class="icon">✍️</div><h3>Jurnale ghidate</h3><p>Pagini în care copilul își poate exprima gândurile și emoțiile.</p></article>
+          <article class="feature-card reveal"><div class="icon">🌙</div><h3>Activități pentru somn liniștit</h3><p>Exerciții și momente de calm care susțin relaxarea.</p></article>
+          <article class="feature-card reveal"><div class="icon">🤝</div><h3>Jocuri de empatie și comunicare</h3><p>Activități care întăresc relațiile și conexiunea emoțională.</p></article>
+          <article class="feature-card reveal"><div class="icon">🏅</div><h3>Certificat de prieten Pinkie</h3><p>Un moment simbolic care celebrează lecția învățată.</p></article>
         </div>
       </div>
     </section>
-        <section class="section" id="volume">
+
+    <section class="section reveal" id="volume">
       <div class="container">
-        <div class="section-head">
+        <div class="section-header">
           <h2>Cele 3 volume Pinkie</h2>
           <p>Fiecare volum are propria emoție centrală și propriul personaj principal.</p>
         </div>
 
-        <div class="book-grid">
-          <article class="glass card">
-            <div class="book-cover vol1"></div>
-            <div class="pill" style="margin-bottom:10px">Volumul I, Mimi</div>
+        <div class="volume-grid">
+          <article class="volume-card reveal">
+            <div class="volume-top">
+              <button class="book-3d book-vol1" type="button" aria-label="Vezi coperta cărții Mimi">
+                <span class="book-shadow"></span>
+                <span class="book-face book-front"></span>
+                <span class="book-face book-back"></span>
+                <span class="book-pages"></span>
+              </button>
+            </div>
+            <div class="volume-tag">Volumul I, Mimi</div>
             <h3>Iubire</h3>
             <p>Mimi îl ajută pe copil să descopere acceptarea de sine și valoarea personală.</p>
-            <ul class="list">
+            <ul class="check-list">
               <li>Să nu se compare</li>
               <li>Să își accepte emoțiile</li>
-              <li>Să simtă că este suficient</li>
+              <li>Să simtă că este suficient exact așa cum este</li>
             </ul>
-            <button class="btn btn-primary add-to-cart" data-id="vol1">Adaugă în coș</button>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
           </article>
 
-          <article class="glass card">
-            <div class="book-cover vol2"></div>
-            <div class="pill" style="margin-bottom:10px">Volumul II, Vivi</div>
+          <article class="volume-card reveal">
+            <div class="volume-top">
+              <button class="book-3d book-vol2" type="button" aria-label="Vezi coperta cărții Vivi">
+                <span class="book-shadow"></span>
+                <span class="book-face book-front"></span>
+                <span class="book-face book-back"></span>
+                <span class="book-pages"></span>
+              </button>
+            </div>
+            <div class="volume-tag">Volumul II, Vivi</div>
             <h3>Generozitate</h3>
             <p>Vivi îi învață pe copii să dăruiască cu inimă și să păstreze echilibrul.</p>
-            <ul class="list">
+            <ul class="check-list">
               <li>Empatie</li>
               <li>Cooperare</li>
               <li>Comunicare sănătoasă</li>
             </ul>
-            <button class="btn btn-primary add-to-cart" data-id="vol2">Adaugă în coș</button>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
           </article>
 
-          <article class="glass card">
-            <div class="book-cover vol3"></div>
-            <div class="pill" style="margin-bottom:10px">Volumul III, Hoppy</div>
+          <article class="volume-card reveal">
+            <div class="volume-top">
+              <button class="book-3d book-vol3" type="button" aria-label="Vezi coperta cărții Hoppy">
+                <span class="book-shadow"></span>
+                <span class="book-face book-front"></span>
+                <span class="book-face book-back"></span>
+                <span class="book-pages"></span>
+              </button>
+            </div>
+            <div class="volume-tag">Volumul III, Hoppy</div>
             <h3>Curaj</h3>
             <p>Hoppy îi încurajează pe copii să meargă înainte chiar și atunci când apare frica.</p>
-            <ul class="list">
+            <ul class="check-list">
               <li>Să încerce fără perfecțiune</li>
               <li>Să ceară ajutor</li>
               <li>Să își spună adevărul</li>
             </ul>
-            <button class="btn btn-primary add-to-cart" data-id="vol3">Adaugă în coș</button>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="produse">
+    <section class="section reveal" id="produse">
       <div class="container">
-        <div class="section-head">
+        <div class="section-header">
           <h2>Alege ce vrei să comanzi</h2>
-          <p>Poți cumpăra un volum separat sau pachetul complet.</p>
+          <p>Poți cumpăra un volum separat sau pachetul complet. Adaugă în coș și finalizează rapid comanda.</p>
         </div>
 
-        <div class="prod-grid">
-          <article class="glass card">
-            <div class="book-cover vol1"></div>
+        <div class="price-box reveal">
+          <article class="product-price-card">
+            <div class="product-cover vol1"></div>
             <h4>Volumul I</h4>
-            <p>Mimi, iubire și acceptare de sine</p>
-            <div class="price">58 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="vol1">Adaugă în coș</button>
+            <p class="product-price-subtitle">Mimi, iubire și acceptare de sine</p>
+            <div class="product-price-value">58 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
           </article>
 
-          <article class="glass card">
-            <div class="book-cover vol2"></div>
+          <article class="product-price-card">
+            <div class="product-cover vol2"></div>
             <h4>Volumul II</h4>
-            <p>Vivi, generozitate și echilibru</p>
-            <div class="price">58 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="vol2">Adaugă în coș</button>
+            <p class="product-price-subtitle">Vivi, generozitate și echilibru</p>
+            <div class="product-price-value">58 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
           </article>
 
-          <article class="glass card">
-            <div class="book-cover vol3"></div>
+          <article class="product-price-card">
+            <div class="product-cover vol3"></div>
             <h4>Volumul III</h4>
-            <p>Hoppy, curaj și încredere</p>
-            <div class="price">58 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="vol3">Adaugă în coș</button>
+            <p class="product-price-subtitle">Hoppy, curaj și încredere</p>
+            <div class="product-price-value">58 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
           </article>
 
-          <article class="glass card">
-            <div class="book-cover pack"></div>
+          <article class="product-price-card">
+            <div class="product-cover pachet"></div>
             <h4>Pachet complet</h4>
-            <p>Toate cele 3 volume Pinkie Cloud</p>
-            <div class="price">133 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="pack">Adaugă în coș</button>
+            <p class="product-price-subtitle">Toate cele 3 volume Pinkie Cloud</p>
+            <div class="product-price-value">133 lei</div>
+            <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section reveal">
       <div class="container">
-        <article class="glass band">
+        <div class="story-band reveal">
           <h3>Nu este doar o carte</h3>
-          <p>Este un univers care îl ajută pe copil să simtă, să înțeleagă și să își construiască încrederea pas cu pas.</p>
-        </article>
+          <p>Este un univers care îl ajută pe copil să simtă, să înțeleagă, să vorbească despre ce trăiește și să își construiască încrederea pas cu pas.</p>
+        </div>
+
+        <div class="book-detail-grid">
+          <article class="book-detail-card reveal"><h3>Un dar care rămâne</h3><p>Potrivit pentru zile de naștere, onomastici și momente speciale în familie.</p></article>
+          <article class="book-detail-card reveal"><h3>Mai multă imaginație</h3><p>Copilul se deconectează de la ecrane și se reconectează la emoții și creativitate.</p></article>
+          <article class="book-detail-card reveal"><h3>Baze pedagogice</h3><p>Fiecare volum este construit cu sens educațional și emoțional.</p></article>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="ateliere">
+    <section class="section reveal" id="ateliere">
       <div class="container">
-        <div class="section-head">
+        <div class="section-header">
           <h2>Atelierele Pinkie</h2>
-          <p>Copiii nu doar ascultă, ei trăiesc povestea.</p>
+          <p>Atelierul completează cărțile și duce experiența mai departe. Copiii nu doar ascultă, ei trăiesc povestea.</p>
         </div>
 
-        <article class="glass card" style="margin-bottom:18px">
+        <article class="atelier-intro-card reveal">
           <h3>Atelierul Pinkie</h3>
-          <p>
-            Atelierul Pinkie este o experiență interactivă în care copiii nu doar ascultă o poveste, ci intră în ea. O trăiesc, o joacă și o transformă într-un set de instrumente potrivit vârstei.
-          </p>
+          <p>Atelierul Pinkie este o experiență interactivă în care copiii nu doar ascultă o poveste, ci intră în ea. O trăiesc, o joacă, o simt și o transformă într-un set de instrumente potrivit vârstei, cuvinte pentru emoții, pași mici pentru liniștire și curajul de a încerca din nou.</p>
+          <p>Fiecare atelier este construit ca o mini-aventură. Copilul pleacă de aici nu cu o lecție, ci cu o amintire frumoasă și cu idei simple pe care le poate folosi în viața reală, la școală, acasă sau cu prietenii.</p>
         </article>
 
-        <div class="info-grid" style="margin-bottom:18px">
-          <article class="glass card">
+        <div class="two-col">
+          <article class="workshop-card reveal">
             <div class="icon">🧠</div>
             <h3>Fundament pedagogic</h3>
-            <ul class="list">
+            <ul class="check-list">
               <li>Învățare prin experiență</li>
               <li>Inteligență emoțională</li>
+              <li>Dezvoltare cognitivă prin joc</li>
               <li>Autoreglare emoțională</li>
+              <li>Comunicare empatică</li>
             </ul>
           </article>
 
-          <article class="glass card">
+          <article class="workshop-card reveal">
             <div class="icon">🌈</div>
-            <h3>Ce se întâmplă</h3>
-            <ul class="list">
-              <li>Poveste și univers Pinkie</li>
-              <li>Participare activă</li>
-              <li>Joc, desen și exerciții</li>
-            </ul>
-          </article>
-
-          <article class="glass card">
-            <div class="icon">⏱️</div>
-            <h3>Durată</h3>
-            <p>Atelierul durează aproximativ 50 de minute, într-un cadru prietenos și potrivit vârstei.</p>
+            <h3>Ce se întâmplă în atelier</h3>
+            <div class="check-list">
+              <li>Ascultă povestea și intră în universul Pinkie</li>
+              <li>Participă activ și trăiește experiența</li>
+              <li>Exprimă emoții prin joc, desen și exerciții</li>
+              <li>Ia acasă o lecție utilă și blândă</li>
+            </div>
           </article>
         </div>
 
-        <div class="accordion">
-          <article class="glass acc-item">
-            <button class="acc-btn">
+        <div class="atelier-accordion-grid reveal">
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
               <span>Pentru cine este?</span>
-              <div class="acc-icon">+</div>
+              <div class="atelier-accordion-icon">+</div>
             </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>Atelierul este potrivit pentru copii între 3 și 10 ani, cu activități adaptate pe nivel.</p>
-                <p>Este valoros pentru copiii timizi, impulsivi sau pentru cei care simt intens.</p>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Atelierul este potrivit pentru copii cu vârste între 3 și 10 ani, cu activități adaptate pe nivel, atât pentru preșcolari, cât și pentru școlarii mici.</p>
+                <p>Este valoros pentru copiii timizi, pentru cei impulsivi, pentru copiii care simt intens, pentru cei care se lovesc de gânduri precum „nu-mi iese” sau „mi-e frică”, dar și pentru orice copil care crește într-o lume în care are nevoie, în același timp, de blândețe și curaj.</p>
               </div>
             </div>
           </article>
 
-          <article class="glass acc-item">
-            <button class="acc-btn">
-              <span>Activități semnătură</span>
-              <div class="acc-icon">+</div>
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Cum se desfășoară?</span>
+              <div class="atelier-accordion-icon">+</div>
             </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>Scutul invizibil al lui Pinkie, Bateria magică a lui Pinkie și Ce ar face Pinkie?</p>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Atelierul durează aproximativ 50 de minute și are un flow ușor de urmărit. Totul începe cu o poveste, continuă cu participare activă, explorarea emoțiilor și exerciții ghidate, iar la final copiii pleacă cu un mesaj simplu, de luat cu tine.</p>
+                <p>Totul se desfășoară într-un cadru prietenos și potrivit vârstei, astfel încât copiii să se simtă văzuți, ascultați și încurajați.</p>
               </div>
             </div>
           </article>
 
-          <article class="glass acc-item">
-            <button class="acc-btn">
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Activități semnătură Pinkie</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>În atelier apar trei momente speciale, pe care copiii le iubesc și le țin minte:</p>
+                <ul class="atelier-accordion-list">
+                  <li>Scutul invizibil al lui Pinkie</li>
+                  <li>Bateria magică a lui Pinkie</li>
+                  <li>Ce ar face Pinkie?</li>
+                </ul>
+                <p>Le păstrăm ca repere calde și recognoscibile, iar conținutul lor rămâne parte din universul Pinkie, un mix de joc, emoție și curaj, livrat într-un mod care îi ajută pe copii să își găsească propriile răspunsuri.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
               <span>Unde se desfășoară?</span>
-              <div class="acc-icon">+</div>
+              <div class="atelier-accordion-icon">+</div>
             </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>În școli, grădinițe, afterschool-uri, centre educaționale, biblioteci sau la evenimente pentru copii.</p>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>În prezent, atelierul se desfășoară în școli, în cadrul activităților educaționale, inclusiv în perioade precum „Școala Altfel”.</p>
+                <p>Metodologia oficială a programului „Școala Altfel” încurajează activități nonformale și experiențe care completează învățarea, ceea ce face atelierul foarte potrivit în acest context.</p>
+                <p>La cerere, atelierul poate fi organizat și în grădinițe, afterschool-uri, centre educaționale, biblioteci sau la evenimente pentru copii, oriunde există un spațiu potrivit pentru o activitate de grup.</p>
               </div>
             </div>
           </article>
 
-          <article class="glass acc-item">
-            <button class="acc-btn">
-              <span>Ce rămâne după atelier?</span>
-              <div class="acc-icon">+</div>
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>De ce facem atelierul?</span>
+              <div class="atelier-accordion-icon">+</div>
             </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>Copiii vorbesc mai ușor despre ce simt, au mai mult curaj să încerce din nou și se raportează mai blând la ei și la ceilalți.</p>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Pentru că emoțiile nu sunt în plus față de învățare. Ele sunt parte din felul în care copilul trăiește școala, prieteniile și familia.</p>
+                <p>Atunci când un copil are cuvinte pentru ceea ce simte și pași simpli pentru ceea ce poate face, lumea lui devine mai clară și mai sigură.</p>
+                <p>În spatele atelierului stau principii de învățare socio-emoțională, SEL, și învățare prin joc, folosite pe scară largă în educație.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Ce rămâne după atelier?</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>De obicei, părinții și cadrele didactice observă că cei mici vorbesc mai ușor despre ce simt, își amintesc să facă o pauză înainte să reacționeze, au mai mult curaj să încerce din nou și se raportează mai blând la ei și la ceilalți.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Pentru școli și comunități</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Atelierul Pinkie poate completa programe educaționale și inițiative de wellbeing școlar printr-un format simplu, ușor de integrat într-o clasă sau într-o grupă.</p>
+                <p>În anumite contexte, atelierul poate fi organizat și ca parte din proiecte educaționale susținute împreună cu parteneri din comunitate, astfel încât cât mai mulți copii să aibă acces la experiențe care sprijină dezvoltarea socio-emoțională.</p>
+                <p>Lucrăm cu școli, cadre didactice și inițiative educaționale din comunitate pentru a aduce atelierele Pinkie acolo unde copiii au nevoie de un spațiu sigur de explorare emoțională.</p>
+                <p>Dacă dorești să organizăm atelierul pentru o clasă, o grupă sau un eveniment educațional, vă rugăm să ne contactați.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Contact</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Pentru programări, colaborări și detalii de organizare, cum ar fi grupa sau clasa, spațiul și disponibilitatea, vă rugăm să ne contactați.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="atelier-accordion-card">
+            <button class="atelier-accordion-button" type="button">
+              <span>Notă de protecție</span>
+              <div class="atelier-accordion-icon">+</div>
+            </button>
+            <div class="atelier-accordion-body">
+              <div class="atelier-accordion-body-inner">
+                <p>Conținutul și materialele atelierului sunt originale și aparțin autoarei. Reproducerea, adaptarea sau folosirea acestora fără acord scris nu este permisă.</p>
               </div>
             </div>
           </article>
         </div>
       </div>
     </section>
-
-    <section class="section" id="autor">
+        <section class="section reveal" id="autor">
       <div class="container">
-        <div class="section-head">
+        <div class="section-header">
           <h2>Despre autor</h2>
           <p>O declarație personală despre drumul care a dus la nașterea universului Pinkie Cloud.</p>
         </div>
 
-        <article class="glass author-quote">
-          <p>
-            „Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc.”
-          </p>
-          <div class="author-sign">Ruxandra Ioniță</div>
+        <article class="author-quote-card reveal">
+          <div class="author-quote-mark">“</div>
+          <div class="author-quote-content">
+            <div class="author-quote-title">Din partea autoarei</div>
+            <p class="author-quote-text">
+              „Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc. Pentru că eu cred că în fiecare copil există mai mult decât se vede. Iar uneori, tot ce are nevoie, este cineva care să îi arate asta.”
+            </p>
+            <div class="author-signature">Ruxandra Ioniță</div>
+          </div>
+        </article>
+
+        <article class="author-story-card reveal">
+          <button class="author-story-button" type="button">
+            <span>Citește povestea autoarei</span>
+            <div class="author-story-icon">+</div>
+          </button>
+
+          <div class="author-story-body">
+            <div class="author-story-body-inner">
+              <p>Sunt Ruxandra Ioniță, profesoară și creatoarea universului Pinkie Cloud.</p>
+              <p>Drumul meu în educație nu a început întâmplător.</p>
+              <p>A început cu un apel.</p>
+              <p>Un apel din partea doamnei director a școlii în care am învățat, care m-a sunat să mă felicite pentru rezultatele la bacalaureat și să îmi propună să lucrez în grădinița din cadrul acelei școli.</p>
+              <p>Pentru mine, acel moment a fost mai mult decât o oportunitate.</p>
+              <p>A fost un început.</p>
+              <p>Un început în care cineva a avut încredere în mine înainte ca eu să știu cât pot.</p>
+              <p>Am spus „da” cu emoție și bucurie, fără să știu că acel „da” avea să-mi definească direcția.</p>
+              <p>În timp, lucrul cu copiii a devenit locul în care am înțeles cu adevărat ce înseamnă educația.</p>
+              <p>Nu doar lecții.</p>
+              <p>Nu doar activități.</p>
+              <p>Ci prezență.</p>
+              <p>Relație.</p>
+              <p>Încredere.</p>
+              <p>Am fost primită cu deschidere, susținută și încurajată, iar pe parcurs am primit ceva ce nu se învață din cărți, aprecierea sinceră a părinților și conexiunea reală cu copiii.</p>
+              <p>Pentru felul în care le vorbeam.</p>
+              <p>Pentru liniștea pe care o aduceam.</p>
+              <p>Pentru modul în care îi făceam să se simtă.</p>
+              <p>Acea energie m-a dus mai departe.</p>
+              <p>Am ales să continui cu Pedagogia Învățământului Primar și Preșcolar, să aprofundez printr-un master în Management Educațional și să explorez experiențe de formare, inclusiv în contexte internaționale.</p>
+              <p>Dar adevărul este acesta, cea mai importantă formare a mea nu a fost într-o sală de curs.</p>
+              <p>A fost în fiecare clasă.</p>
+              <p>În fiecare copil.</p>
+              <p>În fiecare moment în care am învățat să ascult mai mult decât să explic.</p>
+              <p>După ce am devenit profesoară, lucrurile s-au confirmat.</p>
+              <p>Am continuat să primesc același tip de reacții, pentru felul în care țineam spațiul emoțional al copiilor și pentru activitățile care îi făceau să se deschidă.</p>
+              <p>Colegele îmi cereau materialele mele, iar eu le ofeream cu bucurie.</p>
+              <p>Și au început să apară întrebările, cum pot duce asta mai departe?</p>
+              <p>Cum pot ajunge la mai mulți copii?</p>
+              <p>Așa s-a născut Pinkie Cloud.</p>
+              <p>Nu ca un proiect.</p>
+              <p>Nu ca un brand.</p>
+              <p>Ci ca o extensie firească a tot ceea ce am trăit și am construit în relația cu copiii.</p>
+              <p>Un univers în care povestea devine punte.</p>
+              <p>În care emoțiile nu sunt corectate, ci înțelese.</p>
+              <p>În care copilul nu este grăbit să fie „mai mult”, ci susținut să fie exact acolo unde este.</p>
+              <p>Ceea ce definește cu adevărat Pinkie Cloud este felul în care aceste cunoștințe se transformă în experiențe vii, pe înțelesul copiilor.</p>
+              <p>Pentru că eu nu creez doar cărți și ateliere.</p>
+              <p>Creez contexte în care copilul se simte văzut, se simte în siguranță și începe, pas cu pas, să aibă încredere în el.</p>
+              <p>Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc.</p>
+              <p>Pentru că eu cred că în fiecare copil există mai mult decât se vede.</p>
+              <p>Iar uneori, tot ce are nevoie, este cineva care să îi arate asta.</p>
+            </div>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="section" id="contact">
+    <section class="section reveal" id="checkout">
       <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-          <p>Pentru programări, comenzi și colaborări.</p>
+        <div class="section-header">
+          <h2>Comandă simplă și rapidă</h2>
+          <p>Adaugi produsele dorite în coș, verifici totalul și trimiți comanda direct pe WhatsApp.</p>
         </div>
 
-        <div class="contact-grid">
-          <article class="glass card">
-            <div class="icon">📩</div>
-            <h3>Email</h3>
-            <p><a href="mailto:hello.pinkiecloud@gmail.com">hello.pinkiecloud@gmail.com</a></p>
+        <div class="checkout-layout">
+          <article class="checkout-card reveal">
+            <h3>Cum funcționează</h3>
+            <ul class="check-list">
+              <li>Adaugi în coș volumele dorite</li>
+              <li>Deschizi coșul din butonul de sus</li>
+              <li>Modifici cantitatea direct din coș</li>
+              <li>Apeși pe „Finalizează pe WhatsApp”</li>
+            </ul>
+            <div class="checkout-note">
+              În mesajul generat se trimit automat produsele și totalul. Apoi continui direct conversația pentru livrare și plată.
+            </div>
           </article>
-          <article class="glass card">
-            <div class="icon">📱</div>
-            <h3>Telefon</h3>
-            <p><a href="tel:0784571533">0784571533</a></p>
-          </article>
-          <article class="glass card">
-            <div class="icon">🌸</div>
-            <h3>Instagram și TikTok</h3>
-            <p>@hellopinkiecloud</p>
+
+          <article class="checkout-card reveal">
+            <h3>Produse disponibile</h3>
+            <div class="checkout-mini-list">
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol1"></div>
+                <div>
+                  <strong>Volumul I</strong>
+                  <p>58 lei</p>
+                </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
+              </div>
+
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol2"></div>
+                <div>
+                  <strong>Volumul II</strong>
+                  <p>58 lei</p>
+                </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
+              </div>
+
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol3"></div>
+                <div>
+                  <strong>Volumul III</strong>
+                  <p>58 lei</p>
+                </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
+              </div>
+
+              <div class="checkout-mini-item">
+                <div class="checkout-mini-thumb thumb-vol1"></div>
+                <div>
+                  <strong>Pachet complet</strong>
+                  <p>133 lei</p>
+                </div>
+                <button class="btn btn-primary add-to-cart" type="button" data-product="pack">Adaugă în coș</button>
+              </div>
+            </div>
           </article>
         </div>
       </div>
     </section>
+
+    <section class="section reveal">
+      <div class="container">
+        <div class="contact-grid">
+          <article class="contact-card reveal"><div class="icon">📩</div><h3>Email</h3><p><a href="mailto:hello.pinkiecloud@gmail.com">hello.pinkiecloud@gmail.com</a></p></article>
+          <article class="contact-card reveal"><div class="icon">📱</div><h3>Telefon</h3><p><a href="tel:0784571533">0784571533</a></p></article>
+          <article class="contact-card reveal"><div class="icon">🌸</div><h3>Instagram și TikTok</h3><p>@hellopinkiecloud</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container">
+        <article class="final-card reveal">
+          <h3>Există copii care nu știu încă să spună ce simt, dar simt totul.</h3>
+          <p style="margin-top: 12px;">Pinkie este acolo pentru ei. Pentru copilul care are nevoie de curaj. Pentru copilul care are nevoie să fie înțeles. Pentru copilul care învață, pas cu pas, să fie el însuși.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
-  <div class="game-modal" id="gameModal">
-    <div class="game-wrap">
-      <div class="game-top">
-        <div>
+  <div class="game-modal" id="pinkieGameModal" aria-hidden="true">
+    <div class="game-shell">
+      <div class="game-topbar">
+        <div class="game-title-wrap">
           <h2 class="game-title">Pinkie Sky Game</h2>
-          <p class="game-sub">10 niveluri, scor salvat în baza de date</p>
+          <p class="game-subtitle">Prinde norii roz, evită norii roșii și treci prin niveluri ☀️</p>
         </div>
-        <button class="close-x" id="closeGameBtn">×</button>
+
+        <button class="game-close" id="closePinkieGame" aria-label="Închide jocul">×</button>
       </div>
 
       <div class="game-panel">
-        <div class="stats">
-          <div class="pill-stat">Scor <strong id="gScore">0</strong></div>
-          <div class="pill-stat">Nivel <strong id="gLevel">1</strong></div>
-          <div class="pill-stat">Țintă <strong id="gTarget">10</strong></div>
-          <div class="pill-stat">Timp <strong id="gTime">20</strong></div>
-          <div class="pill-stat">Vieți <strong id="gLives">3</strong></div>
-          <div class="pill-stat">Record <strong id="gBest">0</strong></div>
+        <div class="game-stats">
+          <div class="game-pill">Scor: <strong id="gameScore">0</strong></div>
+          <div class="game-pill">Timp: <strong id="gameTimer">45</strong>s</div>
+          <div class="game-pill">Nivel: <strong id="gameLevel">1</strong></div>
+          <div class="game-pill">Vieți: <strong id="gameLives">3</strong></div>
+          <div class="game-pill">Record: <strong id="gameBest">0</strong></div>
         </div>
 
-        <div class="stage" id="stage">
-          <div class="sun"></div>
-          <div class="ground"></div>
+        <div class="game-stage" id="gameStage">
+          <div class="game-sun"></div>
+          <div class="game-lightning" id="gameLightning"></div>
+          <div class="game-ground"></div>
 
-          <div class="overlay" id="startOverlay">
+          <div class="game-overlay" id="gameStartOverlay">
             <div class="game-card">
               <h3>Bine ai venit în cerul lui Pinkie</h3>
               <p>
-                Apasă pe norii roz și galbeni ca să aduni puncte.<br>
-                Evită norii roșii.<br>
-                Jocul are 10 niveluri.<br>
-                Ca să treci mai departe, trebuie să atingi scorul țintă înainte să expire timpul.
+                Apasă pe norii roz ca să aduni puncte.
+                <br>
+                Evită norii roșii, aceștia îți scad scorul și viețile.
+                <br>
+                Jocul urcă pe niveluri și devine mai rapid.
+                <br>
+                Norii aurii aduc bonus mare.
+                <br>
+                Curcubeul încetinește jocul, inimioara îți dă scut, iar steluța oferă puncte duble.
               </p>
-              <span class="mini">La final, scorul tău se salvează în Supabase.</span>
+              <span class="game-mini">Acum jocul durează mai mult și este pe nivele 💖</span>
 
-              <div style="margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-primary" id="startGameBtn">START</button>
-              </div>
-
-              <div class="leaderboard">
-                <h4>Top scoruri</h4>
-                <ol id="leaderboardList">
-                  <li>Se încarcă...</li>
-                </ol>
+              <div class="game-actions">
+                <button class="game-btn" id="startPinkieGame">START</button>
               </div>
             </div>
           </div>
 
-          <div class="overlay" id="endOverlay" style="display:none">
+          <div class="game-overlay" id="gameOverOverlay" style="display:none;">
             <div class="game-card">
-              <h3 id="endTitle">Bravo</h3>
-              <p id="endText">Scor final</p>
-              <div style="margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-primary" id="restartGameBtn">Joacă din nou</button>
-                <button class="btn btn-light" id="saveScoreBtn">Salvează scorul</button>
+              <h3>Bravo! Jocul s-a terminat ✨</h3>
+              <p id="gameOverMessage">
+                Pinkie este mândră de tine!
+              </p>
+
+              <div class="game-actions">
+                <button class="game-btn" id="restartPinkieGame">Joacă din nou</button>
+                <button class="game-btn secondary" id="closePinkieGameEnd">Închide</button>
               </div>
             </div>
           </div>
@@ -851,477 +2950,1039 @@
       </div>
     </div>
   </div>
-      <section class="section" id="volume">
-      <div class="container">
-        <div class="section-head">
-          <h2>Cele 3 volume Pinkie</h2>
-          <p>Fiecare volum are propria emoție centrală și propriul personaj principal.</p>
-        </div>
-
-        <div class="book-grid">
-          <article class="glass card">
-            <div class="book-cover vol1"></div>
-            <div class="pill" style="margin-bottom:10px">Volumul I, Mimi</div>
-            <h3>Iubire</h3>
-            <p>Mimi îl ajută pe copil să descopere acceptarea de sine și valoarea personală.</p>
-            <ul class="list">
-              <li>Să nu se compare</li>
-              <li>Să își accepte emoțiile</li>
-              <li>Să simtă că este suficient</li>
-            </ul>
-            <button class="btn btn-primary add-to-cart" data-id="vol1">Adaugă în coș</button>
-          </article>
-
-          <article class="glass card">
-            <div class="book-cover vol2"></div>
-            <div class="pill" style="margin-bottom:10px">Volumul II, Vivi</div>
-            <h3>Generozitate</h3>
-            <p>Vivi îi învață pe copii să dăruiască cu inimă și să păstreze echilibrul.</p>
-            <ul class="list">
-              <li>Empatie</li>
-              <li>Cooperare</li>
-              <li>Comunicare sănătoasă</li>
-            </ul>
-            <button class="btn btn-primary add-to-cart" data-id="vol2">Adaugă în coș</button>
-          </article>
-
-          <article class="glass card">
-            <div class="book-cover vol3"></div>
-            <div class="pill" style="margin-bottom:10px">Volumul III, Hoppy</div>
-            <h3>Curaj</h3>
-            <p>Hoppy îi încurajează pe copii să meargă înainte chiar și atunci când apare frica.</p>
-            <ul class="list">
-              <li>Să încerce fără perfecțiune</li>
-              <li>Să ceară ajutor</li>
-              <li>Să își spună adevărul</li>
-            </ul>
-            <button class="btn btn-primary add-to-cart" data-id="vol3">Adaugă în coș</button>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="produse">
-      <div class="container">
-        <div class="section-head">
-          <h2>Alege ce vrei să comanzi</h2>
-          <p>Poți cumpăra un volum separat sau pachetul complet.</p>
-        </div>
-
-        <div class="prod-grid">
-          <article class="glass card">
-            <div class="book-cover vol1"></div>
-            <h4>Volumul I</h4>
-            <p>Mimi, iubire și acceptare de sine</p>
-            <div class="price">58 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="vol1">Adaugă în coș</button>
-          </article>
-
-          <article class="glass card">
-            <div class="book-cover vol2"></div>
-            <h4>Volumul II</h4>
-            <p>Vivi, generozitate și echilibru</p>
-            <div class="price">58 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="vol2">Adaugă în coș</button>
-          </article>
-
-          <article class="glass card">
-            <div class="book-cover vol3"></div>
-            <h4>Volumul III</h4>
-            <p>Hoppy, curaj și încredere</p>
-            <div class="price">58 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="vol3">Adaugă în coș</button>
-          </article>
-
-          <article class="glass card">
-            <div class="book-cover pack"></div>
-            <h4>Pachet complet</h4>
-            <p>Toate cele 3 volume Pinkie Cloud</p>
-            <div class="price">133 lei</div>
-            <button class="btn btn-primary add-to-cart" data-id="pack">Adaugă în coș</button>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <article class="glass band">
-          <h3>Nu este doar o carte</h3>
-          <p>Este un univers care îl ajută pe copil să simtă, să înțeleagă și să își construiască încrederea pas cu pas.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="ateliere">
-      <div class="container">
-        <div class="section-head">
-          <h2>Atelierele Pinkie</h2>
-          <p>Copiii nu doar ascultă, ei trăiesc povestea.</p>
-        </div>
-
-        <article class="glass card" style="margin-bottom:18px">
-          <h3>Atelierul Pinkie</h3>
-          <p>
-            Atelierul Pinkie este o experiență interactivă în care copiii nu doar ascultă o poveste, ci intră în ea. O trăiesc, o joacă și o transformă într-un set de instrumente potrivit vârstei.
-          </p>
-        </article>
-
-        <div class="info-grid" style="margin-bottom:18px">
-          <article class="glass card">
-            <div class="icon">🧠</div>
-            <h3>Fundament pedagogic</h3>
-            <ul class="list">
-              <li>Învățare prin experiență</li>
-              <li>Inteligență emoțională</li>
-              <li>Autoreglare emoțională</li>
-            </ul>
-          </article>
-
-          <article class="glass card">
-            <div class="icon">🌈</div>
-            <h3>Ce se întâmplă</h3>
-            <ul class="list">
-              <li>Poveste și univers Pinkie</li>
-              <li>Participare activă</li>
-              <li>Joc, desen și exerciții</li>
-            </ul>
-          </article>
-
-          <article class="glass card">
-            <div class="icon">⏱️</div>
-            <h3>Durată</h3>
-            <p>Atelierul durează aproximativ 50 de minute, într-un cadru prietenos și potrivit vârstei.</p>
-          </article>
-        </div>
-
-        <div class="accordion">
-          <article class="glass acc-item">
-            <button class="acc-btn">
-              <span>Pentru cine este?</span>
-              <div class="acc-icon">+</div>
-            </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>Atelierul este potrivit pentru copii între 3 și 10 ani, cu activități adaptate pe nivel.</p>
-                <p>Este valoros pentru copiii timizi, impulsivi sau pentru cei care simt intens.</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="glass acc-item">
-            <button class="acc-btn">
-              <span>Activități semnătură</span>
-              <div class="acc-icon">+</div>
-            </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>Scutul invizibil al lui Pinkie, Bateria magică a lui Pinkie și Ce ar face Pinkie?</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="glass acc-item">
-            <button class="acc-btn">
-              <span>Unde se desfășoară?</span>
-              <div class="acc-icon">+</div>
-            </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>În școli, grădinițe, afterschool-uri, centre educaționale, biblioteci sau la evenimente pentru copii.</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="glass acc-item">
-            <button class="acc-btn">
-              <span>Ce rămâne după atelier?</span>
-              <div class="acc-icon">+</div>
-            </button>
-            <div class="acc-body">
-              <div class="acc-body-inner">
-                <p>Copiii vorbesc mai ușor despre ce simt, au mai mult curaj să încerce din nou și se raportează mai blând la ei și la ceilalți.</p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="autor">
-      <div class="container">
-        <div class="section-head">
-          <h2>Despre autor</h2>
-          <p>O declarație personală despre drumul care a dus la nașterea universului Pinkie Cloud.</p>
-        </div>
-
-        <article class="glass author-quote">
-          <p>
-            „Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc.”
-          </p>
-          <div class="author-sign">Ruxandra Ioniță</div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-          <p>Pentru programări, comenzi și colaborări.</p>
-        </div>
-
-        <div class="contact-grid">
-          <article class="glass card">
-            <div class="icon">📩</div>
-            <h3>Email</h3>
-            <p><a href="mailto:hello.pinkiecloud@gmail.com">hello.pinkiecloud@gmail.com</a></p>
-          </article>
-          <article class="glass card">
-            <div class="icon">📱</div>
-            <h3>Telefon</h3>
-            <p><a href="tel:0784571533">0784571533</a></p>
-          </article>
-          <article class="glass card">
-            <div class="icon">🌸</div>
-            <h3>Instagram și TikTok</h3>
-            <p>@hellopinkiecloud</p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div class="game-modal" id="gameModal">
-    <div class="game-wrap">
-      <div class="game-top">
-        <div>
-          <h2 class="game-title">Pinkie Sky Game</h2>
-          <p class="game-sub">10 niveluri, scor salvat în baza de date</p>
-        </div>
-        <button class="close-x" id="closeGameBtn">×</button>
+  
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        Pinkie Cloud, un univers colorat pentru dezvoltarea emoțională a copiilor.
       </div>
 
-      <div class="game-panel">
-        <div class="stats">
-          <div class="pill-stat">Scor <strong id="gScore">0</strong></div>
-          <div class="pill-stat">Nivel <strong id="gLevel">1</strong></div>
-          <div class="pill-stat">Țintă <strong id="gTarget">10</strong></div>
-          <div class="pill-stat">Timp <strong id="gTime">20</strong></div>
-          <div class="pill-stat">Vieți <strong id="gLives">3</strong></div>
-          <div class="pill-stat">Record <strong id="gBest">0</strong></div>
-        </div>
-
-        <div class="stage" id="stage">
-          <div class="sun"></div>
-          <div class="ground"></div>
-
-          <div class="overlay" id="startOverlay">
-            <div class="game-card">
-              <h3>Bine ai venit în cerul lui Pinkie</h3>
-              <p>
-                Apasă pe norii roz și galbeni ca să aduni puncte.<br>
-                Evită norii roșii.<br>
-                Jocul are 10 niveluri.<br>
-                Ca să treci mai departe, trebuie să atingi scorul țintă înainte să expire timpul.
-              </p>
-              <span class="mini">La final, scorul tău se salvează în Supabase.</span>
-
-              <div style="margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-primary" id="startGameBtn">START</button>
-              </div>
-
-              <div class="leaderboard">
-                <h4>Top scoruri</h4>
-                <ol id="leaderboardList">
-                  <li>Se încarcă...</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-
-          <div class="overlay" id="endOverlay" style="display:none">
-            <div class="game-card">
-              <h3 id="endTitle">Bravo</h3>
-              <p id="endText">Scor final</p>
-              <div style="margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
-                <button class="btn btn-primary" id="restartGameBtn">Joacă din nou</button>
-                <button class="btn btn-light" id="saveScoreBtn">Salvează scorul</button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="footer-links">
+        <a href="terms.html">Terms & Conditions</a>
+        <span>/</span>
+        <a href="privacy.html">Privacy</a>
       </div>
     </div>
-  </div>
-      function rnd(min,max){
-      return Math.random()*(max-min)+min;
-    }
+  </footer>
 
-    function cloudType(){
-      const r = Math.random();
-      const badChance = levelData().bad;
-      if(r < badChance) return 'bad';
-      if(r > 0.9) return 'bonus';
-      return 'good';
-    }
+  <script>
+    const PRODUCTS = {
+      vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 58, thumbClass: 'vol1' },
+      vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 58, thumbClass: 'vol2' },
+      vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 58, thumbClass: 'vol3' },
+      pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 133, thumbClass: 'pachet' }
+    };
 
-    function spawnCloud(){
-      const type = cloudType();
-      const cloud = document.createElement('button');
-      cloud.className = 'game-cloud ' + type;
-      cloud.innerHTML = `
-        <div class="m"></div>
-        <div class="b1"></div>
-        <div class="b2"></div>
-        <div class="b3"></div>
-        <div class="cloud-label">${type === 'good' ? '+1' : type === 'bonus' ? '+3' : '-2'}</div>
-      `;
+    const WHATSAPP_NUMBER = '40784571533';
 
-      const y = rnd(50, stage.clientHeight - 140);
-      let x = -100;
-      const sp = rnd(levelData().speedMin, levelData().speedMax);
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
 
-      cloud.style.left = x + 'px';
-      cloud.style.top = y + 'px';
-      stage.appendChild(cloud);
-      game.clouds.add(cloud);
+    reveals.forEach((item, index) => {
+      item.style.transitionDelay = `${index * 0.03}s`;
+      revealObserver.observe(item);
+    });
 
-      const hit = () => {
-        if(!game.running) return;
-        if(type === 'good'){
-          game.score += 1;
-          floatText('+1', x + 45, y + 20, 'plus');
-        } else if(type === 'bonus'){
-          game.score += 3;
-          floatText('+3', x + 45, y + 20, 'plus');
+    const tapItems = document.querySelectorAll('.btn, .proof-card, .feature-card, .contact-card, .volume-card, .book-detail-card, .workshop-card, .checkout-card, .product-price-card, .atelier-intro-card, .atelier-accordion-card, .author-quote-card, .author-story-card');
+    tapItems.forEach((item) => {
+      item.addEventListener('mousedown', () => { item.style.transform = 'scale(0.98)'; });
+      item.addEventListener('mouseup', () => { item.style.transform = ''; });
+      item.addEventListener('mouseleave', () => { item.style.transform = ''; });
+    });
+
+    document.querySelectorAll(".book-3d").forEach((book) => {
+      book.addEventListener("click", () => {
+        book.classList.toggle("is-flipped");
+      });
+
+      book.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          book.classList.toggle("is-flipped");
+        }
+      });
+    });
+
+    document.querySelectorAll('.atelier-accordion-card').forEach((card) => {
+      const button = card.querySelector('.atelier-accordion-button');
+      const body = card.querySelector('.atelier-accordion-body');
+
+      button.addEventListener('click', () => {
+        const isOpen = card.classList.contains('open');
+
+        if (isOpen) {
+          card.classList.remove('open');
+          body.style.maxHeight = null;
         } else {
-          game.score -= 2;
-          game.lives--;
-          floatText('-2', x + 45, y + 20, 'minus');
-          if(game.lives <= 0){
-            updateHud();
-            finishGame(false);
+          card.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
+
+    const authorStoryCard = document.querySelector('.author-story-card');
+    if (authorStoryCard) {
+      const authorButton = authorStoryCard.querySelector('.author-story-button');
+      const authorBody = authorStoryCard.querySelector('.author-story-body');
+
+      authorButton.addEventListener('click', () => {
+        const isOpen = authorStoryCard.classList.contains('open');
+
+        if (isOpen) {
+          authorStoryCard.classList.remove('open');
+          authorBody.style.maxHeight = null;
+        } else {
+          authorStoryCard.classList.add('open');
+          authorBody.style.maxHeight = authorBody.scrollHeight + 'px';
+        }
+      });
+    }
+
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartOpen = document.getElementById('cartOpen');
+    const heroOpenCart = document.getElementById('heroOpenCart');
+    const cartClose = document.getElementById('cartClose');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartItemsCountFooterEl = document.getElementById('cartItemsCountFooter');
+    const checkoutButton = document.getElementById('checkoutButton');
+    const clearCartButton = document.getElementById('clearCartButton');
+    const notice = document.getElementById('notice');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    let cart = {};
+
+    function showNotice(message) {
+      notice.textContent = message;
+      notice.classList.add('show');
+      clearTimeout(showNotice.timer);
+      showNotice.timer = setTimeout(() => {
+        notice.classList.remove('show');
+      }, 1800);
+    }
+
+    function openCart() {
+      cartDrawer.classList.add('open');
+      cartOverlay.classList.add('show');
+      cartDrawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('show');
+      cartDrawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function toggleMobileMenu() {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function getCartItemsArray() {
+      return Object.values(cart).filter(item => item.quantity > 0);
+    }
+
+    function getCartCount() {
+      return getCartItemsArray().reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function getCartTotal() {
+      return getCartItemsArray().reduce((sum, item) => sum + item.quantity * item.price, 0);
+    }
+
+    function formatLei(value) {
+      return `${value} lei`;
+    }
+
+    function addToCart(productId) {
+      const product = PRODUCTS[productId];
+      if (!product) return;
+
+      if (!cart[productId]) {
+        cart[productId] = { ...product, quantity: 0 };
+      }
+
+      cart[productId].quantity += 1;
+      renderCart();
+      showNotice('Produs adăugat în coș');
+    }
+
+    function decreaseFromCart(productId) {
+      if (!cart[productId]) return;
+      cart[productId].quantity -= 1;
+      if (cart[productId].quantity <= 0) delete cart[productId];
+      renderCart();
+    }
+
+    function increaseInCart(productId) {
+      if (!cart[productId]) return;
+      cart[productId].quantity += 1;
+      renderCart();
+    }
+
+    function removeFromCart(productId) {
+      if (!cart[productId]) return;
+      delete cart[productId];
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = {};
+      renderCart();
+      showNotice('Coșul a fost golit');
+    }
+
+    function renderCart() {
+      const items = getCartItemsArray();
+      const totalItems = getCartCount();
+      const totalPrice = getCartTotal();
+
+      cartCountEl.textContent = totalItems;
+      cartItemsCountFooterEl.textContent = totalItems;
+      cartTotalEl.textContent = formatLei(totalPrice);
+
+      if (!items.length) {
+        cartItemsEl.innerHTML = `
+          <div class="cart-empty">
+            Coșul este gol. Adaugă volumele preferate și revino aici pentru finalizare.
+          </div>
+        `;
+        return;
+      }
+
+      cartItemsEl.innerHTML = items.map(item => `
+        <article class="cart-item">
+          <div class="cart-item-thumb ${item.thumbClass}"></div>
+          <div>
+            <div class="cart-item-title">${item.name}</div>
+            <div class="cart-item-price">${formatLei(item.price)} / bucată</div>
+            <div class="cart-item-actions">
+              <div class="qty-controls">
+                <button type="button" data-action="decrease" data-id="${item.id}" aria-label="Scade cantitatea">−</button>
+                <span class="qty-value">${item.quantity}</span>
+                <button type="button" data-action="increase" data-id="${item.id}" aria-label="Crește cantitatea">+</button>
+              </div>
+              <button class="remove-item" type="button" data-action="remove" data-id="${item.id}">Elimină</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function buildWhatsAppMessage() {
+      const items = getCartItemsArray();
+      if (!items.length) return '';
+
+      let message = 'Bună! Aș dori să comand:%0A%0A';
+
+      items.forEach(item => {
+        const lineTotal = item.price * item.quantity;
+        message += `• ${item.name} x ${item.quantity} = ${lineTotal} lei%0A`;
+      });
+
+      message += `%0ATotal: ${getCartTotal()} lei%0A%0A`;
+      message += 'Vă rog să îmi spuneți pașii pentru livrare și plată.';
+
+      return message;
+    }
+
+    function checkoutWhatsApp() {
+      const items = getCartItemsArray();
+      if (!items.length) {
+        showNotice('Coșul este gol');
+        return;
+      }
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppMessage()}`;
+      window.open(url, '_blank');
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        addToCart(button.dataset.product);
+      });
+    });
+
+    cartOpen.addEventListener('click', openCart);
+    heroOpenCart.addEventListener('click', openCart);
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    menuToggle.addEventListener('click', toggleMobileMenu);
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCart();
+        closeMobileMenu();
+      }
+    });
+
+    cartItemsEl.addEventListener('click', (e) => {
+      const button = e.target.closest('button[data-action]');
+      if (!button) return;
+
+      const action = button.dataset.action;
+      const id = button.dataset.id;
+
+      if (action === 'increase') increaseInCart(id);
+      if (action === 'decrease') decreaseFromCart(id);
+      if (action === 'remove') removeFromCart(id);
+    });
+
+    clearCartButton.addEventListener('click', clearCart);
+    checkoutButton.addEventListener('click', checkoutWhatsApp);
+
+    renderCart();
+
+    (function () {
+      const openBtnDesktop = document.getElementById('openPinkieGameDesktop');
+      const openBtnMobile = document.getElementById('openPinkieGameMobile');
+      const modal = document.getElementById('pinkieGameModal');
+      const closeBtn = document.getElementById('closePinkieGame');
+      const closeBtnEnd = document.getElementById('closePinkieGameEnd');
+
+      const startBtn = document.getElementById('startPinkieGame');
+      const restartBtn = document.getElementById('restartPinkieGame');
+
+      const startOverlay = document.getElementById('gameStartOverlay');
+      const gameOverOverlay = document.getElementById('gameOverOverlay');
+      const gameOverMessage = document.getElementById('gameOverMessage');
+
+      const stage = document.getElementById('gameStage');
+      const lightning = document.getElementById('gameLightning');
+
+      const scoreEl = document.getElementById('gameScore');
+      const timerEl = document.getElementById('gameTimer');
+      const bestEl = document.getElementById('gameBest');
+      const levelEl = document.getElementById('gameLevel');
+      const livesEl = document.getElementById('gameLives');
+
+      if (
+        (!openBtnDesktop && !openBtnMobile) ||
+        !modal ||
+        !closeBtn ||
+        !startBtn ||
+        !restartBtn ||
+        !startOverlay ||
+        !gameOverOverlay ||
+        !gameOverMessage ||
+        !stage ||
+        !lightning ||
+        !scoreEl ||
+        !timerEl ||
+        !bestEl ||
+        !levelEl ||
+        !livesEl
+      ) {
+        return;
+      }
+
+      let score = 0;
+      let timeLeft = 45;
+      let bestScore = Number(localStorage.getItem('pinkieSkyBestScore') || 0);
+      let gameRunning = false;
+      let level = 1;
+      let lives = 3;
+
+      let gameLoop = null;
+      let timerLoop = null;
+      let lightningLoop = null;
+      let levelLoop = null;
+
+      let combo = 0;
+      let comboBonusReady = false;
+      let shieldActive = false;
+      let doublePointsUntil = 0;
+      let slowMotionUntil = 0;
+
+      const activeClouds = new Set();
+
+      bestEl.textContent = bestScore;
+
+      injectGameEnhancements();
+
+      const comboPill = document.getElementById('gameCombo');
+      const badgePill = document.getElementById('gameBadge');
+
+      function injectGameEnhancements() {
+        if (!document.getElementById('pinkieGameEnhancements')) {
+          const style = document.createElement('style');
+          style.id = 'pinkieGameEnhancements';
+          style.textContent = `
+            .game-stage.sunset-sky {
+              background: linear-gradient(180deg, #ffb6d9 0%, #ffd7ef 35%, #fff3c9 100%);
+            }
+            .game-stage.rainbow-sky {
+              background:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.45), transparent 18%),
+                linear-gradient(180deg, #ffb4dc 0%, #ffd7f0 22%, #fff0be 45%, #d9ffd2 70%, #cde6ff 100%);
+            }
+            .game-stage.stage-shake {
+              animation: pinkieStageShake 0.24s ease;
+            }
+            .game-stage.slow-mode {
+              box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 0 24px rgba(122,139,255,0.22);
+            }
+            .game-stage.double-mode {
+              box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 0 26px rgba(255,212,95,0.28);
+            }
+            .game-combo-text {
+              position: absolute;
+              left: 50%;
+              top: 24px;
+              transform: translateX(-50%);
+              z-index: 5;
+              pointer-events: none;
+              padding: 10px 18px;
+              border-radius: 999px;
+              background: rgba(255,255,255,0.92);
+              color: #ff4da9;
+              font-family: 'Baloo 2', cursive;
+              font-size: 1.2rem;
+              font-weight: 800;
+              box-shadow: 0 10px 24px rgba(31,44,92,0.12);
+              opacity: 0;
+              animation: pinkieComboPop 0.9s ease forwards;
+            }
+            .game-particle {
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              pointer-events: none;
+              z-index: 4;
+              animation: pinkieParticleFly 0.7s ease forwards;
+            }
+            .game-end-badge {
+              margin-top: 12px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              padding: 10px 16px;
+              border-radius: 999px;
+              background: linear-gradient(135deg, #ff73c3, #ffd45f);
+              color: #ffffff;
+              font-family: 'Baloo 2', cursive;
+              font-size: 1rem;
+              font-weight: 800;
+              box-shadow: 0 10px 22px rgba(255,99,184,0.22);
+            }
+            @keyframes pinkieStageShake {
+              0% { transform: translateX(0); }
+              25% { transform: translateX(-5px); }
+              50% { transform: translateX(5px); }
+              75% { transform: translateX(-3px); }
+              100% { transform: translateX(0); }
+            }
+            @keyframes pinkieComboPop {
+              0% { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.88); }
+              20% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+              80% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+              100% { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(1.06); }
+            }
+            @keyframes pinkieParticleFly {
+              0% { opacity: 1; transform: translate(0,0) scale(1); }
+              100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+
+        if (!document.getElementById('gameCombo')) {
+          const comboItem = document.createElement('div');
+          comboItem.className = 'game-pill';
+          comboItem.innerHTML = 'Combo: <strong id="gameCombo">0</strong>';
+          document.querySelector('.game-stats').appendChild(comboItem);
+        }
+
+        if (!document.getElementById('gameBadge')) {
+          const badgeItem = document.createElement('div');
+          badgeItem.className = 'game-pill';
+          badgeItem.innerHTML = 'Putere: <strong id="gameBadge">Normal</strong>';
+          document.querySelector('.game-stats').appendChild(badgeItem);
+        }
+      }
+
+      function openGameModal() {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeGameModal() {
+        stopGame();
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        startOverlay.style.display = 'flex';
+        gameOverOverlay.style.display = 'none';
+      }
+
+      function resetGameState() {
+        score = 0;
+        timeLeft = 45;
+        level = 1;
+        lives = 3;
+        combo = 0;
+        comboBonusReady = false;
+        shieldActive = false;
+        doublePointsUntil = 0;
+        slowMotionUntil = 0;
+        gameRunning = false;
+
+        scoreEl.textContent = score;
+        timerEl.textContent = timeLeft;
+        levelEl.textContent = level;
+        livesEl.textContent = lives;
+        comboPill.textContent = combo;
+        badgePill.textContent = 'Normal';
+
+        clearAllClouds();
+        clearAllLoops();
+
+        stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky', 'slow-mode', 'double-mode', 'stage-shake');
+        lightning.classList.remove('flash');
+
+        startOverlay.style.display = 'flex';
+        gameOverOverlay.style.display = 'none';
+      }
+
+      function startGame() {
+        resetGameState();
+        gameRunning = true;
+        startOverlay.style.display = 'none';
+        gameOverOverlay.style.display = 'none';
+
+        updateSky();
+        updateModes();
+        startSpawnLoop();
+
+        timerLoop = setInterval(() => {
+          timeLeft -= 1;
+          timerEl.textContent = timeLeft;
+          updateModes();
+
+          if (timeLeft <= 0) {
+            finishGame();
+          }
+        }, 1000);
+
+        levelLoop = setInterval(() => {
+          if (!gameRunning) return;
+          level += 1;
+          levelEl.textContent = level;
+          showComboText(`Nivel ${level}`);
+          startSpawnLoop();
+        }, 12000);
+
+        lightningLoop = setInterval(() => {
+          if (!gameRunning) return;
+
+          if (score < 0) {
+            lightning.classList.add('flash');
+            setTimeout(() => {
+              lightning.classList.remove('flash');
+            }, 180);
+          }
+        }, 1200);
+      }
+
+      function startSpawnLoop() {
+        if (gameLoop) {
+          clearInterval(gameLoop);
+          gameLoop = null;
+        }
+
+        gameLoop = setInterval(() => {
+          if (!gameRunning) return;
+
+          if (activeClouds.size < getMaxClouds()) {
+            spawnCloud();
+          }
+        }, getSpawnInterval());
+      }
+
+      function stopGame() {
+        gameRunning = false;
+        clearAllLoops();
+        clearAllClouds();
+        stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky', 'slow-mode', 'double-mode', 'stage-shake');
+        lightning.classList.remove('flash');
+      }
+
+      function finishGame() {
+        gameRunning = false;
+        clearAllLoops();
+        clearAllClouds();
+
+        if (score > bestScore) {
+          bestScore = score;
+          localStorage.setItem('pinkieSkyBestScore', String(bestScore));
+          bestEl.textContent = bestScore;
+        }
+
+        let finalMessage = '';
+        let badge = '';
+
+        if (score >= 45) {
+          finalMessage = `Ai terminat cu ${score} puncte. Ai trecut prin toate nivelurile și ai salvat complet cerul lui Pinkie.`;
+          badge = 'Rainbow Hero';
+        } else if (score >= 30) {
+          finalMessage = `Ai terminat cu ${score} puncte. Pinkie zâmbește, cerul este vesel și ai făcut o treabă minunată.`;
+          badge = 'Pinkie Champion';
+        } else if (score >= 15) {
+          finalMessage = `Ai terminat cu ${score} puncte. Ai adus lumină și ai ajutat cerul să devină mai senin.`;
+          badge = 'Cloud Helper';
+        } else if (score >= 0) {
+          finalMessage = `Ai terminat cu ${score} puncte. Te-ai descurcat bine și data viitoare poți merge și mai departe.`;
+          badge = 'Little Dreamer';
+        } else {
+          finalMessage = `Ai terminat cu ${score} puncte. Cerul s-a întristat puțin, dar Pinkie știe că revii mai puternic.`;
+          badge = 'Brave Starter';
+        }
+
+        gameOverMessage.innerHTML = `${finalMessage}<br><br>Nivel atins: <strong>${level}</strong><br><span class="game-end-badge">${badge}</span>`;
+        gameOverOverlay.style.display = 'flex';
+      }
+
+      function clearAllLoops() {
+        if (gameLoop) {
+          clearInterval(gameLoop);
+          gameLoop = null;
+        }
+
+        if (timerLoop) {
+          clearInterval(timerLoop);
+          timerLoop = null;
+        }
+
+        if (lightningLoop) {
+          clearInterval(lightningLoop);
+          lightningLoop = null;
+        }
+
+        if (levelLoop) {
+          clearInterval(levelLoop);
+          levelLoop = null;
+        }
+      }
+
+      function clearAllClouds() {
+        activeClouds.forEach((cloud) => {
+          if (cloud && cloud.parentNode) {
+            if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
+            cloud.parentNode.removeChild(cloud);
+          }
+        });
+        activeClouds.clear();
+      }
+
+      function getMaxClouds() {
+        const base = window.innerWidth <= 520 ? 4 : window.innerWidth <= 780 ? 5 : 7;
+        return Math.min(base + Math.floor((level - 1) / 2), base + 3);
+      }
+
+      function getSpawnInterval() {
+        const base = window.innerWidth <= 780 ? 800 : 700;
+        const faster = base - (level - 1) * 55;
+        return Math.max(320, faster);
+      }
+
+      function randomBetween(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function getDifficultySpeed() {
+        let baseMin = 2.2 + (level - 1) * 0.35;
+        let baseMax = 3.2 + (level - 1) * 0.45;
+
+        if (window.innerWidth <= 780) {
+          baseMin -= 0.5;
+          baseMax -= 0.6;
+        }
+
+        if (Date.now() < slowMotionUntil) {
+          baseMin *= 0.65;
+          baseMax *= 0.65;
+        }
+
+        return randomBetween(baseMin, baseMax);
+      }
+
+      function updateSky() {
+        stage.classList.remove('dark-sky', 'sunset-sky', 'rainbow-sky');
+
+        if (score < 0) {
+          stage.classList.add('dark-sky');
+        } else if (score >= 22) {
+          stage.classList.add('rainbow-sky');
+        } else if (score >= 8) {
+          stage.classList.add('sunset-sky');
+        }
+      }
+
+      function updateModes() {
+        const now = Date.now();
+        stage.classList.toggle('slow-mode', now < slowMotionUntil);
+        stage.classList.toggle('double-mode', now < doublePointsUntil);
+
+        if (shieldActive) {
+          badgePill.textContent = 'Scut activ';
+          return;
+        }
+
+        if (now < doublePointsUntil) {
+          badgePill.textContent = 'Puncte duble';
+          return;
+        }
+
+        if (now < slowMotionUntil) {
+          badgePill.textContent = 'Slow motion';
+          return;
+        }
+
+        badgePill.textContent = 'Normal';
+      }
+
+      function createCloudElement(type) {
+        const cloud = document.createElement('button');
+        cloud.type = 'button';
+        cloud.className = `game-cloud ${type === 'gold' || type === 'rainbow' || type === 'heart' || type === 'star' ? 'special' : type}`;
+
+        const main = document.createElement('div');
+        main.className = 'cloud-main';
+
+        const b1 = document.createElement('div');
+        b1.className = 'cloud-b1';
+
+        const b2 = document.createElement('div');
+        b2.className = 'cloud-b2';
+
+        const b3 = document.createElement('div');
+        b3.className = 'cloud-b3';
+
+        const label = document.createElement('div');
+        label.className = 'game-cloud-label';
+
+        if (type === 'good') label.textContent = '+1';
+        if (type === 'bad') label.textContent = '-2';
+        if (type === 'gold') label.textContent = '+5';
+        if (type === 'rainbow') label.textContent = 'SLOW';
+        if (type === 'heart') label.textContent = 'SCUT';
+        if (type === 'star') label.textContent = 'x2';
+
+        cloud.appendChild(main);
+        cloud.appendChild(b1);
+        cloud.appendChild(b2);
+        cloud.appendChild(b3);
+        cloud.appendChild(label);
+
+        return cloud;
+      }
+
+      function getRandomCloudType() {
+        const roll = Math.random();
+
+        if (roll < 0.56) return 'good';
+        if (roll < 0.78) return 'bad';
+        if (roll < 0.86) return 'gold';
+        if (roll < 0.91) return 'rainbow';
+        if (roll < 0.96) return 'heart';
+        return 'star';
+      }
+
+      function spawnCloud() {
+        const type = getRandomCloudType();
+        const cloud = createCloudElement(type);
+
+        const stageRect = stage.getBoundingClientRect();
+        const stageHeight = stage.clientHeight;
+        const cloudWidth = window.innerWidth <= 780 ? 78 : 92;
+        const startX = -cloudWidth - 20;
+        const minY = 55;
+        const maxY = Math.max(70, stageHeight - 150);
+        const y = randomBetween(minY, maxY);
+
+        let x = startX;
+        const speed = getDifficultySpeed();
+
+        cloud.style.left = `${x}px`;
+        cloud.style.top = `${y}px`;
+
+        stage.appendChild(cloud);
+        activeClouds.add(cloud);
+
+        let clicked = false;
+
+        function removeCloud() {
+          if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
+          activeClouds.delete(cloud);
+          if (cloud.parentNode) {
+            cloud.parentNode.removeChild(cloud);
+          }
+        }
+
+        cloud.addEventListener('click', () => {
+          if (!gameRunning || clicked) return;
+          clicked = true;
+
+          const rect = cloud.getBoundingClientRect();
+          const popX = rect.left - stageRect.left + rect.width / 2;
+          const popY = rect.top - stageRect.top + rect.height / 2;
+
+          handleCloudHit(type, popX, popY);
+          removeCloud();
+        });
+
+        function animate() {
+          if (!gameRunning) {
             removeCloud();
             return;
           }
+
+          x += speed;
+          cloud.style.left = `${x}px`;
+
+          if (x > stage.clientWidth + 40) {
+            removeCloud();
+            return;
+          }
+
+          cloud._animFrame = requestAnimationFrame(animate);
         }
-        updateHud();
+
+        cloud._animFrame = requestAnimationFrame(animate);
+      }
+
+      function handleCloudHit(type, x, y) {
+        const now = Date.now();
+        let points = 0;
+
+        if (type === 'good') {
+          combo += 1;
+          points = now < doublePointsUntil ? 2 : 1;
+          score += points;
+          showFloatingScore(`+${points}`, x, y, 'plus');
+          burstParticles(x, y, ['#ff83c6', '#ffd1eb', '#fff0f8']);
+        }
+
+        if (type === 'bad') {
+          if (shieldActive) {
+            shieldActive = false;
+            combo = 0;
+            showFloatingScore('Scut!', x, y, 'plus');
+            burstParticles(x, y, ['#9bb2ff', '#ffffff', '#d8e4ff']);
+          } else {
+            combo = 0;
+            points = -2;
+            score += points;
+            lives -= 1;
+            livesEl.textContent = lives;
+            showFloatingScore('-2', x, y, 'minus');
+            burstParticles(x, y, ['#ff5252', '#ff9b9b', '#ffd7d7']);
+            shakeStage();
+
+            if (lives <= 0) {
+              scoreEl.textContent = score;
+              updateSky();
+              updateModes();
+              finishGame();
+              return;
+            }
+          }
+        }
+
+        if (type === 'gold') {
+          combo += 1;
+          points = now < doublePointsUntil ? 10 : 5;
+          score += points;
+          showFloatingScore(`+${points}`, x, y, 'plus');
+          burstParticles(x, y, ['#ffd45f', '#fff0ae', '#fff7d6']);
+          showComboText('Nor auriu!');
+        }
+
+        if (type === 'rainbow') {
+          combo += 1;
+          slowMotionUntil = now + 4000;
+          showFloatingScore('Slow!', x, y, 'plus');
+          burstParticles(x, y, ['#ff83c6', '#ffd45f', '#8ad6ff', '#b7ffb0']);
+          showComboText('Slow motion');
+        }
+
+        if (type === 'heart') {
+          combo += 1;
+          shieldActive = true;
+          showFloatingScore('Scut!', x, y, 'plus');
+          burstParticles(x, y, ['#ff9ed5', '#ffffff', '#ffd9ef']);
+          showComboText('Scut activ');
+        }
+
+        if (type === 'star') {
+          combo += 1;
+          doublePointsUntil = now + 5000;
+          showFloatingScore('x2', x, y, 'plus');
+          burstParticles(x, y, ['#fff0ae', '#ffffff', '#ffe08a']);
+          showComboText('Puncte duble');
+        }
+
+        applyComboBonus(x, y);
+        comboPill.textContent = combo;
+        scoreEl.textContent = score;
         updateSky();
-        removeCloud();
-      };
-
-      const removeCloud = () => {
-        if(cloud._raf) cancelAnimationFrame(cloud._raf);
-        game.clouds.delete(cloud);
-        cloud.remove();
-      };
-
-      cloud.onclick = hit;
-
-      const move = () => {
-        if(!game.running) return removeCloud();
-        x += sp;
-        cloud.style.left = x + 'px';
-        if(x > stage.clientWidth + 120) return removeCloud();
-        cloud._raf = requestAnimationFrame(move);
-      };
-      cloud._raf = requestAnimationFrame(move);
-    }
-
-    function floatText(text, x, y, cls){
-      const el = document.createElement('div');
-      el.className = 'float ' + cls;
-      el.textContent = text;
-      el.style.left = x + 'px';
-      el.style.top = y + 'px';
-      stage.appendChild(el);
-      setTimeout(() => el.remove(), 700);
-    }
-
-    function finishGame(wonAll){
-      stopGame();
-
-      if(game.score > game.best){
-        game.best = game.score;
-        localStorage.setItem('pinkieBest', String(game.best));
-        gBest.textContent = game.best;
+        updateModes();
       }
 
-      startOverlay.style.display = 'none';
-      endOverlay.style.display = 'flex';
+      function applyComboBonus(x, y) {
+        if (combo > 0 && combo % 3 === 0 && !comboBonusReady) {
+          comboBonusReady = true;
+          score += 2;
+          scoreEl.textContent = score;
+          showFloatingScore('+2', x + 30, y - 16, 'plus');
+          showComboText(`Combo x${combo}`);
+          burstParticles(x, y, ['#ff83c6', '#ffd45f', '#ffffff']);
+          updateSky();
+        }
 
-      if(wonAll){
-        endTitle.textContent = 'Super! Ai terminat toate cele 10 niveluri';
-        endText.innerHTML = `Scor final: <strong>${game.score}</strong><br>Nivel atins: <strong>10</strong>`;
-      } else {
-        endTitle.textContent = 'Jocul s-a terminat';
-        endText.innerHTML = `Scor final: <strong>${game.score}</strong><br>Nivel atins: <strong>${game.level}</strong><br>Ținta nivelului: <strong>${levelData().target}</strong>`;
-      }
-    }
-
-    async function saveScore(){
-      const player = prompt('Numele jucătorului pentru clasament:', 'Anonim') || 'Anonim';
-      const payload = {
-        player_name: player.trim().slice(0,30) || 'Anonim',
-        score: game.score,
-        level: game.level
-      };
-
-      const { error } = await supabaseClient.from('pinkie_scores').insert(payload);
-      if(error){
-        toast('Scorul nu a putut fi salvat');
-        return;
+        if (combo % 3 !== 0) {
+          comboBonusReady = false;
+        }
       }
 
-      toast('Scor salvat');
-      await loadLeaderboard();
-    }
+      function showFloatingScore(text, x, y, type) {
+        const el = document.createElement('div');
+        el.className = `game-float-score ${type}`;
+        el.textContent = text;
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
 
-    async function loadLeaderboard(){
-      const { data, error } = await supabaseClient
-        .from('pinkie_scores')
-        .select('player_name,score,level')
-        .order('score', { ascending:false })
-        .order('level', { ascending:false })
-        .limit(5);
+        stage.appendChild(el);
 
-      if(error || !data || !data.length){
-        leaderboardList.innerHTML = '<li>Nu există scoruri încă</li>';
-        return;
+        setTimeout(() => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, 700);
       }
 
-      leaderboardList.innerHTML = data.map(row =>
-        `<li>${escapeHtml(row.player_name)} , ${row.score} pct, nivel ${row.level}</li>`
-      ).join('');
-    }
+      function showComboText(text) {
+        const el = document.createElement('div');
+        el.className = 'game-combo-text';
+        el.textContent = text;
+        stage.appendChild(el);
 
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-    }
+        setTimeout(() => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, 900);
+      }
 
-    $('#startGameBtn').onclick = startGame;
-    $('#restartGameBtn').onclick = startGame;
-    $('#saveScoreBtn').onclick = saveScore;
+      function burstParticles(x, y, colors) {
+        for (let i = 0; i < 10; i += 1) {
+          const p = document.createElement('div');
+          p.className = 'game-particle';
+          p.style.left = `${x}px`;
+          p.style.top = `${y}px`;
+          p.style.background = colors[i % colors.length];
+          p.style.setProperty('--dx', `${randomBetween(-34, 34)}px`);
+          p.style.setProperty('--dy', `${randomBetween(-34, 34)}px`);
+          stage.appendChild(p);
 
-    loadLeaderboard();
-  </script>
+          setTimeout(() => {
+            if (p.parentNode) p.parentNode.removeChild(p);
+          }, 700);
+        }
+      }
 
-  <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/69e217fc4a1e1a1c35282621/1jmdircjq';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
+      function shakeStage() {
+        stage.classList.remove('stage-shake');
+        void stage.offsetWidth;
+        stage.classList.add('stage-shake');
+      }
+
+      function handleOpenGame() {
+        closeMobileMenu();
+        openGameModal();
+        resetGameState();
+      }
+
+      if (openBtnDesktop) {
+        openBtnDesktop.addEventListener('click', handleOpenGame);
+      }
+
+      if (openBtnMobile) {
+        openBtnMobile.addEventListener('click', handleOpenGame);
+      }
+
+      closeBtn.addEventListener('click', closeGameModal);
+
+      if (closeBtnEnd) {
+        closeBtnEnd.addEventListener('click', closeGameModal);
+      }
+
+      startBtn.addEventListener('click', startGame);
+      restartBtn.addEventListener('click', startGame);
+
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          closeGameModal();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('open')) {
+          closeGameModal();
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (!gameRunning) return;
+
+        const tooMany = activeClouds.size - getMaxClouds();
+        if (tooMany > 0) {
+          let count = 0;
+          activeClouds.forEach((cloud) => {
+            if (count < tooMany) {
+              if (cloud && cloud.parentNode) {
+                if (cloud._animFrame) cancelAnimationFrame(cloud._animFrame);
+                cloud.parentNode.removeChild(cloud);
+              }
+              activeClouds.delete(cloud);
+              count += 1;
+            }
+          });
+        }
+      });
+
+      resetGameState();
     })();
   </script>
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69e217fc4a1e1a1c35282621/1jmdircjq';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 </body>
 </html>
