@@ -20,7 +20,7 @@
       --card: rgba(255,255,255,0.72);
       --border: rgba(255,255,255,0.92);
       --shadow: 0 20px 44px rgba(186,95,181,0.18);
-      --shadow-soft: 0 10px 24px rgba(255,116,200,0.18)
+      --shadow-soft: 0 10px 24px rgba(255,116,200,0.18);
       --radius-xl: 34px;
       --radius-lg: 24px;
       --max: 1220px;
@@ -1024,6 +1024,71 @@
       margin-bottom: 14px;
     }
 
+    .sale-wrap {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .sale-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffe56e, #ff9f4c);
+      color: #9a3c00;
+      border: 2px solid rgba(255,255,255,0.92);
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.96rem;
+      font-weight: 800;
+      box-shadow: 0 10px 18px rgba(255,159,76,0.22);
+    }
+
+    .old-price {
+      color: #a47a9e;
+      font-weight: 800;
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      opacity: 0.9;
+    }
+
+    .sale-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .product-price-value.sale-price {
+      margin-bottom: 0;
+      transform: scale(1.08);
+      background: linear-gradient(135deg, #ff3fa8, #ff74c9);
+      box-shadow: 0 16px 28px rgba(255,63,168,0.32);
+    }
+
+    .mini-sale-price {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mini-sale-price strong {
+      color: var(--pink-dark);
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.18rem;
+    }
+
+    .cart-sale-note {
+      color: var(--pink-dark);
+      font-weight: 800;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
     .product-price-card .btn {
       width: 100%;
     }
@@ -1086,6 +1151,16 @@
     .thumb-vol1 { background-image: url("coperta-volum-1.png"); }
     .thumb-vol2 { background-image: url("coperta-volum-2.png"); }
     .thumb-vol3 { background-image: url("coperta-volum-3.png"); }
+    .checkout-mini-thumb.pachet {
+      background:
+        linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.14)),
+        url("coperta-volum-1.png"),
+        url("coperta-volum-2.png"),
+        url("coperta-volum-3.png");
+      background-size: 100% 100%, 36% auto, 36% auto, 36% auto;
+      background-position: center, left 6% center, center center, right 6% center;
+      background-repeat: no-repeat;
+    }
 
     .checkout-mini-item .btn {
       padding: 10px 16px;
@@ -2517,7 +2592,13 @@
             <div class="product-cover vol1"></div>
             <h4>Volumul I</h4>
             <p class="product-price-subtitle">Mimi, iubire și acceptare de sine</p>
-            <div class="product-price-value">58 lei</div>
+            <div class="sale-wrap">
+              <span class="sale-badge">Reducere acum</span>
+              <div class="sale-price-row">
+                <span class="old-price">58 lei</span>
+                <span class="product-price-value sale-price">50 lei</span>
+              </div>
+            </div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
           </article>
 
@@ -2525,7 +2606,13 @@
             <div class="product-cover vol2"></div>
             <h4>Volumul II</h4>
             <p class="product-price-subtitle">Vivi, generozitate și echilibru</p>
-            <div class="product-price-value">58 lei</div>
+            <div class="sale-wrap">
+              <span class="sale-badge">Reducere acum</span>
+              <div class="sale-price-row">
+                <span class="old-price">58 lei</span>
+                <span class="product-price-value sale-price">50 lei</span>
+              </div>
+            </div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
           </article>
 
@@ -2533,7 +2620,13 @@
             <div class="product-cover vol3"></div>
             <h4>Volumul III</h4>
             <p class="product-price-subtitle">Hoppy, curaj și încredere</p>
-            <div class="product-price-value">58 lei</div>
+            <div class="sale-wrap">
+              <span class="sale-badge">Reducere acum</span>
+              <div class="sale-price-row">
+                <span class="old-price">58 lei</span>
+                <span class="product-price-value sale-price">50 lei</span>
+              </div>
+            </div>
             <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
           </article>
 
@@ -2592,12 +2685,12 @@
           <article class="workshop-card reveal">
             <div class="icon">🌈</div>
             <h3>Ce se întâmplă în atelier</h3>
-            <div class="check-list">
+            <ul class="check-list">
               <li>Ascultă povestea și intră în universul Pinkie</li>
               <li>Participă activ și trăiește experiența</li>
               <li>Exprimă emoții prin joc, desen și exerciții</li>
               <li>Ia acasă o lecție utilă și blândă</li>
-            </div>
+            </ul>
           </article>
         </div>
 
@@ -2742,34 +2835,43 @@
 
           <div class="author-story-body">
             <div class="author-story-body-inner">
-             <div class="author-story-body">
-  <div class="author-story-body-inner">
-    <h3>Despre autoare</h3>
-
-    <p>Sunt Ruxandra Ioniță, profesoară și creatoarea universului Pinkie Cloud.</p>
-
-    <p>Povestea mea în educație a început cu un gest de încredere. După absolvirea liceului și rezultatele obținute la examenul de bacalaureat, am primit un apel din partea doamnei director a școlii în care am învățat. M-a felicitat și mi-a propus să lucrez în grădinița din cadrul școlii.</p>
-
-    <p>Pentru mine, acel moment a însemnat mult mai mult decât o oportunitate profesională. A fost începutul unui drum care avea să îmi definească vocația și direcția în viață.</p>
-
-    <p>Am acceptat cu emoție și entuziasm, fără să știu că lucrul alături de copii va deveni una dintre cele mai importante misiuni ale mele. În timp, am descoperit că educația înseamnă mai mult decât lecții și activități. Înseamnă relație, încredere, prezență și capacitatea de a crea un spațiu în care fiecare copil se simte văzut, ascultat și valorizat.</p>
-
-    <p>Pe parcursul anilor am fost susținută de colegi, apreciată de părinți și inspirată în fiecare zi de copiii cu care am lucrat. Aceste experiențe m-au motivat să continui pregătirea profesională prin studiile de Pedagogia Învățământului Primar și Preșcolar, completate ulterior cu un master în Management Educațional și diverse programe de formare, inclusiv în contexte internaționale.</p>
-
-    <p>Cu toate acestea, cea mai valoroasă formare nu a avut loc într-o sală de curs. Ea s-a construit în fiecare clasă, în fiecare conversație și în fiecare moment petrecut alături de copii. Am învățat să ascult înainte să explic, să observ înainte să intervin și să înțeleg înainte să ofer soluții.</p>
-
-    <p>De-a lungul timpului, activitățile și materialele pe care le-am creat au fost apreciate atât de copii, cât și de colegi. Tot mai des am început să mă întreb cum aș putea duce aceste experiențe către mai mulți copii și mai multe familii.</p>
-
-    <p>Așa s-a născut Pinkie Cloud.</p>
-
-    <p>Nu ca un simplu proiect și nici ca un brand, ci ca o continuare firească a tot ceea ce am construit în relația cu copiii. Un univers în care poveștile devin instrumente de dezvoltare emoțională, în care emoțiile sunt înțelese și acceptate, iar fiecare copil este încurajat să crească în propriul ritm.</p>
-
-    <p>Pinkie Cloud transformă concepte importante despre emoții, încredere și dezvoltare personală în experiențe accesibile, captivante și potrivite pentru lumea copiilor.</p>
-
-    <p>Cred cu tărie că în fiecare copil există un potențial extraordinar. Uneori, tot ce are nevoie este cineva care să creadă în el și să îi ofere spațiul necesar pentru a descoperi cât de valoros este.</p>
-
-    <p>Prin Pinkie Cloud, îmi doresc să ofer exact acest lucru.</p>
-    
+              <p>Sunt Ruxandra Ioniță, profesoară și creatoarea universului Pinkie Cloud.</p>
+              <p>Drumul meu în educație nu a început întâmplător.</p>
+              <p>A început cu un apel.</p>
+              <p>Un apel din partea doamnei director a școlii în care am învățat, care m-a sunat să mă felicite pentru rezultatele la bacalaureat și să îmi propună să lucrez în grădinița din cadrul acelei școli.</p>
+              <p>Pentru mine, acel moment a fost mai mult decât o oportunitate.</p>
+              <p>A fost un început.</p>
+              <p>Un început în care cineva a avut încredere în mine înainte ca eu să știu cât pot.</p>
+              <p>Am spus „da” cu emoție și bucurie, fără să știu că acel „da” avea să-mi definească direcția.</p>
+              <p>În timp, lucrul cu copiii a devenit locul în care am înțeles cu adevărat ce înseamnă educația.</p>
+              <p>Nu doar lecții.</p>
+              <p>Nu doar activități.</p>
+              <p>Ci prezență.</p>
+              <p>Relație.</p>
+              <p>Încredere.</p>
+              <p>Am fost primită cu deschidere, susținută și încurajată, iar pe parcurs am primit ceva ce nu se învață din cărți, aprecierea sinceră a părinților și conexiunea reală cu copiii.</p
+              <p>Am ales să continui cu Pedagogia Învățământului Primar și Preșcolar, să aprofundez printr-un master în Management Educațional și să explorez experiențe de formare, inclusiv în contexte internaționale.</p>
+              <p>Dar adevărul este acesta, cea mai importantă formare a mea nu a fost într-o sală de curs.</p>
+              <p>A fost în fiecare clasă.</p>
+              <p>Cu fiecare copil.</p>
+              <p>În fiecare moment în care am învățat să ascult mai mult decât să explic.</p>
+              <p>După ce am devenit profesoară, lucrurile s-au confirmat.</p>
+              <p>Am continuat să primesc același tip de reacții, pentru felul în care țineam spațiul emoțional al copiilor și pentru activitățile care îi făceau să se deschidă.</p>
+              <p>Colegele îmi cereau materialele mele, iar eu le ofeream cu bucurie.</p>
+              <p>Și au început să apară întrebările, cum pot duce asta mai departe?</p>
+              <p>Cum pot ajunge la mai mulți copii?</p>
+              <p>Așa s-a născut Pinkie Cloud.</p>
+              <p>Nu ca un proiect.</p>
+              <p>Nu ca un brand.</p>
+              <p>Ci ca o extensie firească a tot ceea ce am trăit și am construit în relația cu copiii.</p>
+              <p>Un Univers în care povestea devine punte.</p>
+              <p>În care emoțiile nu sunt corectate, ci înțelese.</p>
+              <p>În care copilul nu este grăbit să fie „mai mult”, ci susținut să fie exact acolo unde este.</p>
+              <p>Ceea ce definește cu adevărat Pinkie Cloud este felul în care aceste cunoștințe se transformă în experiențe pe înțelesul copiilor.</p>
+              <p>Pinkie Cloud este felul meu de a duce mai departe acel prim gest de încredere pe care l-am primit și de a-l transforma într-un spațiu în care fiecare copil are loc.</p>
+              <p>Pentru că eu cred că în fiecare copil există mai mult decât se vede.</p>
+              <p>Iar uneori, tot ce are nevoie, este cineva care să îi arate asta.</p>
+            </div>
           </div>
         </article>
       </div>
@@ -2803,7 +2905,7 @@
                 <div class="checkout-mini-thumb thumb-vol1"></div>
                 <div>
                   <strong>Volumul I</strong>
-                  <p>58 lei</p>
+                  <p class="mini-sale-price"><span class="old-price">58 lei</span><strong>50 lei</strong></p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="vol1">Adaugă în coș</button>
               </div>
@@ -2812,7 +2914,7 @@
                 <div class="checkout-mini-thumb thumb-vol2"></div>
                 <div>
                   <strong>Volumul II</strong>
-                  <p>58 lei</p>
+                  <p class="mini-sale-price"><span class="old-price">58 lei</span><strong>50 lei</strong></p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="vol2">Adaugă în coș</button>
               </div>
@@ -2821,13 +2923,13 @@
                 <div class="checkout-mini-thumb thumb-vol3"></div>
                 <div>
                   <strong>Volumul III</strong>
-                  <p>58 lei</p>
+                  <p class="mini-sale-price"><span class="old-price">58 lei</span><strong>50 lei</strong></p>
                 </div>
                 <button class="btn btn-primary add-to-cart" type="button" data-product="vol3">Adaugă în coș</button>
               </div>
 
               <div class="checkout-mini-item">
-                <div class="checkout-mini-thumb thumb-vol1"></div>
+                <div class="checkout-mini-thumb pachet"></div>
                 <div>
                   <strong>Pachet complet</strong>
                   <p>133 lei</p>
@@ -2932,9 +3034,9 @@
 
   <script>
     const PRODUCTS = {
-      vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 58, thumbClass: 'vol1' },
-      vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 58, thumbClass: 'vol2' },
-      vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 58, thumbClass: 'vol3' },
+      vol1: { id: 'vol1', name: 'Volumul I, Mimi', price: 50, oldPrice: 58, thumbClass: 'vol1' },
+      vol2: { id: 'vol2', name: 'Volumul II, Vivi', price: 50, oldPrice: 58, thumbClass: 'vol2' },
+      vol3: { id: 'vol3', name: 'Volumul III, Hoppy', price: 50, oldPrice: 58, thumbClass: 'vol3' },
       pack: { id: 'pack', name: 'Pachet complet, toate cele 3 volume', price: 133, thumbClass: 'pachet' }
     };
 
@@ -3135,6 +3237,7 @@
           <div>
             <div class="cart-item-title">${item.name}</div>
             <div class="cart-item-price">${formatLei(item.price)} / bucată</div>
+            ${item.oldPrice ? `<div class="cart-sale-note">Redus de la ${formatLei(item.oldPrice)}</div>` : ''}
             <div class="cart-item-actions">
               <div class="qty-controls">
                 <button type="button" data-action="decrease" data-id="${item.id}" aria-label="Scade cantitatea">−</button>
@@ -3156,7 +3259,8 @@
 
       items.forEach(item => {
         const lineTotal = item.price * item.quantity;
-        message += `• ${item.name} x ${item.quantity} = ${lineTotal} lei%0A`;
+        const saleText = item.oldPrice ? `, redus de la ${item.oldPrice} lei la ${item.price} lei` : '';
+        message += `• ${item.name}${saleText} x ${item.quantity} = ${lineTotal} lei%0A`;
       });
 
       message += `%0ATotal: ${getCartTotal()} lei%0A%0A`;
