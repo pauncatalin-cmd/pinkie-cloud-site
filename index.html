@@ -2682,6 +2682,33 @@
       body.night .mobile-menu-inner .mobile-game-btn { color:#f2afd4!important; border-color:#70527e; }
       .mobile-menu-inner a:focus-visible,.mobile-menu-inner button:focus-visible { outline:2px solid #b63d85; outline-offset:2px; }
     }
+    /* Explicit nested surfaces prevent light day panels inheriting night text. */
+    body.night { --night-panel:#30243f; --night-inset:#3a2b49; --night-line:#70527e; --night-copy:#e8dcef; --night-muted:#d0bddb; }
+    body.night .checkout-note, body.night .cart-footer, body.night .qty-controls,
+    body.night .notice, body.night .social-link, body.night .cart-empty,
+    body.night .pdf-preview-label, body.night .btn-light,
+    body.night .atelier-accordion-icon, body.night .author-story-icon { background:var(--night-inset); border-color:var(--night-line); color:var(--night-copy); box-shadow:none; }
+    body.night .checkout-card .checkout-note { color:var(--night-copy); }
+    body.night .checkout-mini-item, body.night .cart-item { background:var(--night-inset); border-color:var(--night-line); color:var(--night-copy); }
+    body.night .checkout-mini-item strong, body.night .cart-item-title,
+    body.night .qty-value, body.night .cart-summary-row, body.night .cart-summary-total,
+    body.night .author-signature, body.night .footer-brand { color:var(--pinkie-accent-text); text-shadow:none; }
+    body.night .checkout-mini-item span, body.night .cart-item-price,
+    body.night .old-price, body.night .sale-badge, body.night .remove-item,
+    body.night .book-detail-card p, body.night .story-band p { color:var(--night-muted); }
+    body.night .cart-close { background:var(--night-inset); color:var(--night-copy); border-color:var(--night-line); }
+    body.night .social-link.instagram, body.night .social-link.tiktok, body.night .social-link.facebook { color:var(--night-copy); }
+    body.night .social-link:hover, body.night .social-link:focus-visible { background:#493355; color:#fff; }
+    body.night .atelier-accordion-button span, body.night .author-story-button span { color:var(--pinkie-accent-text); }
+    body.night .footer-links a { color:var(--night-copy); }
+    body.night .footer-links span { color:var(--night-muted); }
+    body.night .qty-controls button { background:var(--pinkie-accent); color:#fff; box-shadow:none; }
+    body.night .game-modal { color:#33406b; }
+    body.night .game-title { color:#a83275; }
+    body.night .game-pill strong { color:#a83275; }
+    body.night .game-intro, body.night .game-over { color:#33406b; }
+    body.night .game-card h3 { color:#a83275; }
+    body.night .game-btn { background:var(--pinkie-accent); color:#fff; box-shadow:none; }
   </style>
 </head>
 <body>
