@@ -2637,6 +2637,57 @@
       .hero-proof .proof-card:nth-child(2) { display:none; }
       :target { scroll-margin-top:80px; }
     }
+    /* Calm neutral surfaces; pink is reserved for the brand and main actions. */
+    body { --text:#334247; --muted:#58666a; --pink-dark:#a7396a; --surface:#f5f6f3; --surface-soft:#e2e7e6; --line:#cbd4d2; --accent:#aa3d70; --heading:#2c3d42; --border:#cbd4d2; background:#e6ebe8; color:var(--text); }
+    body.night { --text:#e3e9e7; --muted:#b6c4c3; --pink-dark:#eca9c7; --surface:#253137; --surface-soft:#2d3c42; --line:#415258; --accent:#aa3d70; --heading:#e8eeeb; --border:#415258; background:#19252b; color:var(--text); }
+    body .hero, body.night .hero { background:linear-gradient(180deg,var(--surface-soft),transparent); }
+    body .topbar, body.night .topbar { background:var(--surface); border-color:var(--line); box-shadow:none; }
+    body .brand-badge { filter:none; -webkit-mask-image:radial-gradient(ellipse 48% 42% at 50% 46%,#000 58%,transparent 100%); mask-image:radial-gradient(ellipse 48% 42% at 50% 46%,#000 58%,transparent 100%); }
+    body .brand-text { color:var(--pink-dark); text-shadow:none; }
+    body .gradient-title, body.night .gradient-title, body .hero-subtitle, body.night .hero-subtitle,
+    body .section-header h2, body.night .section-header h2, body .home-mission-card h2, body.night .home-mission-card h2,
+    body .hero-title-card h3, body.night .hero-title-card h3 { color:var(--heading); text-shadow:none; }
+    body .lead, body.night .lead, body .proof-card strong, body.night .proof-card strong, body .section-header p, body.night .section-header p { color:var(--muted); }
+    body .nav-links a, body.night .nav-links a, body .nav-links button, body.night .nav-links button { color:var(--text); }
+    body .pill, body.night .pill, body .theme-toggle, body.night .theme-toggle,
+    body .mobile-menu .theme-toggle, body.night .mobile-menu .theme-toggle { color:var(--text); background:var(--surface); border:1px solid var(--line); box-shadow:none; }
+    body .btn-primary, body.night .btn-primary, body .nav-links .nav-superpowers, body.night .nav-links .nav-superpowers,
+    body .mobile-menu .nav-superpowers, body.night .mobile-menu .nav-superpowers, body .home-mission-action .btn, body.night .home-mission-action .btn { background:var(--accent); color:#fff; box-shadow:none; }
+    body .btn-secondary, body.night .btn-secondary, body .btn-light { background:var(--surface-soft); color:var(--text); border:1px solid var(--line); }
+    body .cart-button, body.night .cart-button, body .nav-game-btn, body.night .nav-game-btn,
+    body .mobile-game-btn, body.night .mobile-game-btn { background:var(--surface-soft)!important; color:var(--text)!important; border:1px solid var(--line); box-shadow:none; }
+    body .cart-count { background:var(--surface); color:var(--text); box-shadow:none; }
+    body .product-price-card, body.night .product-price-card, body .feature-card, body.night .feature-card,
+    body .workshop-card, body.night .workshop-card, body .atelier-intro-card, body.night .atelier-intro-card,
+    body .atelier-accordion-card, body.night .atelier-accordion-card, body .author-quote-card, body.night .author-quote-card,
+    body .author-story-card, body.night .author-story-card, body .checkout-card, body.night .checkout-card,
+    body .contact-card, body.night .contact-card, body .pdf-preview-card, body.night .pdf-preview-card,
+    body .preview-details, body.night .preview-details, body .home-mission-card, body.night .home-mission-card { background:var(--surface); border-color:var(--line); box-shadow:none; }
+    body #ateliere, body.night #ateliere { background:var(--surface-soft); }
+    body .product-price-card h4, body .feature-card h3, body .workshop-card h3, body .atelier-intro-card h3,
+    body .atelier-accordion-button, body .author-story-button, body .author-quote-title, body .checkout-card h3, body .contact-card h3,
+    body .atelier-accordion-button span, body .author-story-button span { color:var(--heading); text-shadow:none; }
+    body .product-price-subtitle, body.night .product-price-subtitle, body .feature-card p, body.night .feature-card p,
+    body .atelier-intro-card p, body.night .atelier-intro-card p, body .author-quote-text, body.night .author-quote-text,
+    body .author-story-body p, body.night .author-story-body p, body .atelier-accordion-body p, body.night .atelier-accordion-body p,
+    body .atelier-accordion-list li, body.night .atelier-accordion-list li, body .workshop-card li, body.night .workshop-card li,
+    body .checkout-card p, body.night .checkout-card p, body .home-mission-action small, body.night .home-mission-action small { color:var(--muted); }
+    body .home-mission-label, body.night .home-mission-label, body .preview-details summary, body.night .preview-details summary { color:var(--text); }
+    body .sale-badge, body .sale-price, body .product-price-value, body .icon,
+    body .atelier-accordion-icon, body .author-story-icon { background:var(--surface-soft); color:var(--text); box-shadow:none; text-shadow:none; }
+    body .mobile-menu, body.night .mobile-menu, body .cart-drawer, body.night .cart-drawer { background:var(--surface); color:var(--text); }
+    body .mobile-menu a, body .mobile-menu button { background:var(--surface-soft); color:var(--text); }
+    body .menu-toggle, body.night .menu-toggle { background:var(--surface-soft); color:var(--text); border-color:var(--line); }
+    body .site-footer, body.night .site-footer { background:var(--surface-soft); color:var(--muted); }
+    @media(max-width:600px) {
+      .nav-actions { gap:7px; }
+      body .nav-actions .theme-toggle, body.night .nav-actions .theme-toggle { display:inline-grid; place-items:center; width:38px; height:40px; min-height:40px; padding:0; border-radius:12px; font-size:1rem; grid-column:auto; grid-row:auto; }
+      .nav-actions .theme-toggle .theme-name { display:none; }
+      .nav-actions .theme-toggle span:first-child { grid-area:1 / 1; }
+      .nav-actions .menu-toggle { width:38px; }
+      .brand-text { font-size:1.3rem; }
+      .brand-badge { width:32px; height:32px; flex-basis:32px; }
+    }
   </style>
 </head>
 <body>
@@ -4252,7 +4303,7 @@ s0.parentNode.insertBefore(s1,s0);
       function applyTheme(night) {
         document.body.classList.toggle('night', night);
         toggle.setAttribute('aria-pressed', String(night));
-        toggle.textContent = night ? '☀️ Zi' : '🌙 Noapte';
+        toggle.innerHTML = night ? '<span aria-hidden="true">☀️</span><span class="theme-name"> Zi</span>' : '<span aria-hidden="true">🌙</span><span class="theme-name"> Noapte</span>';
         toggle.setAttribute('aria-label', night ? 'Activează modul de zi' : 'Activează modul de noapte');
       }
       applyTheme(saved ? saved === 'night' : window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -4269,7 +4320,7 @@ s0.parentNode.insertBefore(s1,s0);
  const desktop=document.querySelector('.nav-actions');
  const mobile=document.querySelector('.mobile-menu-inner');
  const screen=window.matchMedia('(max-width:600px)');
- function placeToggle(){ if(screen.matches) mobile.append(toggle); else desktop.prepend(toggle); }
+ function placeToggle(){ desktop.prepend(toggle); }
  screen.addEventListener('change',placeToggle); placeToggle();
 })();
 </script>
